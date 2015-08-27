@@ -1,5 +1,3 @@
-// gcc ./compute_tabs.c -o ./compute_tabs
-
 // printf()
 #include <stdio.h>
 
@@ -27,7 +25,7 @@ size_t len = 0;
 
 			count++;
 
-                printf("%d %s", count, line);		
+                printf("%d %s", count, line);
         }
 
         if(line)

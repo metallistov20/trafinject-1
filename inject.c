@@ -606,10 +606,12 @@ static void print_element_names(xmlNode * a_node)
 	{
 		if (cur_node->type == XML_ELEMENT_NODE)
 		{
-			printf("node type: Element, name: %s\n", cur_node->name);
+			printf(" * * * node type: Element, name: %s  content: %s\n", cur_node->name, cur_node->content);
 		}
 		else
-			printf("node type: <%d>\n", cur_node->type);
+		{
+			printf(" + + + node type: <%d>\n", cur_node->type);
+		}
 
 		print_element_names(cur_node->children);
 	}

@@ -37,12 +37,15 @@ StartNodeI()
 TA=$1
 CSTR=$2
 
+	CSTR="${CSTR// /_}"
+
 	for (( t=0; t < ($TA); t++ ))
 	do
 		printf "\t">>$NB_OUTFNAME
 	done
 
-	echo  "<node name=\"$CSTR\">">>$NB_OUTFNAME
+	#OBSOLETE: echo  "<node name=\"$CSTR\">">>$NB_OUTFNAME
+	echo  "<$CSTR>">>$NB_OUTFNAME
 
 	Finalize[$t]="<yes>"
 	FinalizeWith[$t]="$CSTR"
@@ -58,8 +61,10 @@ TBS=$1
 		printf "\t">>$NB_OUTFNAME
 	done
 
-	echo  "</node>">>$NB_OUTFNAME
-	#echo  "</node> <!-- name=\"${FinalizeWith[$i]}\" -->">>$NB_OUTFNAME
+	
+	echo  "</${FinalizeWith[$i]}>">>$NB_OUTFNAME
+	#OBSOLETE: echo  "</node>">>$NB_OUTFNAME
+	#OBSOLETE: echo  "</node> <!-- name=\"${FinalizeWith[$i]}\" -->">>$NB_OUTFNAME
 
 	Finalize[$i]="<no>"
 	FinalizeWith[$i]="<empty>"
@@ -76,8 +81,10 @@ TBS=$1
 		printf "\t">>$NB_OUTFNAME
 	done
 
-	echo  "</node>">>$NB_OUTFNAME
-	#echo  "</node> <!-- name=\"${FinalizeWith[$k]}\" -->">>$NB_OUTFNAME	
+	
+	echo  "</${FinalizeWith[$k]}>">>$NB_OUTFNAME
+	#OBSOLETE: echo  "</node>">>$NB_OUTFNAME
+	#OBSOLETE: echo  "</node> <!-- name=\"${FinalizeWith[$k]}\" -->">>$NB_OUTFNAME	
 
 	Finalize[$k]="<no>"
 	FinalizeWith[$k]="<empty>"
