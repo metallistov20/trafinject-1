@@ -1,0 +1,419 @@
+<?xml version="1.0"?>
+<node name="TL-SL5428E">
+	<node name="System">
+		<node name="System Info">
+			<node name="System Summary">
+			</node>
+			<node name="Device Description">
+			</node>
+			<node name="System Time">
+			</node>
+			<node name="Daylight Saving Time">
+			</node>
+			<node name="System IP">
+			</node>
+			<node name="System IPv6">
+			</node>
+		</node>
+		<node name="User Management">
+			<node name="User Table">
+			</node>
+			<node name="User Config">
+			</node>
+		</node>
+		<node name="System Tools">
+			<node name="Config Restore">
+			</node>
+			<node name="Config Backup">
+			</node>
+			<node name="Firmware Upgrade">
+			</node>
+			<node name="System Reboot">
+			</node>
+			<node name="System Reset">
+			</node>
+		</node>
+		<node name="Access Security">
+			<node name="Access Control">
+			</node>
+			<node name="SSL Config">
+			</node>
+			<node name="SSH Config">
+			</node>
+		</node>
+	</node>
+	<node name="Switching">
+		<node name="Port">
+			<node name="Port Config">
+			</node>
+			<node name="Port Mirror">
+			</node>
+			<node name="Port Security">
+			</node>
+			<node name="Port Isolation">
+			</node>
+			<node name="Loopback Detection">
+			</node>
+		</node>
+		<node name="LAG">
+			<node name="LAG Table">
+			</node>
+			<node name="Static LAG">
+			</node>
+			<node name="LACP Config">
+			</node>
+		</node>
+		<node name="Traffic Monitor">
+			<node name="Traffic Summary">
+			</node>
+			<node name="Traffic Statistics">
+			</node>
+		</node>
+		<node name="MAC Address">
+			<node name="Address Table">
+			</node>
+			<node name="Static Address">
+			</node>
+			<node name="Dynamic Address">
+			</node>
+			<node name="Filtering Address">
+			</node>
+		</node>
+	</node>
+	<node name="VLAN">
+		<node name="802.1Q VLAN">
+			<node name="VLAN Config">
+			</node>
+			<node name="Port Config">
+			</node>
+		</node>
+		<node name="MAC VLAN">
+			<node name="MAC VLAN">
+			</node>
+			<node name="Port Enable">
+			</node>
+		</node>
+		<node name="Protocol VLAN">
+			<node name="Protocol VLAN">
+			</node>
+			<node name="Protocol Template">
+			</node>
+			<node name="Port Enable">
+			</node>
+		</node>
+		<node name="VLAN VPN">
+			<node name="VPN Config">
+			</node>
+			<node name="VLAN Mapping">
+			</node>
+			<node name="Port Enable">
+			</node>
+		</node>
+		<node name="Private VLAN">
+			<node name="PVLAN Config">
+			</node>
+			<node name="Port Config">
+			</node>
+		</node>
+		<node name="GVRP">
+		</node>
+	</node>
+	<node name="Spanning Tree">
+		<node name="STP Config">
+			<node name="STP Config">
+			</node>
+			<node name="STP Summary">
+			</node>
+		</node>
+		<node name="Port Config">
+		</node>
+		<node name="MSTP Instance">
+			<node name="Region Config">
+			</node>
+			<node name="Instance Config">
+			</node>
+			<node name="Instance Port Config">
+			</node>
+		</node>
+		<node name="STP Security">
+			<node name="Port Protect">
+			</node>
+			<node name="TC Protect">
+			</node>
+		</node>
+	</node>
+	<node name="Ethernet OAM">
+		<node name="Basic Config">
+			<node name="Basic Config">
+			</node>
+			<node name="Discovery Info">
+			</node>
+		</node>
+		<node name="Link Monitoring">
+		</node>
+		<node name="RFI">
+		</node>
+		<node name="Remote Loopback">
+		</node>
+		<node name="Statistics">
+			<node name="Statistics">
+			</node>
+			<node name="Event Log">
+			</node>
+		</node>
+		<node name="DLDP">
+		</node>
+	</node>
+	<node name="Multicast">
+		<node name="IGMP Snooping">
+			<node name="Snooping Config">
+			</node>
+			<node name="VLAN Config">
+			</node>
+			<node name="Port Config">
+			</node>
+			<node name="IP-Range">
+			</node>
+			<node name="Multicast VLAN">
+			</node>
+			<node name="Static Multicast IP">
+			</node>
+			<node name="Packet Statistics">
+			</node>
+			<node name="Querier Config">
+			</node>
+		</node>
+		<node name="MLD Snooping">
+			<node name="Global Config">
+			</node>
+			<node name="VLAN Config">
+			</node>
+			<node name="Filter Config">
+			</node>
+			<node name="Port Config">
+			</node>
+			<node name="Static Multicast">
+			</node>
+			<node name="Querier Config">
+			</node>
+			<node name="Packet Statistics">
+			</node>
+		</node>
+		<node name="Multicast Table">
+			<node name="IPv4 Multicast Table">
+			</node>
+			<node name="IPv6 Multicast Table">
+			</node>
+		</node>
+	</node>
+	<node name="QoS">
+		<node name="DiffServ">
+			<node name="Port Priority">
+			</node>
+			<node name="DSCP Priority">
+			</node>
+			<node name="802.1P/CoS mapping">
+			</node>
+			<node name="Schedule Mode">
+			</node>
+		</node>
+		<node name="Bandwidth Control">
+			<node name="Rate Limit">
+			</node>
+			<node name="Storm Control">
+			</node>
+		</node>
+		<node name="Voice VLAN">
+			<node name="Global Config">
+			</node>
+			<node name="Port Config">
+			</node>
+			<node name="OUI Config">
+			</node>
+		</node>
+	</node>
+	<node name="ACL">
+		<node name="Time-Range">
+			<node name="Time-Range Summary">
+			</node>
+			<node name="Time-Range Create">
+			</node>
+			<node name="Holiday Config">
+			</node>
+		</node>
+		<node name="ACL Config">
+			<node name="ACL Summary">
+			</node>
+			<node name="ACL Create">
+			</node>
+			<node name="MAC ACL">
+			</node>
+			<node name="Standard-IP ACL">
+			</node>
+			<node name="Extend-IP ACL">
+			</node>
+		</node>
+		<node name="Policy Config">
+			<node name="Policy Summary">
+			</node>
+			<node name="Policy Create">
+			</node>
+			<node name="Action Create">
+			</node>
+		</node>
+		<node name="Policy Binding">
+			<node name="Binding Table">
+			</node>
+			<node name="Port Binding">
+			</node>
+			<node name="VLAN Binding">
+			</node>
+		</node>
+	</node>
+	<node name="Network Security">
+		<node name="Network Security">
+			<node name="Binding Table">
+			</node>
+			<node name="Manual Binding">
+			</node>
+			<node name="ARP Scanning">
+			</node>
+			<node name="DHCP Snooping">
+			</node>
+		</node>
+		<node name="ARP Inspection">
+			<node name="ARP Detect">
+			</node>
+			<node name="ARP Defend">
+			</node>
+			<node name="ARP Statistics">
+			</node>
+		</node>
+		<node name="IP Source Guard">
+		</node>
+		<node name="DoS Defend">
+			<node name="DoS Defend">
+			</node>
+			<node name="DoS Detect">
+			</node>
+		</node>
+		<node name="802.1X">
+			<node name="Global Config">
+			</node>
+			<node name="Port Config">
+			</node>
+			<node name="Radius Server">
+			</node>
+		</node>
+		<node name="PPPoE Config">
+			<node name="PPPoE Circuit-ID">
+			</node>
+		</node>
+	</node>
+	<node name="SNMP">
+		<node name="SNMP Config">
+			<node name="Global Config">
+			</node>
+			<node name="SNMP View">
+			</node>
+			<node name="SNMP Group">
+			</node>
+			<node name="SNMP User">
+			</node>
+			<node name="SNMP Community">
+			</node>
+		</node>
+		<node name="Notification">
+			<node name="Notification Config">
+			</node>
+			<node name="Traps Config">
+			</node>
+		</node>
+		<node name="RMON">
+			<node name="History Control">
+			</node>
+			<node name="Event Config">
+			</node>
+			<node name="Alarm Config">
+			</node>
+		</node>
+	</node>
+	<node name="LLDP">
+		<node name="Basic Config">
+			<node name="Global Config">
+			</node>
+			<node name="Port Config">
+			</node>
+		</node>
+		<node name="Device Info">
+			<node name="Local Info">
+			</node>
+			<node name="Neighbor Info">
+			</node>
+		</node>
+		<node name="Device Statistics">
+			<node name="Statistic Info">
+			</node>
+		</node>
+	</node>
+	<node name="Cluster">
+		<node name="NDP">
+			<node name="Neighbor Info">
+			</node>
+			<node name="NDP Summary">
+			</node>
+			<node name="NDP Config">
+			</node>
+		</node>
+		<node name="NTDP">
+			<node name="Device Table">
+			</node>
+			<node name="NTDP Summary">
+			</node>
+			<node name="NTDP Config">
+			</node>
+		</node>
+		<node name="Cluster">
+			<node name="Cluster Summary">
+			</node>
+			<node name="Cluster Config">
+			</node>
+			<node name="Member Config">
+			</node>
+			<node name="Cluster Topology">
+			</node>
+		</node>
+	</node>
+	<node name="Maintenance">
+		<node name="System Monitor">
+			<node name="CPU Monitor">
+			</node>
+			<node name="Memory Monitor">
+			</node>
+		</node>
+		<node name="Log">
+			<node name="Log Table">
+			</node>
+			<node name="Local Log">
+			</node>
+			<node name="Remote Log">
+			</node>
+			<node name="Backup Log">
+			</node>
+		</node>
+		<node name="Device Diagnostics">
+			<node name="Cable Test">
+			</node>
+		</node>
+		<node name="Network Diagnostics">
+			<node name="Ping">
+			</node>
+			<node name="Tracert">
+			</node>
+		</node>
+	</node>
+	<node name="Save Config">
+	</node>
+	<node name="Logout">
+	</node>
+</node>

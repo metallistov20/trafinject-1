@@ -1,0 +1,84 @@
+# In-Makefile to generate C-primitive <inject>
+#
+# 1. Ensure <cURL-devel> is installed on your system. If needed
+# can be downloaded from here: http://curl.haxx.se/download.html,
+# but better is to use platform package mnager (dpkg, apr-get, etc).
+#
+# 2. Provide flags -I<dir> and -L<dir> once installed
+# into not default 'lib' and 'include' dirs of compiler.  
+#
+# (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307 USA
+export CC=@CC@
+
+BUILD_CURL=@BUILD_CURL@
+
+CFLAGS =  -c -g   -I/usr/local/include/libxml2
+
+
+LDFLAGS = -L/usr/local/lib -lz -lm -ldl
+
+
+
+
+LIBS = -lcurl 	-lxml2
+
+
+ifeq ($(strip $(prefix)),)
+	PREFIX=""
+else
+	PREFIX="--prefix=$(prefix)"
+endif
+
+.PHONY: all install build deps clean uninstall
+
+
+OBJS = inject.o
+
+all: build
+
+
+# TODO: since we delete Makefile in <preclean> by now <install> is not accessible. Bring it back
+install: build
+	install $(PREFIX)
+
+
+# TODO: remove this odd <preclean> after draftwork finished
+#build:	$(OBJS) inject preclean
+build:	inject compute_tabs
+
+preclean:
+	rm -fv config.log config.status configure  *.~ *.o *.log *.in~
+	rm -rfv autom4te.cache
+
+# TODO: since we delete Makefile in <preclean> by now <clean> is not accessible. Bring it back
+clean:
+	rm -fv inject compute_tabs config.log config.status configure  *.~ *.in~  *.o inject *.log
+	rm -rfv autom4te.cache
+
+inject: inject.o
+	$(CC)  -o inject inject.o $(LDFLAGS) $(LIBS)
+
+compute_tabs: compute_tabs.c
+	$(CC) compute_tabs.c -o compute_tabs 
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
+
+
+
+

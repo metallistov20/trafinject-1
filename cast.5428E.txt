@@ -1,0 +1,209 @@
+TL-SL5428E
+	System
+		System Info
+			System Summary
+			Device Description
+			System Time
+			Daylight Saving Time
+			System IP
+			System IPv6
+		User Management
+			User Table
+			User Config
+		System Tools
+			Config Restore
+			Config Backup
+			Firmware Upgrade
+			System Reboot
+			System Reset
+		Access Security
+			Access Control
+			SSL Config
+			SSH Config
+	Switching
+		Port
+			Port Config
+			Port Mirror
+			Port Security
+			Port Isolation
+			Loopback Detection
+		LAG
+			LAG Table
+			Static LAG
+			LACP Config
+		Traffic Monitor
+			Traffic Summary
+			Traffic Statistics
+		MAC Address
+			Address Table
+			Static Address
+			Dynamic Address
+			Filtering Address
+	VLAN
+		802.1Q VLAN
+			VLAN Config
+			Port Config
+		MAC VLAN
+			MAC VLAN
+			Port Enable
+		Protocol VLAN
+			Protocol VLAN
+			Protocol Template
+			Port Enable
+		VLAN VPN
+			VPN Config
+			VLAN Mapping
+			Port Enable
+		Private VLAN
+			PVLAN Config
+			Port Config
+		GVRP
+	Spanning Tree
+		STP Config
+			STP Config
+			STP Summary
+		Port Config
+		MSTP Instance
+			Region Config
+			Instance Config
+			Instance Port Config
+		STP Security
+			Port Protect
+			TC Protect
+	Ethernet OAM
+		Basic Config
+			Basic Config
+			Discovery Info
+		Link Monitoring
+		RFI
+		Remote Loopback
+		Statistics
+			Statistics
+			Event Log
+		DLDP
+	Multicast
+		IGMP Snooping
+			Snooping Config
+			VLAN Config
+			Port Config
+			IP-Range
+			Multicast VLAN
+			Static Multicast IP
+			Packet Statistics
+			Querier Config
+		MLD Snooping
+			Global Config
+			VLAN Config
+			Filter Config
+			Port Config
+			Static Multicast
+			Querier Config
+			Packet Statistics
+		Multicast Table
+			IPv4 Multicast Table
+			IPv6 Multicast Table
+	QoS
+		DiffServ
+			Port Priority
+			DSCP Priority
+			802.1P/CoS mapping
+			Schedule Mode
+		Bandwidth Control
+			Rate Limit
+			Storm Control
+		Voice VLAN
+			Global Config
+			Port Config
+			OUI Config
+	ACL
+		Time-Range
+			Time-Range Summary
+			Time-Range Create
+			Holiday Config
+		ACL Config
+			ACL Summary
+			ACL Create
+			MAC ACL
+			Standard-IP ACL
+			Extend-IP ACL
+		Policy Config
+			Policy Summary
+			Policy Create
+			Action Create
+		Policy Binding
+			Binding Table
+			Port Binding
+			VLAN Binding
+	Network Security
+		Network Security
+			Binding Table
+			Manual Binding
+			ARP Scanning
+			DHCP Snooping
+		ARP Inspection
+			ARP Detect
+			ARP Defend
+			ARP Statistics
+		IP Source Guard
+		DoS Defend
+			DoS Defend
+			DoS Detect
+		802.1X
+			Global Config
+			Port Config
+			Radius Server
+		PPPoE Config
+			PPPoE Circuit-ID
+	SNMP
+		SNMP Config
+			Global Config
+			SNMP View
+			SNMP Group
+			SNMP User
+			SNMP Community
+		Notification
+			Notification Config
+			Traps Config
+		RMON
+			History Control
+			Event Config
+			Alarm Config
+	LLDP
+		Basic Config
+			Global Config
+			Port Config
+		Device Info
+			Local Info
+			Neighbor Info
+		Device Statistics
+			Statistic Info
+	Cluster
+		NDP
+			Neighbor Info
+			NDP Summary
+			NDP Config
+		NTDP
+			Device Table
+			NTDP Summary
+			NTDP Config
+		Cluster
+			Cluster Summary
+			Cluster Config
+			Member Config
+			Cluster Topology
+	Maintenance
+		System Monitor
+			CPU Monitor
+			Memory Monitor
+		Log
+			Log Table
+			Local Log
+			Remote Log
+			Backup Log
+		Device Diagnostics
+			Cable Test
+		Network Diagnostics
+			Ping
+			Tracert
+	Save Config
+	Logout
