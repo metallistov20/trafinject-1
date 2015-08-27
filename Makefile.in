@@ -1,10 +1,16 @@
-# In-Makefile to generate C-primitive <inject>
+# In-Makefile to generate 'trafinject' with XML-enhancements 
 #
 # 1. Ensure <cURL-devel> is installed on your system. If needed
-# can be downloaded from here: http://curl.haxx.se/download.html,
+# can be downloaded from: http://curl.haxx.se/download.html,
 # but better is to use platform package mnager (dpkg, apr-get, etc).
+
+# 2. Ensure <libxml2> is installed on your system. If needed
+# can be downloaded from: http://www.xmlsoft.org/downloads.html
+# (optionally: git clone git://git.gnome.org/libxml2). 
+# Compile (autogen.sh) without 'Python' support, and
+# install ('make install').
 #
-# 2. Provide flags -I<dir> and -L<dir> once installed
+# 3. Provide flags -I<dir> and -L<dir> once installed
 # into not default 'lib' and 'include' dirs of compiler.  
 #
 # (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
@@ -30,9 +36,7 @@ BUILD_CURL=@BUILD_CURL@
 CFLAGS =  -c -g   -I/usr/local/include/libxml2
 
 
-LDFLAGS = -L/usr/local/lib -lz -lm -ldl
-
-
+LDFLAGS = -L/usr/local/lib 
 
 
 LIBS = -lcurl 	-lxml2
@@ -62,12 +66,12 @@ install: build
 build:	inject compute_tabs
 
 preclean:
-	rm -fv config.log config.status configure  *.~ *.o *.log *.in~
+	rm -fv config.log config.status configure  *.in~ *.sh~ *.c~ *.o *.log
 	rm -rfv autom4te.cache
 
 # TODO: since we delete Makefile in <preclean> by now <clean> is not accessible. Bring it back
 clean:
-	rm -fv inject compute_tabs config.log config.status configure  *.~ *.in~  *.o inject *.log
+	rm -fv inject compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.o *.log
 	rm -rfv autom4te.cache
 
 inject: inject.o

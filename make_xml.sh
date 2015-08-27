@@ -25,9 +25,8 @@ NB_FNAME="cast.5428E.txt"
 NB_OUTFNAME="$NB_FNAME.xml"
 
 TO_BE_CLOSED="-1"
-TO_BE_CLOSED_WITH="<empty>"
 
-# Let's assumed that amount of sub-ordered pages are not more than ..
+# Let's assume that amount of sub-ordered pages are not more than ..
 SiteDepth=7
 
 # Array to keep a key word (<yes>, <no>) to tell if the tag to be finalized
@@ -106,7 +105,6 @@ TBS=$1
 
 	#OBSOLETE: echo  "</node>">>$NB_OUTFNAME
 	#OBSOLETE: echo  "</node> <!-- name=\"${FinalizeWith[$i]}\" -->">>$NB_OUTFNAME
-
 
 	Finalize[$i]="<no>"
 	FinalizeWith[$i]="<empty>"
