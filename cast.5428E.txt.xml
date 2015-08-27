@@ -11,6 +11,12 @@
 			<Daylight_Saving_Time>
 			</Daylight_Saving_Time>
 			<System_IP>
+				URL1="/SystemInfoRpm.htm?s_userlevel=1AES_tid_="
+				URL2="AES_tid_="
+				URL1="/userRpm/SystemIpRpm.htm?s_userlevel=1AES_tid_="
+				URL1="/userRpm/SystemIpRpm.htm?ip_mode=0AESip_mgmt_vlanid=1AESip_address="
+				URL2="AESip_mask="
+				URL3="AESip_gateway=AESsubmit=ApplyAES_tid_="
 			</System_IP>
 			<System_IPv6>
 			</System_IPv6>
@@ -29,6 +35,9 @@
 			<Firmware_Upgrade>
 			</Firmware_Upgrade>
 			<System_Reboot>
+				URL="/userRpm/RestoreRpm.htm?s_userlevel=1AES_tid_=">
+				URL="/userRpm/ReiniRstAdRpm.htm?restore=ResetAES_tid_="
+				URL="/userRpm/ReiniRstAdTempRpm.htm?_tid_="
 			</System_Reboot>
 			<System_Reset>
 			</System_Reset>
@@ -245,6 +254,9 @@
 			<ACL_Summary>
 			</ACL_Summary>
 			<ACL_Create>
+				URL=""
+				URL="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1AES_tid_="
+				URL="/userRpm/ACLRuleCreateRpm.htm?submit=SubmitAESaclId="
 			</ACL_Create>
 			<MAC_ACL>
 			</MAC_ACL>
@@ -413,7 +425,22 @@
 		</Network_Diagnostics>
 	</Maintenance>
 	<Save_Config>
+		URL1=""
+		URL1="/userRpm/ConfigsaveRpm.htm?s_userlevel=1AES_tid_="
+		URL2="/userRpm/ConfigsaveRpm.htm?s_userlevel=1AES_tid_="
+		URL3="AES_tid_="
+		URL1="/userRpm/ConfigsaveImg.htm"
+		URL1="/userRpm/ConfigsaveFileRpm.htm?_tid_="
 	</Save_Config>
 	<Logout>
+		URL1="/userRpm/SystemInfoRpm.htm?t=bothAES_tid_="
+		URL1="/userRpm/Logout.htm"
+		URL1="/"
 	</Logout>
+	<Login>
+		URL1="/logon/LogonRpm.htm"
+		STR="username=adminAESpassword=adminAESlogon=Login"
+		URL1="/"
+		STR="user=adminAESlevel=1AESuserID=0"
+	</Login>
 </TL-SL5428E>

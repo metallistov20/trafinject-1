@@ -26,6 +26,12 @@
 /* Operation done successfully */
 #define INJ_SUCCESS	0
 
+/* Bad paramaters */
+#define INJ_PAR_ERROR	(-1)
+
+/* Bad data */
+#define INJ_XML_ERROR	(-2)
+
 /* Operation is not yet impelmented */
 #define INJ_NOT_IMPL	(-8)
 

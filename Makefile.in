@@ -66,12 +66,12 @@ install: build
 build:	inject compute_tabs
 
 preclean:
-	rm -fv config.log config.status configure  *.in~ *.sh~ *.c~ *.o *.log
+	rm -fv config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log
 	rm -rfv autom4te.cache
 
 # TODO: since we delete Makefile in <preclean> by now <clean> is not accessible. Bring it back
 clean:
-	rm -fv inject compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.o *.log
+	rm -fv inject compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log
 	rm -rfv autom4te.cache
 
 inject: inject.o

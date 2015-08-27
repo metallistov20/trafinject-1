@@ -591,70 +591,131 @@ int iEnablePort()
 }
 
 
-/**
- * print_element_names:
- * @a_node: the initial xml node to consider.
- *
- * Prints the names of the all the xml elements
- * that are siblings or children of a given xml node.
- */
-static void print_element_names(xmlNode * a_node)
+#define print_element_names(x) _print_element_names(__func__, (x))
+static void _print_element_names(const char * caller, xmlNode * a_node)
 {
 	xmlNode *cur_node = NULL;
 
 	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
 	{
-		if (cur_node->type == XML_ELEMENT_NODE)
+#if (1)
+		if (XML_ELEMENT_NODE == cur_node->type)
 
-			printf(" * * * name: %s\n", cur_node->name);
+			printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+#endif /* (0) */
 
-		/* else
-			printf(" + + + node type: <%d>\n", cur_node->type); */
+
+		if ( XML_TEXT_NODE == cur_node->type)
+			printf("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
 
 
 		print_element_names(cur_node->children);
 	}
 }
 
+#define find_named_element(x,y) _find_named_element(__func__, (x), (y))
+static void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
+{
+	xmlNode *cur_node = NULL;
+
+	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
+	{
+#if (1)
+		if (XML_ELEMENT_NODE == cur_node->type)
+		{
+
+			/* DEBUG: printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE"); */
+	
+			/* El't has been found by template?  */
+			if ( 0 == strcmp (template, cur_node->name) )
+			{
+				xmlNode *_ch_cur_node = NULL;
+
+				/* melde sich */
+				printf("[%s]: The element name=<%s> has been found (type=%s)\n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+
+				/* Print its contents */
+				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
+					if ( XML_TEXT_NODE == _ch_cur_node->type)
+						printf("[%s]:   type=%d  content=(%s)\n", caller,  _ch_cur_node->type, _ch_cur_node->content);
+
+				/* and get away */
+				break;
+			}
+		}
+#endif /* (1) */
+
+
+		/* If not found by template let's try with its children */
+		find_named_element(cur_node->children, template);
+	}
+}
+
+
 int main (int argc, char **argv)
 {
 int iOption;
 
 xmlDoc *doc = NULL;
-    xmlNode *root_element = NULL;
 
-    if (argc != 2)
-        return(1);
+xmlNode *root_element = NULL;
 
-    /*
-     * this initialize the library and check potential ABI mismatches
-     * between the version it was compiled for and the actual shared
-     * library used.
-     */
-    LIBXML_TEST_VERSION
+	/* Name of XML file to parse must be given */
+	if (argc != 2)
+	{
 
-    /*parse the file and get the DOM */
-    doc = xmlReadFile(argv[1], NULL, 0);
+		DCOMMON("%s: ERROR: name of XML file to parse should be passed on command line\n", cArg0);
 
-    if (doc == NULL) {
-        printf("error: could not parse file %s\n", argv[1]);
-    }
+		return INJ_PAR_ERROR;
+	}
 
-    /*Get the root element node */
-    root_element = xmlDocGetRootElement(doc);
+	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
+	LIBXML_TEST_VERSION
 
-    print_element_names(root_element);
+	/* Parse the file and get the DOM */
+	doc = xmlReadFile(argv[1], NULL, 0);
 
-    /*free the document */
-    xmlFreeDoc(doc);
+	if (NULL == doc)
+	{
+		DCOMMON("%s: ERROR: could not parse file %s\n", cArg0, argv[1]);
 
-    /*
-     *Free the global variables that may
-     *have been allocated by the parser.
-     */
-    xmlCleanupParser();
+		return INJ_XML_ERROR;
+	}
 
-    return 0;
+	/*Get the root element node */
+	root_element = xmlDocGetRootElement(doc);
+
+#if (0)
+	print_element_names(root_element);
+#else
+	find_named_element(root_element, "System_IP");
+
+	find_named_element(root_element, "Login");
+
+	find_named_element(root_element, "Logout");
+
+	find_named_element(root_element, "Save_Config");
+
+	find_named_element(root_element, "ACL_Create");
+
+	find_named_element(root_element, "System_Reboot");
+
+#endif /* (0) */
+
+	/* Free the document */
+	xmlFreeDoc(doc);
+
+	/* Free the global variables that may have been allocated by the parser */
+	xmlCleanupParser();
+
+	return INJ_SUCCESS;
+
+	DCOMMON("%s: this line is not seen\n", cArg0, iOperation);
+
+
+
+
+
 
 
 
