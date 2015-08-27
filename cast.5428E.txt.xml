@@ -81,12 +81,12 @@
 		</MAC_Address>
 	</Switching>
 	<VLAN>
-		<802.1Q_VLAN>
+		<n802.1Q_VLAN>
 			<VLAN_Config>
 			</VLAN_Config>
 			<Port_Config>
 			</Port_Config>
-		</802.1Q_VLAN>
+		</n802.1Q_VLAN>
 		<MAC_VLAN>
 			<MAC_VLAN>
 			</MAC_VLAN>
@@ -212,8 +212,8 @@
 			</Port_Priority>
 			<DSCP_Priority>
 			</DSCP_Priority>
-			<802.1P/CoS_mapping>
-			</802.1P/CoS_mapping>
+			<n802.1P_CoS_mapping>
+			</n802.1P_CoS_mapping>
 			<Schedule_Mode>
 			</Schedule_Mode>
 		</DiffServ>
@@ -297,14 +297,14 @@
 			<DoS_Detect>
 			</DoS_Detect>
 		</DoS_Defend>
-		<802.1X>
+		<n802.1X>
 			<Global_Config>
 			</Global_Config>
 			<Port_Config>
 			</Port_Config>
 			<Radius_Server>
 			</Radius_Server>
-		</802.1X>
+		</n802.1X>
 		<PPPoE_Config>
 			<PPPoE_Circuit-ID>
 			</PPPoE_Circuit-ID>
