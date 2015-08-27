@@ -1,6 +1,6 @@
 /*
  Routine to prepend each string of the input file with amount
- of special characters ( tabulation sign) found in this string.
+ of 'tabs' (tabulation characters) found in this string.
 
  (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
 
@@ -20,13 +20,10 @@
  MA 02111-1307 USA
 */
 
-// printf()
+/* printf(), getline() */
 #include <stdio.h>
 
-// getline()
-#include <string.h>
-
-// free()
+/* free() */
 #include <stdlib.h>
 
 int main(int argc, char *argv[])
@@ -37,20 +34,21 @@ char * line = NULL;
 
 size_t len = 0;
 
-        while (-1 != getline(&line, &len, stdin))
-        {
-                int count = 0;
+	while (-1 != getline(&line, &len, stdin))
+	{
+		int count = 0;
 
-                char * s = line;
+		char * s = line;
 
-                while (*s) if(*s++ == c)
+		while (*s)
+			if(*s++ == c)
+				count++;
 
-			count++;
+		printf("%d %s", count, line);
+	}
 
-                printf("%d %s", count, line);
-        }
-
-        if(line)
-
+	if(line)
 		free(line);
+
+	return 0;
 }
