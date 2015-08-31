@@ -2,13 +2,19 @@
 <TL-SL5428E>
 	<System>
 		<System_Info>
+			URL1="/userRpm/SystemInfoRpm.htm?t=port&_tid_=c812dfebbc936bbd"
+			URL1="/userRpm/SystemInfoRpm.htm?s_userlevel=1&_tid_=c812dfebbc936bbd&_tid_=c812dfebbc936bbd"
+			URL1="/help/SystemInfoHelpRpm.htm"
 			<System_Summary>
 			</System_Summary>
 			<Device_Description>
+				URL1="/userRpm/SystemDescriRpm.htm?s_userlevel=1&_tid_=c812dfebbc936bbd"
+				URL1="/userRpm/SystemDescriRpm.htm?sysName=TL-	SL5428E&sysLocation=SHENZHEN&sysContact=www.tp-link.com&submit=Apply&_tid_=c812dfebbc936bbd" {APPLY}
 			</Device_Description>
 			<System_Time>
 			</System_Time>
 			<Daylight_Saving_Time>
+				URL1="/userRpm/DstConfigRpm.htm?s_userlevel=1&_tid_=36f8f49a4957d0b5"				
 			</Daylight_Saving_Time>
 			<System_IP>
 				URL1="/SystemInfoRpm.htm?s_userlevel=1AES_tid_="
