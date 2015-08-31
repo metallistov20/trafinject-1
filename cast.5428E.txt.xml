@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <TL-SL5428E>
-	<System>
+	URL1="/logon/LogonRpm.htm"
+	STR1="username=adminAESpassword=adminAESlogon=Login"
+	URL2="/"
+	STR2="user=adminAESlevel=1AESuserID=0"
+	<System>0
 		<System_Info>
 			URL1="/userRpm/SystemInfoRpm.htm?t=portAES_tid_=c812dfebbc936bbd"
 			URL2="/userRpm/SystemInfoRpm.htm?s_userlevel=1AES_tid_=c812dfebbc936bbdAES_tid_=c812dfebbc936bbd"
@@ -11,7 +15,7 @@
 			</System_Summary>
 			<Device_Description>
 				URL1="/userRpm/SystemDescriRpm.htm?s_userlevel=1AES_tid_=c812dfebbc936bbd"
-				URL2="/userRpm/SystemDescriRpm.htm?sysName=TL-	SL5428EAESsysLocation=SHENZHENAESsysContact=www.tp-link.comAESsubmit=ApplyAES_tid_=c812dfebbc936bbd" {APPLY}
+				URL2="/userRpm/SystemDescriRpm.htm?sysName=TL-SL5428EAESsysLocation=SHENZHENAESsysContact=www.tp-link.comAESsubmit=ApplyAES_tid_=c812dfebbc936bbd" {APPLY}
 			</Device_Description>
 			<System_Time>
 				URL1="/userRpm/SystemTimeRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
@@ -28,7 +32,6 @@
 				URL4="/userRpm/SystemIpRpm.htm?ip_mode=0AESip_mgmt_vlanid=1AESip_address="
 				URL5="AESip_mask="
 				URL6="AESip_gateway=AESsubmit=ApplyAES_tid_="
-
 				URL1="/userRpm/SystemIpRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
 				URL2="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1AESipv6_mode=1AES_tid_=36f8f49a4957d0b5"
 			</System_IP>
@@ -455,10 +458,4 @@
 		URL2="/userRpm/Logout.htm"
 		URL3="/"
 	</Logout>
-	<Login>
-		URL1="/logon/LogonRpm.htm"
-		STR1="username=adminAESpassword=adminAESlogon=Login"
-		URL2="/"
-		STR2="user=adminAESlevel=1AESuserID=0"
-	</Login>
 </TL-SL5428E>

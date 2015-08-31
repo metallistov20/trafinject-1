@@ -9,7 +9,7 @@
  the License, or (at your option) any later version.
 
  This program is distributed in the hope that it will be useful,
- but WITHOUT cAby WARRANTY; without even the implied warranty of
+ but WITHOUT any WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
@@ -688,6 +688,7 @@ xmlNode *root_element = NULL;
 #if (0)
 	print_element_names(root_element);
 #else
+/*
 	find_named_element(root_element, "System_IP");
 
 	find_named_element(root_element, "Login");
@@ -699,7 +700,29 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "ACL_Create");
 
 	find_named_element(root_element, "System_Reboot");
+*/
+// TODO: check white spaces search 
+	find_named_element(root_element, "TL-SL5428E");
 
+	find_named_element(root_element, "System_Info");
+
+	find_named_element(root_element, "Device_Description");
+
+	find_named_element(root_element, "System_Time");
+
+	find_named_element(root_element, "Daylight_Saving_Time");
+
+	find_named_element(root_element, "System_IP");
+
+	find_named_element(root_element, "System_IPv6");
+
+	find_named_element(root_element, "System_Reboot");
+
+	find_named_element(root_element, "ACL_Create");
+
+	find_named_element(root_element, "Save_Config");
+
+	find_named_element(root_element, "Logout");
 #endif /* (0) */
 
 	/* Free the document */
