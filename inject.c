@@ -631,33 +631,15 @@ char *token;
 
 }
 
-_int_rt_AT(char * cOne, const char * cTwo)
-{
-char *_tkAES;
 
-	_tkAES = strndup(cOne, strlen(cOne));
-
-	/* get the first token */
-	_tkAES = strtok(_tkAES, cTwo);
-
-	/* walk through other tokens */
-	while( _tkAES != NULL ) 
-	{
-		printf("=====  %s\n", _tkAES );
-
-		_tkAES = strtok(NULL, cTwo);
-	}
-
-	free (_tkAES);
-}
 
 
 char * strtok1(char *s1, const char *delimit)
 
 {
-    char *lastToken = NULL;
+static char *lastToken = NULL;
 
-    char *tmp;
+char *tmp;
 
     /* Skip leading delimiters if new string. */
     if ( s1 == NULL )
@@ -718,7 +700,7 @@ int strspn2(char *p, char *s)
 
 char * strtok2(char *s1, char *delimit)
 {
-char *lastToken = NULL;
+static char *lastToken = NULL;
 
 char *tmp;
 
@@ -763,7 +745,6 @@ char *_localCopy;
 char *_localToken;
 
 	_localCopy=strndup(tkn, strlen(tkn));
-
 	_localToken=strtok2(_localCopy, "@");
 
 	while( _localToken != NULL ) 
@@ -791,20 +772,14 @@ char *cParcedOut;
 
 	while( _localToken != NULL ) 
 	{
-#if (0)
-		printf( "_localToken: %s\n", _localToken );		
-#else
 		cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
 
 		cParcedOut[strlen(cParcedOut) -1 ] = 0;
 
-		printf("\t{%s}\n", _localToken );
-		printf("\t[%s]\n", cParcedOut );
+		//TODO: REMOVE! printf("\t{%s}\n", _localToken );
+		//TODO: REMOVE! printf("\t[%s]\n", cParcedOut );
 
-
-		_unat(cParcedOut);		
-		
-#endif /* (0) */
+		_unat(cParcedOut);
 
 		_localToken = strtok1(NULL, "\t");
 
@@ -911,25 +886,10 @@ xmlNode *root_element = NULL;
 #if (0)
 	print_element_names(root_element);
 #else
-/*
-	find_named_element(root_element, "System_IP");
-
-	find_named_element(root_element, "Login");
-
-	find_named_element(root_element, "Logout");
-
-	find_named_element(root_element, "Save_Config");
-
-	find_named_element(root_element, "ACL_Create");
-
-	find_named_element(root_element, "System_Reboot");
-*/
-// TODO: check white spaces search . DONE!!
-/*
 	find_named_element(root_element, "TL-SL5428E");
-*/
+
 	find_named_element(root_element, "System_Info");
-/*
+
 	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
@@ -947,7 +907,7 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Save_Config");
 
 	find_named_element(root_element, "Logout");
-*/
+
 #endif /* (0) */
 
 	/* Free the document */
