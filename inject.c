@@ -652,6 +652,202 @@ char *_tkAES;
 }
 
 
+char * strtok1(char *s1, const char *delimit)
+
+{
+    char *lastToken = NULL;
+
+    char *tmp;
+
+    /* Skip leading delimiters if new string. */
+    if ( s1 == NULL )
+    {
+        s1 = lastToken;
+        if (s1 == NULL)         /* End of story? */
+            return NULL;
+    }
+    else
+    {
+        s1 += strspn(s1, delimit);
+    }
+
+    /* Find end of segment */
+    tmp = strpbrk(s1, delimit);
+    if (tmp)
+    {
+        /* Found another delimiter, split string and save state. */
+        *tmp = '\0';
+        lastToken = tmp + 1;
+    }
+    else
+    {
+        /* Last segment, remember that. */
+        lastToken = NULL;
+    }
+
+    return s1;
+}
+
+
+char * strtok2(char *s1, const char *delimit)
+
+{
+char *lastToken = NULL;
+
+char *tmp;
+
+    /* Skip leading delimiters if new string. */
+    if ( s1 == NULL )
+    {
+        s1 = lastToken;
+        if (s1 == NULL)
+            return NULL;
+    }
+    else
+    {
+        s1 += strspn(s1, delimit);
+    }
+
+    /* Find end of segment */
+    tmp = strpbrk(s1, delimit);
+    if (tmp)
+    {
+        /* Found another delimiter, split string and save state. */
+        *tmp = '\0';
+
+        lastToken = tmp + 1;
+    }
+    else
+    {
+        /* Last segment, remember that. */
+        lastToken = NULL;
+    }
+
+    return s1;
+}
+
+
+void _unat(char * cParcedOut)
+{
+char *_tkAES;
+
+	_tkAES = strndup (cParcedOut, strlen (cParcedOut) );
+
+	/* get the first token */
+	_tkAES = strtok2(_tkAES, "@");
+
+	/* walk through other tokens */
+	while( _tkAES != NULL ) 
+	{
+		printf("\t\t%s\n", _tkAES );
+
+		_tkAES = strtok2(NULL, "@");
+	}
+
+	free(_tkAES);
+}
+
+void _untab(char * tkn)
+{
+char *_localCopy;
+char *_localToken;
+
+	_localCopy=strndup(tkn, strlen(tkn));
+//printf( "_localCopy: %s\n", _localCopy );
+
+	_localToken=strtok1(_localCopy, "\t");
+
+	while( _localToken != NULL ) 
+	{
+#if (0)
+		printf( "_localToken: %s\n", _localToken );		
+#else
+		char *cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
+		// Let's overwrite trailing {\"} with EOL 
+		cParcedOut[strlen(cParcedOut) -1 ] = 0;
+
+		//printf("\t{%s}\n", _localToken );
+		printf("\t[%s]\n", cParcedOut );
+
+		// . . . 
+		_unat(cParcedOut);		
+		
+#endif /* (0) */
+
+		_localToken = strtok1(NULL, "\t");
+
+		free (cParcedOut);
+	}
+
+
+	free(_localCopy);
+}
+
+void _u_ntab(char * tkn)
+{
+char *_tk;
+char *_localCopy;
+
+	_tk = _localCopy=strndup(tkn, strlen(tkn));
+
+
+	/* get the first token */
+	_tk = strtok(_localCopy, "\t");
+
+
+	/* walk through other tokens */
+	while( _tk != NULL ) 
+	{
+
+		printf("\t_untab:\t_tk\t{%s}\n", _tk );
+		// <_tk> is either URL="xxxx" either STR="xxxx". We need <xxxx>:
+
+#if (0)
+
+		char *cParcedOut = strndup(_tk+strlen("URL=\""), strlen(_tk) - strlen("URL=\"") );
+		// Let's overwrite trailing {\"} with EOL 
+		cParcedOut[strlen(cParcedOut) -1 ] = 0;
+
+		printf("\t{%s}\n", _tk );
+		printf("\t[%s]\n", cParcedOut );
+
+
+		/* 4. splitting into AES-terminated */
+		{
+		char *_tkAES;
+
+			_tkAES = strndup (cParcedOut, strlen (cParcedOut) );
+
+			/* get the first token */
+			_tkAES = strtok(_tkAES, "@");
+
+			/* walk through other tokens */
+			while( _tkAES != NULL ) 
+			{
+				printf("\t\t%s\n", _tkAES );
+
+				_tkAES = strtok(NULL, "@");
+			}
+			free(_tkAES);
+		}
+		free (cParcedOut);
+
+#endif /* (0) */
+
+		_tk = strtok(NULL, "\t");		
+
+	} // while
+
+
+
+	printf("_localCopy: >>>>%s<<<<\n", _localCopy );
+	free (_localCopy);
+
+
+	printf("tkn: >>>>%s<<<<\n", tkn );
+	
+}// untab
+
 
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
 static void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
@@ -660,7 +856,6 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 
 	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
 	{
-#if (1)
 		if (XML_ELEMENT_NODE == cur_node->type)
 		{
 
@@ -681,68 +876,22 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					/* 1. splitting into Newline-terminated */
 					{
-// TODO: rem! 
-printf("[[[[%s]]]]\n", _ch_cur_node->content );
-
-#if (1)
+//printf("[[[[%s]]]]\n", _ch_cur_node->content );
 					char *token = _ch_cur_node->content;
-printf("Tocken-1: %s\n", token );						
+
 						token = strtok(token, "\n");
-printf("Tocken0:  %s\n", token );
 
 						/* walk through other tokens */
 						while( token != NULL ) 
 						{
-printf("TockenI:  %s\n", token );
+
 							//printf(">>>>%s<<<<\n", token );
-							
-							/* 2. splitting into Tab-terminated - parsing out all what is not tab. */
-							{
-							char *_tk = token;
-
-								/* get the first token */
-								_tk = strtok(_tk, "\t");
-
-								/* walk through other tokens */
-								while( _tk != NULL ) 
-								{
-
-									// <_tk> is either URL="xxxx" either STR="xxxx". We need <xxxx>:
-
-
-									char *cParcedOut = strndup(_tk+strlen("URL=\""), strlen(_tk) - strlen("URL=\"") );
-									// Let's overwrite trailing {\"} with EOL 
-									cParcedOut[strlen(cParcedOut) -1 ] = 0;
-
-									printf("\t{%s}\n", _tk );
-									printf("\t[%s]\n", cParcedOut );
-
-
-									/* 4. splitting into AES-terminated */
-									{
-									char *_tkAES = cParcedOut;
-
-										/* get the first token */
-										_tkAES = strtok(_tkAES, "@");
-
-										/* walk through other tokens */
-										while( _tkAES != NULL ) 
-										{
-											printf("\t\t%s\n", _tkAES );
-
-											_tkAES = strtok(NULL, "@");
-										}
-									}
-
-									_tk = strtok(NULL, "\t");
-
-									free (cParcedOut);
-								}
-							}
+							_untab(token);
 
 							token = strtok(NULL, "\n");
+
 						}
-#endif /* (0) */
+
 					}
 
 
@@ -750,7 +899,6 @@ printf("TockenI:  %s\n", token );
 				break;
 			}
 		}
-#endif /* (1) */
 
 
 		/* If not found by template let's try with its children */
