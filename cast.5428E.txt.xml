@@ -1,45 +1,45 @@
 <?xml version="1.0"?>
 <TL-SL5428E>
-	URL1="/logon/LogonRpm.htm"
-	STR1="username=adminAESpassword=adminAESlogon=Login"
-	URL2="/"
-	STR2="user=adminAESlevel=1AESuserID=0"
+	URL="/logon/LogonRpm.htm"
+	STR="username=admin@password=admin@logon=Login"
+	URL="/"
+	STR="user=admin@level=1@userID=0"
 	<System>0
 		<System_Info>
-			URL1="/userRpm/SystemInfoRpm.htm?t=portAES_tid_=c812dfebbc936bbd"
-			URL2="/userRpm/SystemInfoRpm.htm?s_userlevel=1AES_tid_=c812dfebbc936bbdAES_tid_=c812dfebbc936bbd"
-			URL3="/help/SystemInfoHelpRpm.htm"
-			URL4="/userRpm/SystemInfoRpm.htm?drawradio=onAESrefresh=RefreshAES_tid_=36f8f49a4957d0b5"
-			URL5="/userRpm/SystemInfoRpm.htm?t=bothAES_tid_=36f8f49a4957d0b5"
+			URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=c812dfebbc936bbd"
+			URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd@_tid_=c812dfebbc936bbd"
+			URL="/help/SystemInfoHelpRpm.htm"
+			URL="/userRpm/SystemInfoRpm.htm?drawradio=on@refresh=Refresh@_tid_=36f8f49a4957d0b5"
+			URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=36f8f49a4957d0b5"
 			<System_Summary>
 			</System_Summary>
 			<Device_Description>
-				URL1="/userRpm/SystemDescriRpm.htm?s_userlevel=1AES_tid_=c812dfebbc936bbd"
-				URL2="/userRpm/SystemDescriRpm.htm?sysName=TL-SL5428EAESsysLocation=SHENZHENAESsysContact=www.tp-link.comAESsubmit=ApplyAES_tid_=c812dfebbc936bbd" {APPLY}
+				URL="/userRpm/SystemDescriRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd"
+				URL="/userRpm/SystemDescriRpm.htm?sysName=TL-SL5428E@sysLocation=SHENZHEN@sysContact=www.tp-link.com@submit=Apply@_tid_=c812dfebbc936bbd" {APPLY}
 			</Device_Description>
 			<System_Time>
-				URL1="/userRpm/SystemTimeRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
-				URL2="/help/SystemTimeHelpRpm.htm?isNtpInclude=1"
-				URL3="/userRpm/SystemTimeRpm.htm?timemode=1AESslct_time_zone=800AEStxt_ntp_1=133.100.9.2AEStxt_ntp_2=139.78.100.163AEStxt_ntp_rate=12AESt_submit=ApplyAES_tid_=36f8f49a4957d0b5"
+				URL="/userRpm/SystemTimeRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
+				URL="/help/SystemTimeHelpRpm.htm?isNtpInclude=1"
+				URL="/userRpm/SystemTimeRpm.htm?timemode=1@slct_time_zone=800@txt_ntp_1=133.100.9.2@txt_ntp_2=139.78.100.163@txt_ntp_rate=12@t_submit=Apply@_tid_=36f8f49a4957d0b5"
 			</System_Time>
 			<Daylight_Saving_Time>
-				URL1="/userRpm/DstConfigRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
+				URL="/userRpm/DstConfigRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
 			</Daylight_Saving_Time>
 			<System_IP>
-				URL1="/SystemInfoRpm.htm?s_userlevel=1AES_tid_="
-				URL2="AES_tid_="
-				URL3="/userRpm/SystemIpRpm.htm?s_userlevel=1AES_tid_="
-				URL4="/userRpm/SystemIpRpm.htm?ip_mode=0AESip_mgmt_vlanid=1AESip_address="
-				URL5="AESip_mask="
-				URL6="AESip_gateway=AESsubmit=ApplyAES_tid_="
-				URL1="/userRpm/SystemIpRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
-				URL2="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1AESipv6_mode=1AES_tid_=36f8f49a4957d0b5"
+				URL="/SystemInfoRpm.htm?s_userlevel=1@_tid_="
+				URL="@_tid_="
+				URL="/userRpm/SystemIpRpm.htm?s_userlevel=1@_tid_="
+				URL="/userRpm/SystemIpRpm.htm?ip_mode=0@ip_mgmt_vlanid=1@ip_address="
+				URL="@ip_mask="
+				URL="@ip_gateway=@submit=Apply@_tid_="
+				URL="/userRpm/SystemIpRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
+				URL="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1@ipv6_mode=1@_tid_=36f8f49a4957d0b5"
 			</System_IP>
 			<System_IPv6>
-				URL1="/userRpm/SystemIPv6CfgRpm.htm?s_userlevel=1AES_tid_=36f8f49a4957d0b5"
-				URL2="/help/SystemIPv6CfgHelpRpm.htm"
-				URL3="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1AESipv6_mode=1AES_tid_=36f8f49a4957d0b5"
-				URL4="/help/SystemIPv6CfgHelpRpm.htm"
+				URL="/userRpm/SystemIPv6CfgRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
+				URL="/help/SystemIPv6CfgHelpRpm.htm"
+				URL="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1@ipv6_mode=1@_tid_=36f8f49a4957d0b5"
+				URL="/help/SystemIPv6CfgHelpRpm.htm"
 			</System_IPv6>
 		</System_Info>
 		<User_Management>
@@ -56,9 +56,9 @@
 			<Firmware_Upgrade>
 			</Firmware_Upgrade>
 			<System_Reboot>
-				URL1="/userRpm/RestoreRpm.htm?s_userlevel=1AES_tid_=">
-				URL2="/userRpm/ReiniRstAdRpm.htm?restore=ResetAES_tid_="
-				URL3="/userRpm/ReiniRstAdTempRpm.htm?_tid_="
+				URL="/userRpm/RestoreRpm.htm?s_userlevel=1@_tid_="
+				URL="/userRpm/ReiniRstAdRpm.htm?restore=Reset@_tid_="
+				URL="/userRpm/ReiniRstAdTempRpm.htm?_tid_="
 			</System_Reboot>
 			<System_Reset>
 			</System_Reset>
@@ -275,9 +275,8 @@
 			<ACL_Summary>
 			</ACL_Summary>
 			<ACL_Create>
-				URL1=""
-				URL2="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1AES_tid_="
-				URL3="/userRpm/ACLRuleCreateRpm.htm?submit=SubmitAESaclId="
+				URL="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1@_tid_="
+				URL="/userRpm/ACLRuleCreateRpm.htm?submit=Submit@aclId="
 			</ACL_Create>
 			<MAC_ACL>
 			</MAC_ACL>
@@ -446,16 +445,15 @@
 		</Network_Diagnostics>
 	</Maintenance>
 	<Save_Config>
-		URL1=""
-		URL2="/userRpm/ConfigsaveRpm.htm?s_userlevel=1AES_tid_="
-		URL3="/userRpm/ConfigsaveRpm.htm?s_userlevel=1AES_tid_="
-		URL4="AES_tid_="
-		URL5="/userRpm/ConfigsaveImg.htm"
-		URL6="/userRpm/ConfigsaveFileRpm.htm?_tid_="
+		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_="
+		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_="
+		URL="@_tid_="
+		URL="/userRpm/ConfigsaveImg.htm"
+		URL="/userRpm/ConfigsaveFileRpm.htm?_tid_="
 	</Save_Config>
 	<Logout>
-		URL1="/userRpm/SystemInfoRpm.htm?t=bothAES_tid_="
-		URL2="/userRpm/Logout.htm"
-		URL3="/"
+		URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_="
+		URL="/userRpm/Logout.htm"
+		URL="/"
 	</Logout>
 </TL-SL5428E>

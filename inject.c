@@ -613,6 +613,46 @@ static void _print_element_names(const char * caller, xmlNode * a_node)
 	}
 }
 
+#define strip_nl(x,y) _strip_nl(__func__, (x), (y))
+static void _strip_nl(const char * caller, char * a_node, const char * template)
+{
+char *token;
+
+	/* get the first token */
+	token = strtok(a_node, template);
+
+	/* walk through other tokens */
+	while( token != NULL ) 
+	{
+		printf(">>>>%s<<<<\n", token );
+
+		token = strtok(NULL, template);
+	}
+
+}
+
+_int_rt_AT(char * cOne, const char * cTwo)
+{
+char *_tkAES;
+
+	_tkAES = strndup(cOne, strlen(cOne));
+
+	/* get the first token */
+	_tkAES = strtok(_tkAES, cTwo);
+
+	/* walk through other tokens */
+	while( _tkAES != NULL ) 
+	{
+		printf("=====  %s\n", _tkAES );
+
+		_tkAES = strtok(NULL, cTwo);
+	}
+
+	free (_tkAES);
+}
+
+
+
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
 static void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
 {
@@ -636,8 +676,75 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 
 				/* Print its contents */
 				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
+
+
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
-						printf("[%s]:   type=%d  content=(%s)\n", caller,  _ch_cur_node->type, _ch_cur_node->content);
+					/* 1. splitting into Newline-terminated */
+					{
+// TODO: rem! 
+printf("[[[[%s]]]]\n", _ch_cur_node->content );
+
+#if (1)
+					char *token = _ch_cur_node->content;
+printf("Tocken-1: %s\n", token );						
+						token = strtok(token, "\n");
+printf("Tocken0:  %s\n", token );
+
+						/* walk through other tokens */
+						while( token != NULL ) 
+						{
+printf("TockenI:  %s\n", token );
+							//printf(">>>>%s<<<<\n", token );
+							
+							/* 2. splitting into Tab-terminated - parsing out all what is not tab. */
+							{
+							char *_tk = token;
+
+								/* get the first token */
+								_tk = strtok(_tk, "\t");
+
+								/* walk through other tokens */
+								while( _tk != NULL ) 
+								{
+
+									// <_tk> is either URL="xxxx" either STR="xxxx". We need <xxxx>:
+
+
+									char *cParcedOut = strndup(_tk+strlen("URL=\""), strlen(_tk) - strlen("URL=\"") );
+									// Let's overwrite trailing {\"} with EOL 
+									cParcedOut[strlen(cParcedOut) -1 ] = 0;
+
+									printf("\t{%s}\n", _tk );
+									printf("\t[%s]\n", cParcedOut );
+
+
+									/* 4. splitting into AES-terminated */
+									{
+									char *_tkAES = cParcedOut;
+
+										/* get the first token */
+										_tkAES = strtok(_tkAES, "@");
+
+										/* walk through other tokens */
+										while( _tkAES != NULL ) 
+										{
+											printf("\t\t%s\n", _tkAES );
+
+											_tkAES = strtok(NULL, "@");
+										}
+									}
+
+									_tk = strtok(NULL, "\t");
+
+									free (cParcedOut);
+								}
+							}
+
+							token = strtok(NULL, "\n");
+						}
+#endif /* (0) */
+					}
+
 
 				/* and get away */
 				break;
@@ -701,11 +808,12 @@ xmlNode *root_element = NULL;
 
 	find_named_element(root_element, "System_Reboot");
 */
-// TODO: check white spaces search 
+// TODO: check white spaces search . DONE!!
+/*
 	find_named_element(root_element, "TL-SL5428E");
-
+*/
 	find_named_element(root_element, "System_Info");
-
+/*
 	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
@@ -723,6 +831,7 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Save_Config");
 
 	find_named_element(root_element, "Logout");
+*/
 #endif /* (0) */
 
 	/* Free the document */
