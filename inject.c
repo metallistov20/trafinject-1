@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <getopt.h>
 
@@ -95,6 +96,32 @@ char cNewIpAddr[MAX_IP_SIZE];
 
 /* Static array with global scope. We sore aux strings StrTokIdx() inside  */
 char * LastToken[3];
+
+//------------------------
+
+typedef struct _CompoundType {
+
+	char * pcData;	
+
+	struct _CompoundType * pNext; 
+
+} CompoundType, *pCompoundType;
+
+typedef struct _UrlChainType {
+
+	/* Either <pcData> contains _integral ULR-injection string ... */
+	char * pcData;
+
+	/* either _composite ULR-injection is stored in few <pcCompData> fields. */
+	struct _CompoundType * pCompound;
+	
+	unsigned long uloDataAddr; /* Opt'l */
+
+	struct _UrlChainType * pNextChain; 
+
+} UrlChainType, *pUrlChainType;
+
+//------------------------
 
 /* Payload of POST method during user authenticate */
 static const char *cPostMethodString="username=admin&password=admin&logon=Login";
@@ -658,11 +685,185 @@ char *tmp;
 
 
 
+/* Create initial chain of URL list */
+#define CreateUrl(x) _CreateUrl(__func__, (x))
+pUrlChainType _CreateUrl(const char * caller, pUrlChainType pNewUrlChain)
+{
+	/* only one chain, for breginning */
+	pNewUrlChain = (pUrlChainType) malloc ( sizeof (UrlChainType) );
+
+	/* check if successful */
+	if (!pNewUrlChain)
+		/* TODO: verbose"failure on creation" error */
+		return  NULL;
+
+	/* a lock-up  */
+	pNewUrlChain->pNextChain = NULL;
+	
+
+	/* NULL identifies "failure on creation" error */
+	return pNewUrlChain;
+}
+
+/* Append URL list with new new chain with contents <_NameOfItem> */
+#define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
+void _AppendUrl(const char * caller, pUrlChainType pThisUrlChain, char * pcData)
+{
+pUrlChainType pChild, pbTempUrlChain;
+
+	/* point with first temporary element to head of chain */
+	pChild = pThisUrlChain;
+
+	/* allocate a space for new record in chain */
+	pbTempUrlChain = (pUrlChainType) malloc ( sizeof (UrlChainType));
+
+	/* Skip everything */
+	while (NULL != pChild->pNextChain )
+
+		/* til the tail */
+		pChild = pChild->pNextChain;
+		
+	/* if previous memory allocation was successful */
+	if(pbTempUrlChain != NULL)
+	{
+		/* allocate a space needed for item's name */
+		pbTempUrlChain->pcData = (char *) malloc (strlen(pcData));
+		
+		/* do copy item's name */
+		strcpy(pbTempUrlChain->pcData, pcData);
+		
+		/* set a lock-up */
+		pbTempUrlChain->pNextChain = NULL;		
+
+		/* append a new chain entry to the end of existing chain */
+		pChild->pNextChain = pbTempUrlChain;
+	}
+	else
+		/* TODO: verbose memory for new ch. was not allocated  */
+		return; 
+	
+}
+
+#define DeleteCompound(x) _DeleteCompound(__func__, (x))
+void _DeleteCompound(const char * caller, pCompoundType pThisCompound)
+{
+pCompoundType pChild;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisCompound)
+	{
+		/* if space to keep item's name is allocated */
+		if (pThisCompound->pcData)
+		
+		    /* then release this space */
+		    free(pThisCompound->pcData);
+		    
+		/* preserve a pointer to next record */		    
+		pChild = pThisCompound->pNext;
+		
+		/* free space occupied by current record */
+		free (pThisCompound);
+		
+		/* Go to next record. TODO: check if really needed. ASSUMING THAT IS. */
+		pThisCompound = pChild;
+	}
+
+}
+
+#define DeleteUrl(x) _DeleteUrl(__func__, (x))
+void _DeleteUrl(const char * caller, pUrlChainType pThisUrlChain)
+{
+pUrlChainType pChild;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisUrlChain)
+	{
+		/* if space to keep item's name is allocated */
+		if (pThisUrlChain->pcData)
+		
+		    /* then release this space */
+		    free(pThisUrlChain->pcData);
+
+		/* if we have compound data (i.e. binded-list insted of single string) release  */
+		if (pThisUrlChain->pCompound)
+		
+		    /* then release this space */
+		    DeleteCompound(pThisUrlChain->pCompound);
+		    
+		/* preserve a pointer to next record */		    
+		pChild = pThisUrlChain->pNextChain;
+		
+		/* free space occupied by current record */
+		free (pThisUrlChain);
+		
+		/* Go to next record. TODO: check if really needed. ASSUMING THAT IS. */
+		pThisUrlChain = pChild;
+	}
+	
+	/* done */
+	return; 
+}
+
+#define DisplayString(x) _DisplayString(__func__, (x))
+void _DisplayString(const char * caller, char * pcDataPar)
+{    
+	if (pcDataPar) printf("[%s]: STRING(%s)\n", caller, pcDataPar); else  printf("[%s]  EMPTY_AT(%p)\n", caller, &pcDataPar);
+}
+
+
+#define DisplayCompound(x) _DisplayCompound(__func__, (x))
+void _DisplayCompound(const char * caller, pCompoundType pCompoundPar)
+{    
+pCompoundType pCompound = pCompoundPar;
+
+    /* process each  entry of chain */
+    while (pCompound != NULL )
+    {
+	/* issue item's name */	
+	if (NULL != pCompound->pcData)
+
+		DisplayString((unsigned char *)(pCompound->pcData));
+	
+	/* Go to next record of Chainwork */
+	pCompound =  pCompound->pNext;
+    }
+}
+
+#define DisplayEntireUrl(x) _DisplayEntireUrl(__func__, (x))
+void _DisplayEntireUrl(const char * caller, pUrlChainType pThisUrlChainPar)
+{    
+pUrlChainType pThisUrlChain = pThisUrlChainPar;
+
+    /* process each  entry of chain */
+    while (pThisUrlChain != NULL )
+    {
+	/* issue item's name */	
+	if (NULL != pThisUrlChain->pcData)
+
+		DisplayString((unsigned char *)(pThisUrlChain->pcData));
+
+	if (NULL != pThisUrlChain->pCompound)
+
+		DisplayCompound(pThisUrlChain->pCompound);
+	
+	/* Go to next record of Chainwork */
+	pThisUrlChain =  pThisUrlChain->pNextChain;
+    };	    
+}
+
+
+/* Let's have it global for now */
+pUrlChainType  pUrlChain;
+
 void _unat(char * tkn)
 {
 char *_localCopy;
 
 char *_localToken;
+
+int iChunked = -1;
+
+	//CreateUrl(pUrlChain);
 	
 	_localCopy=strndup(tkn, strlen(tkn));
 
@@ -670,12 +871,18 @@ char *_localToken;
 
 	while( _localToken != NULL ) 
 	{
+		iChunked++;
+
 		printf("\t\t%s\n", _localToken );
+		//AppendUrl(pUrlChain, _localToken);
 
 		_localToken = strTokIdx(NULL, "@", 2);
 	}
+printf(" The element is <%s>\n", (iChunked>0)?"SPLIT INTO PARTS":"INTEGRAL");
 
 	free(_localCopy);
+
+
 }
 
 
@@ -722,7 +929,7 @@ char *_localToken;
 
 	while( _localToken != NULL ) 
 	{
-		printf(">>>>%s<<<<\n", _localToken );
+//		printf(">>>>%s<<<<\n", _localToken );
 
 		_untab(_localToken);
 
@@ -730,7 +937,9 @@ char *_localToken;
 	}
 
 
+
 	free(_localCopy);
+
 }
 
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
@@ -754,14 +963,19 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 
 				/* Print its contents */
 				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
+				{
 
 
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
+					{						
 
 						//c_unret() --> _untab() --> _unat() ... go!
 						_unret(_ch_cur_node->content);
 
+					}
+					
 
+				}
 
 				/* and get away */
 				break;
@@ -814,7 +1028,7 @@ xmlNode *root_element = NULL;
 /*	find_named_element(root_element, "TL-SL5428E");
 */
 	find_named_element(root_element, "System_Info");
-/*
+
 	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
@@ -832,7 +1046,7 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Save_Config");
 
 	find_named_element(root_element, "Logout");
-*/
+/**/
 #endif /* (0) */
 
 	/* Free the document */
