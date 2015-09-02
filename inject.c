@@ -1,6 +1,4 @@
 /*
- Tested switches: TL-SL2428, TL-SL2218, TL-SL5428E
-
  (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
 
  This program is free software; you can redistribute it and/or
