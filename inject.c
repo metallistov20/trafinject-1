@@ -93,6 +93,8 @@ char cFwName[MAX_STR_SIZE];
 /* IP adress to ve assigned of target switch */
 char cNewIpAddr[MAX_IP_SIZE];
 
+/* Static array with global scope. We sore aux strings StrTokIdx() inside  */
+char * LastToken[3];
 
 /* Payload of POST method during user authenticate */
 static const char *cPostMethodString="username=admin&password=admin&logon=Login";
@@ -613,35 +615,18 @@ static void _print_element_names(const char * caller, xmlNode * a_node)
 	}
 }
 
-#define strip_nl(x,y) _strip_nl(__func__, (x), (y))
-static void _strip_nl(const char * caller, char * a_node, const char * template)
+
+char * strTokIdx(char *s1, const char *delimit, int iIdx)
 {
-char *token;
-
-	/* get the first token */
-	token = strtok(a_node, template);
-
-	/* walk through other tokens */
-	while( token != NULL ) 
-	{
-		printf(">>>>%s<<<<\n", token );
-
-		token = strtok(NULL, template);
-	}
-
-}
-
-
-char * strtok0(char *s1, const char *delimit)
-{
-static char *lastToken0 = NULL;
-
+char ** lastToken;
 char *tmp;
+
+    lastToken =  &(LastToken[iIdx]) ;
 
     /* Skip leading delimiters if new string. */
     if ( s1 == NULL )
     {
-        s1 = lastToken0;
+        s1 = *lastToken;
 
         if (s1 == NULL)
 
@@ -660,90 +645,16 @@ char *tmp;
         /* Found another delimiter, split string and save state. */
         *tmp = '\0';
 
-        lastToken0 = tmp + 1;
-    }
+        *lastToken = tmp + 1;    }
     else
     {
         /* Last segment, remember that. */
-        lastToken0 = NULL;
+        *lastToken = NULL;
     }
 
     return s1;
 }
 
-char * strtok1(char *s1, const char *delimit)
-
-{
-static char *lastToken = NULL;
-
-char *tmp;
-
-    /* Skip leading delimiters if new string. */
-    if ( s1 == NULL )
-    {
-        s1 = lastToken;
-        if (s1 == NULL)         /* End of story? */
-            return NULL;
-    }
-    else
-    {
-        s1 += strspn(s1, delimit);
-    }
-
-    /* Find end of segment */
-    tmp = strpbrk(s1, delimit);
-    if (tmp)
-    {
-        /* Found another delimiter, split string and save state. */
-        *tmp = '\0';
-        lastToken = tmp + 1;
-    }
-    else
-    {
-        /* Last segment, remember that. */
-        lastToken = NULL;
-    }
-
-    return s1;
-}
-
-char * strtok2(char *s1, char *delimit)
-{
-static char *lastToken = NULL;
-
-char *tmp;
-
-    /* Skip leading delimiters if new string. */
-    if ( s1 == NULL )
-    {
-        s1 = lastToken;
-
-        if (s1 == NULL)
-            return NULL;
-    }
-    else
-    {
-        s1 += strspn(s1, delimit);
-    }
-
-    /* Find end of segment */
-    tmp = strpbrk(s1, delimit);
-
-    if (tmp)
-    {
-        /* Found another delimiter, split string and save state. */
-        *tmp = '\0';
-
-        lastToken = tmp + 1;
-    }
-    else
-    {
-        /* Last segment, remember that. */
-        lastToken = NULL;
-    }
-
-    return s1;
-}
 
 
 
@@ -752,15 +663,16 @@ void _unat(char * tkn)
 char *_localCopy;
 
 char *_localToken;
-
+	
 	_localCopy=strndup(tkn, strlen(tkn));
-	_localToken=strtok2(_localCopy, "@");
+
+	_localToken=strTokIdx(_localCopy, "@", 2);
 
 	while( _localToken != NULL ) 
 	{
 		printf("\t\t%s\n", _localToken );
 
-		_localToken = strtok2(NULL, "@");
+		_localToken = strTokIdx(NULL, "@", 2);
 	}
 
 	free(_localCopy);
@@ -777,7 +689,7 @@ char *cParcedOut;
 
 	_localCopy=strndup(tkn, strlen(tkn));
 
-	_localToken=strtok1(_localCopy, "\t");
+	_localToken=strTokIdx(_localCopy, "\t", 1);
 
 	while( _localToken != NULL ) 
 	{
@@ -790,7 +702,7 @@ char *cParcedOut;
 
 		_unat(cParcedOut);
 
-		_localToken = strtok1(NULL, "\t");
+		_localToken = strTokIdx(NULL, "\t", 1);
 
 		free (cParcedOut);
 	}
@@ -806,16 +718,15 @@ char *_localToken;
 
 	_localCopy=strndup(tkn, strlen(tkn));
 
-	//_localToken=strtokIdx(_localCopy, "\n", 0);
-	_localToken=strtok0(_localCopy, "\n");
+	_localToken=strTokIdx(_localCopy, "\n", 0);
 
 	while( _localToken != NULL ) 
 	{
 		printf(">>>>%s<<<<\n", _localToken );
+
 		_untab(_localToken);
 
-		//_localToken = strtokIdx(NULL, "\n", 0);
-		_localToken = strtok0(NULL, "\n");
+		_localToken = strTokIdx(NULL, "\n", 0);
 	}
 
 
@@ -831,7 +742,6 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 	{
 		if (XML_ELEMENT_NODE == cur_node->type)
 		{
-
 			/* DEBUG: printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE"); */
 	
 			/* El't has been found by template?  */
@@ -847,30 +757,10 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 
 
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
-					/* 1. splitting into Newline-terminated */
-#if (0)
-					{
-printf("[[[[%s]]]]\n", _ch_cur_node->content );
-					char *token = _ch_cur_node->content;
 
-						token = strtok(token, "\n");
+						//c_unret() --> _untab() --> _unat() ... go!
+						_unret(_ch_cur_node->content);
 
-						/* walk through other tokens */
-						while( token != NULL ) 
-						{
-
-							//printf(">>>>%s<<<<\n", token );
-							_untab(token);
-
-							token = strtok(NULL, "\n");
-
-						}
-
-					}
-#else
-					//c_unret() --> _untab() --> _unat() ... go!
-					_unret(_ch_cur_node->content);
-#endif /* (0) */
 
 
 				/* and get away */
