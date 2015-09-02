@@ -632,7 +632,44 @@ char *token;
 }
 
 
+char * strtok0(char *s1, const char *delimit)
+{
+static char *lastToken0 = NULL;
 
+char *tmp;
+
+    /* Skip leading delimiters if new string. */
+    if ( s1 == NULL )
+    {
+        s1 = lastToken0;
+
+        if (s1 == NULL)
+
+            return NULL;
+    }
+    else
+    {
+        s1 += strspn(s1, delimit);
+    }
+
+    /* Find end of segment */
+    tmp = strpbrk(s1, delimit);
+
+    if (tmp)
+    {
+        /* Found another delimiter, split string and save state. */
+        *tmp = '\0';
+
+        lastToken0 = tmp + 1;
+    }
+    else
+    {
+        /* Last segment, remember that. */
+        lastToken0 = NULL;
+    }
+
+    return s1;
+}
 
 char * strtok1(char *s1, const char *delimit)
 
@@ -670,34 +707,6 @@ char *tmp;
     return s1;
 }
 
-char * strpbrk2(char *s1, char *s2)
-{
-	for (; *s1; s1++)
-	{
-		if (strchr (s2, *s1) != 0)
-			return ((char *)s1);
-	}
-	return (0);
-}
-
-int strspn2(char *p, char *s)
-{
-	int i, j;
-
-	for (i = 0; p[i]; i++)
-	{
-		for (j = 0; s[j]; j++)
-		{
-			if (s[j] == p[i])
-				break;
-		}
-		if (!s[j])
-			break;
-	}
-
-	return (i);
-}
-
 char * strtok2(char *s1, char *delimit)
 {
 static char *lastToken = NULL;
@@ -714,11 +723,11 @@ char *tmp;
     }
     else
     {
-        s1 += strspn2(s1, delimit);
+        s1 += strspn(s1, delimit);
     }
 
     /* Find end of segment */
-    tmp = strpbrk2(s1, delimit);
+    tmp = strpbrk(s1, delimit);
 
     if (tmp)
     {
@@ -790,7 +799,28 @@ char *cParcedOut;
 	free(_localCopy);
 }
 
+void _unret(char * tkn)
+{
+char *_localCopy;
+char *_localToken;
 
+	_localCopy=strndup(tkn, strlen(tkn));
+
+	//_localToken=strtokIdx(_localCopy, "\n", 0);
+	_localToken=strtok0(_localCopy, "\n");
+
+	while( _localToken != NULL ) 
+	{
+		printf(">>>>%s<<<<\n", _localToken );
+		_untab(_localToken);
+
+		//_localToken = strtokIdx(NULL, "\n", 0);
+		_localToken = strtok0(NULL, "\n");
+	}
+
+
+	free(_localCopy);
+}
 
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
 static void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
@@ -818,8 +848,9 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					/* 1. splitting into Newline-terminated */
+#if (0)
 					{
-//printf("[[[[%s]]]]\n", _ch_cur_node->content );
+printf("[[[[%s]]]]\n", _ch_cur_node->content );
 					char *token = _ch_cur_node->content;
 
 						token = strtok(token, "\n");
@@ -836,6 +867,10 @@ static void _find_named_element(const char * caller, xmlNode * a_node, const cha
 						}
 
 					}
+#else
+					//c_unret() --> _untab() --> _unat() ... go!
+					_unret(_ch_cur_node->content);
+#endif /* (0) */
 
 
 				/* and get away */
@@ -886,10 +921,10 @@ xmlNode *root_element = NULL;
 #if (0)
 	print_element_names(root_element);
 #else
-	find_named_element(root_element, "TL-SL5428E");
-
+/*	find_named_element(root_element, "TL-SL5428E");
+*/
 	find_named_element(root_element, "System_Info");
-
+/*
 	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
@@ -907,7 +942,7 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Save_Config");
 
 	find_named_element(root_element, "Logout");
-
+*/
 #endif /* (0) */
 
 	/* Free the document */
