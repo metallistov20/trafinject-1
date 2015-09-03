@@ -73,19 +73,15 @@ void _AppendUrl(const char * caller, pUrlChainType pThisUrlChain, char * pcData)
 pUrlChainType pChild, pTempUrlChain;
 
 
-printf("_AppendUrl 1 (<%p> <%s>) \n", pThisUrlChain, pcData);
+//.printf("_AppendUrl 1 (<%p> <%s>) \n", pThisUrlChain, pcData);
 	/* point with first temporary element to head of chain */
 	pChild = pThisUrlChain;
 
-//.printf("_AppendUrl 2 pbTempUrlChain <%p> \n", pbTempUrlChain);
 	CreateUrl(&pTempUrlChain);
-//.printf("_AppendUrl 2  pbTempUrlChain <%p> \n", pbTempUrlChain);
-
 
 	/* Skip everything */
 	while ((NULL != pChild) && (NULL != pChild->pNextChain ) )
 	{
-//.printf(" skipping \n");
 
 		/* til the tail */
 		pChild = pChild->pNextChain;
@@ -116,19 +112,15 @@ void _AppendCompound(const char * caller, pCompoundType pThisCompound, char * pc
 {
 pCompoundType pChild, pTempCompound;
 
-printf("_AppendCompound 1 (pThisCompound=<%p> pcData=<%s>) \n", pThisCompound, pcData);
+//.printf("_AppendCompound 1 (pThisCompound=<%p> pcData=<%s>) \n", pThisCompound, pcData);
 	/* point with first temporary element to head of chain */
 	pChild = pThisCompound;
 
-printf("_AppendCompound 2 pbTempUrlChain <%p> \n", pThisCompound);
 	CreateCompound(&pTempCompound);
-printf("_AppendCompound 2  pbTempUrlChain <%p> \n", pThisCompound);
-
 
 	/* Skip everything */
-	while ((NULL != pChild) && (NULL != pChild->pNext ) )
+	while (NULL != pChild->pNext ) 
 	{
-//.printf(" skipping \n");
 
 		/* til the tail */
 		pChild = pChild->pNext;
@@ -248,8 +240,13 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 		DisplayString((unsigned char *)(pThisUrlChain->pcData));
 
 	if (NULL != pThisUrlChain->pCompound)
-
+	{
+printf("about to disaplay cpndd...");
 		DisplayCompound(pThisUrlChain->pCompound);
+	} else
+{
+printf("======= CANT DISPLAY COMPOND SINCE ITS null");
+}
 	
 	/* Go to next record of Chainwork */
 	pThisUrlChain =  pThisUrlChain->pNextChain;
