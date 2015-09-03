@@ -24,9 +24,6 @@
 
 #include "lists.h"
 
-/* Variable to store URL list for current command */
-pUrlChainType  pUrlChain;
-
 
 /* Create initial chain of URL list */
 pUrlChainType _CreateUrl(const char * caller, pUrlChainType pNewUrlChain)
@@ -36,36 +33,79 @@ pUrlChainType _CreateUrl(const char * caller, pUrlChainType pNewUrlChain)
 
 	/* check if successful */
 	if (!pNewUrlChain)
+	{
 		/* TODO: verbose"failure on creation" error */
 		return  NULL;
+	}
+//printf("_CreateUrl 4 pNewUrlChain=<%p>\n", pNewUrlChain);
 
+#if (0)
 	/* a lock-up  */
 	pNewUrlChain->pNextChain = NULL;
+#else
+	/* make it clean */
+	memset ((void*)pNewUrlChain, 0, sizeof (UrlChainType));
+#endif /* (0) */
 	
-
-	/* NULL identifies "failure on creation" error */
+	/* TODO: useless, or? NULL identifies "failure on creation" error */
 	return pNewUrlChain;
 }
 
-/* Append URL list with new new chain with contents <_NameOfItem> */
+pCompoundType _CreateCompound(const char * caller, pCompoundType pNewCompound)
+{
+	/* only one chain, for breginning */
+	pNewCompound = (pCompoundType) malloc ( sizeof (CompoundType) );
+
+	/* check if successful */
+	if (!pNewCompound)
+	{
+		/* TODO: verbose"failure on creation" error */
+		return  NULL;
+	}
+//printf("_CreateUrl 4 pNewUrlChain=<%p>\n", pNewUrlChain);
+
+#if (0)
+	/* a lock-up  */
+	pNewCompound->pNext = NULL;
+#else
+	/* make it clean */
+	memset ((void*)pNewCompound, 0, sizeof (CompoundType));
+#endif /* (0) */
+	
+	/* TODO: useless, or? NULL identifies "failure on creation" error */
+	return pNewCompound;
+}
+
+//void _x_AppendUrl(pUrlChainType pThisUrlChain, char * pcData)
 void _AppendUrl(const char * caller, pUrlChainType pThisUrlChain, char * pcData)
 {
 pUrlChainType pChild, pbTempUrlChain;
 
+
+printf("_AppendUrl 1 (<%p> <%s>) \n", pThisUrlChain, pcData);
 	/* point with first temporary element to head of chain */
 	pChild = pThisUrlChain;
 
+#if (0)
 	/* allocate a space for new record in chain */
 	pbTempUrlChain = (pUrlChainType) malloc ( sizeof (UrlChainType));
+#else
+//.printf("_AppendUrl 2 pbTempUrlChain <%p> \n", pbTempUrlChain);
+	pbTempUrlChain = CreateUrl(pbTempUrlChain);
+//.printf("_AppendUrl 2  pbTempUrlChain <%p> \n", pbTempUrlChain);
+#endif /* (0) */
 
 	/* Skip everything */
-	while (NULL != pChild->pNextChain )
+	while ((NULL != pChild) && (NULL != pChild->pNextChain ) )
+	{
+//.printf(" skipping \n");
 
 		/* til the tail */
 		pChild = pChild->pNextChain;
-		
-	/* if previous memory allocation was successful */
-	if(pbTempUrlChain != NULL)
+	}
+
+	/* if nex chunk was created allright */
+	if(NULL != pbTempUrlChain)
 	{
 		/* allocate a space needed for item's name */
 		pbTempUrlChain->pcData = (char *) malloc (strlen(pcData));
@@ -73,16 +113,59 @@ pUrlChainType pChild, pbTempUrlChain;
 		/* do copy item's name */
 		strcpy(pbTempUrlChain->pcData, pcData);
 		
-		/* set a lock-up */
+		/* set a lock-up */ // TODO: remove overabundance
 		pbTempUrlChain->pNextChain = NULL;		
 
-		/* append a new chain entry to the end of existing chain */
+		/* attach a new chain entry to the end of existing chain */
 		pChild->pNextChain = pbTempUrlChain;
 	}
 	else
 		/* TODO: verbose memory for new ch. was not allocated  */
-		return; 
-	
+		return; 	
+
+}
+
+void _AppendCompound(const char * caller, pCompoundType pThisCompound, char * pcData)
+{
+pCompoundType pChild, pTempCompound;
+
+printf("_AppendCompound 1 (pThisCompound=<%p> pcData=<%s>) \n", pThisCompound, pcData);
+	/* point with first temporary element to head of chain */
+	pChild = pThisCompound;
+
+printf("_AppendCompound 2 pbTempUrlChain <%p> \n", pThisCompound);
+	pThisCompound = CreateCompound(pTempCompound);
+printf("_AppendCompound 2  pbTempUrlChain <%p> \n", pThisCompound);
+
+
+	/* Skip everything */
+	while ((NULL != pChild) && (NULL != pChild->pNext ) )
+	{
+//.printf(" skipping \n");
+
+		/* til the tail */
+		pChild = pChild->pNext;
+	}
+
+	/* if nex chunk was created allright */
+	if(NULL != pTempCompound)
+	{
+		/* allocate a space needed for item's name */
+		pTempCompound->pcData = (char *) malloc (strlen(pcData));
+		
+		/* do copy item's name */
+		strcpy(pTempCompound->pcData, pcData);
+		
+		/* set a lock-up */ // TODO: remove overabundance
+		pTempCompound->pNext = NULL;		
+
+		/* attach a new chain entry to the end of existing chain */
+		pChild->pNext = pTempCompound;
+	}
+	else
+		/* TODO: verbose memory for new ch. was not allocated  */
+		return; 	
+
 }
 
 void _DeleteCompound(const char * caller, pCompoundType pThisCompound)
@@ -165,7 +248,7 @@ pCompoundType pCompound = pCompoundPar;
     }
 }
 
-void _DisplayEntireUrl(const char * caller, pUrlChainType pThisUrlChainPar)
+void _DisplayUrl(const char * caller, pUrlChainType pThisUrlChainPar)
 {    
 pUrlChainType pThisUrlChain = pThisUrlChainPar;
 

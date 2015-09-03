@@ -45,17 +45,21 @@ typedef struct _UrlChainType {
 
 #define CreateUrl(x) _CreateUrl(__func__, (x))
 
+#define CreateCompound(x) _CreateCompound(__func__, (x))
+
 #define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
 
-#define DeleteCompound(x) _DeleteCompound(__func__, (x))
+#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
 
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
+
+#define DeleteCompound(x) _DeleteCompound(__func__, (x))
 
 #define DisplayString(x) _DisplayString(__func__, (x))
 
 #define DisplayCompound(x) _DisplayCompound(__func__, (x))
 
-#define DisplayEntireUrl(x) _DisplayEntireUrl(__func__, (x))
+#define DisplayUrl(x) _DisplayUrl(__func__, (x))
 
 
 #endif /* _LISTS_H_ */

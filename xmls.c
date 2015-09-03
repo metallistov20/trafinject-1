@@ -22,41 +22,24 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
+#include "lists.h"
 #include "xmls.h"
 
 
 /* Static array in scope of curr. file. We store aux strings StrTokIdx() inside  */
 static char * aLastToken[3];
 
-void _print_element_names(const char * caller, xmlNode * a_node)
-{
-	xmlNode *cur_node = NULL;
-
-	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
-	{
-#if (1)
-		if (XML_ELEMENT_NODE == cur_node->type)
-
-			printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
-#endif /* (0) */
+/* Variable to store URL list for current command */
+static pUrlChainType  pUrlChain;
 
 
-		if ( XML_TEXT_NODE == cur_node->type)
-			printf("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
-
-
-		print_element_names(cur_node->children);
-	}
-}
-
-
-char * strTokIdx(char *s1, const char *delimit, int iIdx)
+static char * strTokIdx(char *s1, const char *delimit, int iIdx)
 {
 char ** lastToken;
 char *tmp;
 
     lastToken =  &(aLastToken[iIdx]) ;
-//TODO: why can'r initialile here?    *lastToken = NULL;
+//TODO: why can't initialile here?    *lastToken = NULL;
 
     /* Skip leading delimiters if new string. */
     if ( s1 == NULL )
@@ -92,7 +75,7 @@ char *tmp;
 
 
 
-void _unat(char * tkn)
+static void _unat(char * tkn)
 {
 char *_localCopy;
 
@@ -100,22 +83,34 @@ char *_localToken;
 
 int iChunked = -1;
 
-	//CreateUrl(pUrlChain);
+pUrlChainType  pUrlChainTmp;
+
+	pUrlChainTmp = (pUrlChainType)CreateUrl(pUrlChain);
 	
 	_localCopy=strndup(tkn, strlen(tkn));
 
 	_localToken=strTokIdx(_localCopy, "@", 2);
 
+	AppendUrl(pUrlChainTmp, _localToken);
+
 	while( _localToken != NULL ) 
 	{
+	pCompoundType  pCompoundTmp;
+
 		iChunked++;
 
+		pCompoundTmp = (pCompoundType)CreateCompound(pUrlChainTmp->pCompound);
+
 		printf("\t\t%s\n", _localToken );
-		//AppendUrl(pUrlChain, _localToken);
+		AppendCompound(pCompoundTmp, _localToken);
 
 		_localToken = strTokIdx(NULL, "@", 2);
 	}
 printf(" The element is <%s>\n", (iChunked>0)?"SPLIT INTO PARTS":"INTEGRAL");
+
+	DisplayUrl(pUrlChainTmp);
+
+	DeleteUrl(pUrlChainTmp);
 
 	free(_localCopy);
 
@@ -124,7 +119,7 @@ printf(" The element is <%s>\n", (iChunked>0)?"SPLIT INTO PARTS":"INTEGRAL");
 
 
 
-void _untab(char * tkn)
+static void _untab(char * tkn)
 {
 char *_localCopy;
 char *_localToken;
@@ -155,7 +150,7 @@ char *cParcedOut;
 	free(_localCopy);
 }
 
-void _unret(char * tkn)
+static void _unret(char * tkn)
 {
 char *_localCopy;
 char *_localToken;
@@ -222,5 +217,26 @@ void _find_named_element(const char * caller, xmlNode * a_node, const char * tem
 
 		/* If not found by template let's try with its children */
 		find_named_element(cur_node->children, template);
+	}
+}
+
+void _print_element_names(const char * caller, xmlNode * a_node)
+{
+	xmlNode *cur_node = NULL;
+
+	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
+	{
+#if (1)
+		if (XML_ELEMENT_NODE == cur_node->type)
+
+			printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+#endif /* (0) */
+
+
+		if ( XML_TEXT_NODE == cur_node->type)
+			printf("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
+
+
+		print_element_names(cur_node->children);
 	}
 }
