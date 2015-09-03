@@ -633,7 +633,7 @@ xmlNode *root_element = NULL;
 /*	find_named_element(root_element, "TL-SL5428E");
 */
 	find_named_element(root_element, "System_Info");
-
+/*
 	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
@@ -651,7 +651,7 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Save_Config");
 
 	find_named_element(root_element, "Logout");
-/**/
+*/
 #endif /* (0) */
 
 	/* Free the document */

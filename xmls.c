@@ -85,24 +85,32 @@ int iChunked = -1;
 
 pUrlChainType  pUrlChainTmp;
 
-	pUrlChainTmp = (pUrlChainType)CreateUrl(pUrlChain);
+	pUrlChainTmp = (pUrlChainType)CreateUrl(&pUrlChain);
 	
 	_localCopy=strndup(tkn, strlen(tkn));
 
 	_localToken=strTokIdx(_localCopy, "@", 2);
 
-	AppendUrl(pUrlChainTmp, _localToken);
+	//AppendUrl(/*pUrlChainTmp*/pUrlChain, _localToken);
+//printf(" >>>>[%s]   <%p> \n", "_unat", pUrlChain->pcData);
+//.	pUrlChain->pcData = malloc(strlen(_localToken));
+//printf(" >>>>[%s]   <%p> \n", "_unat", pUrlChain->pcData);
+//.	memcpy(pUrlChain->pcData, _localToken, strlen(_localToken));
+//printf(" >>>>[%s]   <%p> \n", "_unat", pUrlChain->pcData);
+//.printf(" >>>>[%s]   %s \n", "_unat", pUrlChain->pcData);
 
 	while( _localToken != NULL ) 
 	{
-	pCompoundType  pCompoundTmp;
+	pCompoundType pCompoundTmp;
 
 		iChunked++;
 
-		pCompoundTmp = (pCompoundType)CreateCompound(pUrlChainTmp->pCompound);
+		/*pUrlChain->pCompound = (pCompoundType) */ //.CreateCompound(&(pUrlChain->pCompound));
 
 		printf("\t\t%s\n", _localToken );
-		AppendCompound(pCompoundTmp, _localToken);
+
+		//.AppendCompound(pUrlChain->pCompound, _localToken);
+		AppendUrl(pUrlChain, _localToken);
 
 		_localToken = strTokIdx(NULL, "@", 2);
 	}
@@ -113,6 +121,8 @@ printf(" The element is <%s>\n", (iChunked>0)?"SPLIT INTO PARTS":"INTEGRAL");
 	DeleteUrl(pUrlChainTmp);
 
 	free(_localCopy);
+
+printf("\n\n");
 
 
 }

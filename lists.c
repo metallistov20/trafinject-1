@@ -26,74 +26,61 @@
 
 
 /* Create initial chain of URL list */
-pUrlChainType _CreateUrl(const char * caller, pUrlChainType pNewUrlChain)
+pUrlChainType _CreateUrl(const char * caller, pUrlChainType * pNewUrlChain)
 {
 	/* only one chain, for breginning */
-	pNewUrlChain = (pUrlChainType) malloc ( sizeof (UrlChainType) );
+	*pNewUrlChain = (pUrlChainType) calloc ( 1, sizeof (UrlChainType) );
 
 	/* check if successful */
-	if (!pNewUrlChain)
+	if (NULL == *pNewUrlChain)
 	{
 		/* TODO: verbose"failure on creation" error */
 		return  NULL;
 	}
 //printf("_CreateUrl 4 pNewUrlChain=<%p>\n", pNewUrlChain);
 
-#if (0)
-	/* a lock-up  */
-	pNewUrlChain->pNextChain = NULL;
-#else
 	/* make it clean */
-	memset ((void*)pNewUrlChain, 0, sizeof (UrlChainType));
-#endif /* (0) */
+	//memset ((void*)(*pNewUrlChain), 0, sizeof (UrlChainType));
 	
 	/* TODO: useless, or? NULL identifies "failure on creation" error */
-	return pNewUrlChain;
+	return *pNewUrlChain;
 }
 
-pCompoundType _CreateCompound(const char * caller, pCompoundType pNewCompound)
+pCompoundType _CreateCompound(const char * caller, pCompoundType * pNewCompound)
 {
 	/* only one chain, for breginning */
-	pNewCompound = (pCompoundType) malloc ( sizeof (CompoundType) );
+	*pNewCompound = (pCompoundType) calloc ( 1, sizeof (CompoundType) );
 
 	/* check if successful */
-	if (!pNewCompound)
+	if (NULL == *pNewCompound)
 	{
 		/* TODO: verbose"failure on creation" error */
 		return  NULL;
 	}
 //printf("_CreateUrl 4 pNewUrlChain=<%p>\n", pNewUrlChain);
 
-#if (0)
-	/* a lock-up  */
-	pNewCompound->pNext = NULL;
-#else
 	/* make it clean */
-	memset ((void*)pNewCompound, 0, sizeof (CompoundType));
-#endif /* (0) */
+	//memset ((void*)(*pNewCompound), 0, sizeof (CompoundType));
+
 	
 	/* TODO: useless, or? NULL identifies "failure on creation" error */
-	return pNewCompound;
+	return *pNewCompound;
 }
 
 //void _x_AppendUrl(pUrlChainType pThisUrlChain, char * pcData)
 void _AppendUrl(const char * caller, pUrlChainType pThisUrlChain, char * pcData)
 {
-pUrlChainType pChild, pbTempUrlChain;
+pUrlChainType pChild, pTempUrlChain;
 
 
 printf("_AppendUrl 1 (<%p> <%s>) \n", pThisUrlChain, pcData);
 	/* point with first temporary element to head of chain */
 	pChild = pThisUrlChain;
 
-#if (0)
-	/* allocate a space for new record in chain */
-	pbTempUrlChain = (pUrlChainType) malloc ( sizeof (UrlChainType));
-#else
 //.printf("_AppendUrl 2 pbTempUrlChain <%p> \n", pbTempUrlChain);
-	pbTempUrlChain = CreateUrl(pbTempUrlChain);
+	CreateUrl(&pTempUrlChain);
 //.printf("_AppendUrl 2  pbTempUrlChain <%p> \n", pbTempUrlChain);
-#endif /* (0) */
+
 
 	/* Skip everything */
 	while ((NULL != pChild) && (NULL != pChild->pNextChain ) )
@@ -105,19 +92,19 @@ printf("_AppendUrl 1 (<%p> <%s>) \n", pThisUrlChain, pcData);
 	}
 
 	/* if nex chunk was created allright */
-	if(NULL != pbTempUrlChain)
+	if(NULL != pTempUrlChain)
 	{
 		/* allocate a space needed for item's name */
-		pbTempUrlChain->pcData = (char *) malloc (strlen(pcData));
+		pTempUrlChain->pcData = (char *) malloc (strlen(pcData));
 		
 		/* do copy item's name */
-		strcpy(pbTempUrlChain->pcData, pcData);
+		strcpy(pTempUrlChain->pcData, pcData);
 		
 		/* set a lock-up */ // TODO: remove overabundance
-		pbTempUrlChain->pNextChain = NULL;		
+		pTempUrlChain->pNextChain = NULL;		
 
 		/* attach a new chain entry to the end of existing chain */
-		pChild->pNextChain = pbTempUrlChain;
+		pChild->pNextChain = pTempUrlChain;
 	}
 	else
 		/* TODO: verbose memory for new ch. was not allocated  */
@@ -134,7 +121,7 @@ printf("_AppendCompound 1 (pThisCompound=<%p> pcData=<%s>) \n", pThisCompound, p
 	pChild = pThisCompound;
 
 printf("_AppendCompound 2 pbTempUrlChain <%p> \n", pThisCompound);
-	pThisCompound = CreateCompound(pTempCompound);
+	CreateCompound(&pTempCompound);
 printf("_AppendCompound 2  pbTempUrlChain <%p> \n", pThisCompound);
 
 
