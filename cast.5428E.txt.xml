@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <TL-SL5428E>
 	URL="/logon/LogonRpm.htm"
-	STR="username=admin@password=admin@logon=Login"
-	URL="/"
-	STR="user=admin@level=1@userID=0"
 	<System>
 		URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=c812dfebbc936bbd"
 		URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd@_tid_=c812dfebbc936bbd"
@@ -11,7 +8,10 @@
 		URL="/userRpm/SystemInfoRpm.htm?drawradio=on@refresh=Refresh@_tid_=36f8f49a4957d0b5"
 		URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=36f8f49a4957d0b5"
 		<System_Info>
-			URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=c812dfebbc936bbd"
+			URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=36f8f49a4957d0b5"
+			URL="/help/SystemInfoHelpRpm.htm"
+			URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd@_tid_=c812dfebbc936bbd"
+			URL="/help/SystemInfoHelpRpm.htm"
 			<System_Summary>
 			</System_Summary>
 			<Device_Description>
@@ -447,8 +447,6 @@
 	</Maintenance>
 	<Save_Config>
 		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_="
-		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_="
-		URL="@_tid_="
 		URL="/userRpm/ConfigsaveImg.htm"
 		URL="/userRpm/ConfigsaveFileRpm.htm?_tid_="
 	</Save_Config>

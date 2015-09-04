@@ -654,6 +654,12 @@ xmlNode *root_element = NULL;
 */
 #endif /* (0) */
 
+printf("============================ data display start below =================\n");
+	DisplayUrl(pUrlChain);
+
+	/* Delete entire list with URLs along with its compounds */
+	DeleteUrl(pUrlChain);
+
 	/* Free the document */
 	xmlFreeDoc(doc);
 

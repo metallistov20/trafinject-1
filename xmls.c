@@ -30,10 +30,10 @@
 static char * aLastToken[3];
 
 /* Variable to store URL list for current command */
-static pUrlChainType  pUrlChain;
+pUrlChainType  pUrlChain;
 
 /* Variable to store a pointer onto its head */
-pUrlChainType  pUrlChainTmp;
+//pUrlChainType  pUrlChainTmp;
 
 
 static char * strTokIdx(char *s1, const char *delimit, int iIdx)
@@ -86,28 +86,26 @@ char *_localToken;
 
 int iChunked = -1;
 
-const char * cBsStr = "(COMPOUND intro)";
-
-pCompoundType  pCompoundTmp;
+pUrlChainType pUrlLastChain = pUrlChain;
 
 	_localCopy=strndup(tkn, strlen(tkn));
 
 	_localToken=strTokIdx(_localCopy, "@", 2);
 
-pCompoundTmp = (pCompoundType)CreateCompound(&pUrlChain->pCompound);
-
-	pUrlChain->pCompound->pcData = malloc(strlen(cBsStr));
-
-	memcpy(pUrlChain->pCompound->pcData, cBsStr, strlen(cBsStr));
+	/* Shift <pUrlLastChain> to the end of <pUrlChain> */
+	if (NULL != pUrlLastChain) while (pUrlLastChain->pNextChain) pUrlLastChain=pUrlLastChain->pNextChain;
 
 	while( _localToken != NULL ) 
 	{
-
 		iChunked++;
 
-//.		printf("\t\t%s\n", _localToken );
+		//printf("\t\t%s\n", _localToken );
 
-		AppendCompound(pUrlChain->pCompound, _localToken);
+		_AppendAnyCompound(&pUrlLastChain->pCompound, _localToken);
+
+		/* Clean String data, we have Compond <set of strings> instaed */
+		//if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;
+
 
 		_localToken = strTokIdx(NULL, "@", 2);
 	}
@@ -115,28 +113,20 @@ pCompoundTmp = (pCompoundType)CreateCompound(&pUrlChain->pCompound);
 
 	if (iChunked>0) 
 	{
-//		pUrlChain->pCompound=pCompoundTmp;
-		pUrlChain->pcData=NULL;
-
 		printf("<SPLIT>");
+		//if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;		
 	}
 	else
 	{
-		free (pCompoundTmp);
-		pUrlChain->pCompound=NULL;
-		
 		printf("<INTEGRAL>");
-	}
+		//free( pUrlLastChain->pCompound );
+		//pUrlLastChain->pCompound = NULL;
 
-//.	DisplayCompound(pCompoundTmp);
+	}
 
 	// we delete the compound while deleting an URL containing it
 
 	free(_localCopy);
-printf("....................................\n");
-DisplayUrl(pUrlChainTmp);
-printf("....................................\n");
-
 }
 
 
@@ -158,10 +148,8 @@ char *cParcedOut;
 
 		cParcedOut[strlen(cParcedOut) -1 ] = 0;
 
-		//TODO: REMOVE! printf("\t{%s}\n", _localToken );
-		//TODO: REMOVE! printf("\t[%s]\n", cParcedOut );
-
-AppendUrl(pUrlChain, cParcedOut);
+		//_AppendAnyUrl(&pUrlChain, cParcedOut);
+		_AppendAnyUrl(&pUrlChain, "SomeBasicallyUselessString");
 
 		_unat(cParcedOut);
 
@@ -192,7 +180,6 @@ char *_localToken;
 	}
 
 
-
 	free(_localCopy);
 
 }
@@ -221,15 +208,11 @@ void _find_named_element(const char * caller, xmlNode * a_node, const char * tem
 				{
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					{
-						pUrlChainTmp = (pUrlChainType)CreateUrl(&pUrlChain);
+						//pUrlChainTmp = (pUrlChainType)CreateUrl(&pUrlChain);
 
 						//c_unret() --> _untab() --> _unat() ... go!
 						_unret(_ch_cur_node->content);
 
-						DisplayUrl(pUrlChainTmp);
-
-						DeleteUrl(pUrlChainTmp);
-printf("\n\n\n\n\n endissimo! \n\n\n\n\n");					
 					}				
 				}
 
@@ -242,6 +225,7 @@ printf("\n\n\n\n\n endissimo! \n\n\n\n\n");
 		/* If not found by template let's try with its children */
 		find_named_element(cur_node->children, template);
 	}
+
 }
 
 void _print_element_names(const char * caller, xmlNode * a_node)

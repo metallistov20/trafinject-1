@@ -24,4 +24,7 @@
 
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
 
+/* Make in visible from within other files */
+extern pUrlChainType  pUrlChain;
+
 #endif /* _XMLS_H_ */
