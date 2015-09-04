@@ -24,6 +24,9 @@
 
 #define find_named_element(x,y) _find_named_element(__func__, (x), (y))
 
+/* Disclose type <pUrlChainType> */
+#include "lists.h"
+
 /* Make in visible from within other files */
 extern pUrlChainType  pUrlChain;
 

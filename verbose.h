@@ -29,21 +29,32 @@
 /* Show URLs for verification */
 #define DEBUG_URL	1
 
+/* Show XMLs particales during XML-parsing */
+#define DEBUG_XML	1
 
-/* DCOMMON macro */
+
+/* Display common debug info */
 #if (DEBUG_COMMON)
 	#define DCOMMON(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
-	#define DCOMMON(x) 
+	#define DCOMMON(format, ...)
 #endif /* (DEBUG_COMMON) */
 
 
-/* DURL macro */
+/* Display debug URL */
 #if (DEBUG_URL)
 	#define DURL(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
-	#define DURL(x)
+	#define DURL(format, ...) 
 #endif /* (DURL) */
+
+/* Debug XML-parsing and related info */
+#if (DEBUG_XML)
+	#define DXML(format, ...) fprintf (stdout, format, __VA_ARGS__)
+#else
+	#define DXML(format, ...)
+#endif /* (DXML) */
+
 
 #define VERBOSE_STATUS(x) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x() ) ) { printf("operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("operation WAS NOT %d done.\n",  iOperation ); } }

@@ -605,7 +605,6 @@ xmlNode *root_element = NULL;
 	/* Name of XML file to parse must be given */
 	if (argc != 2)
 	{
-
 		DCOMMON("%s: ERROR: name of XML file to parse should be passed on command line\n", cArg0);
 
 		return INJ_PAR_ERROR;

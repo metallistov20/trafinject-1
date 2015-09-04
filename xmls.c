@@ -22,8 +22,9 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
-#include "lists.h"
 #include "xmls.h"
+#include "lists.h"
+#include "verbose.h"
 
 
 /* Static array in scope of curr. file. We store aux strings StrTokIdx() inside  */
@@ -32,9 +33,6 @@ static char * aLastToken[3];
 /* Variable to store URL list for current command */
 pUrlChainType  pUrlChain;
 
-/* Variable to store a pointer onto its head */
-//pUrlChainType  pUrlChainTmp;
-
 
 static char * strTokIdx(char *s1, const char *delimit, int iIdx)
 {
@@ -42,6 +40,7 @@ char ** lastToken;
 char *tmp;
 
     lastToken =  &(aLastToken[iIdx]) ;
+
 //TODO: why can't initialile here?    *lastToken = NULL;
 
     /* Skip leading delimiters if new string. */
@@ -99,13 +98,14 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	{
 		iChunked++;
 
-		//printf("\t\t%s\n", _localToken );
+		DXML("%s: \t\t%s\n", "", _localToken);
 
 		_AppendAnyCompound(&pUrlLastChain->pCompound, _localToken);
 
+#if (0)
 		/* Clean String data, we have Compond <set of strings> instaed */
-		//if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;
-
+		if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;
+#endif /* (0) */
 
 		_localToken = strTokIdx(NULL, "@", 2);
 	}
@@ -113,23 +113,28 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 	if (iChunked>0) 
 	{
-		printf("<SPLIT>");
-		//if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;		
+		DXML("%s: <URL STRING IS SPLIT INTO %d PARTS>\n", "", iChunked+1);
+
+#if (0)
+		if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;		
+#endif /* (0) */
+
 	}
 	else
 	{
-		printf("<INTEGRAL>");
-		//free( pUrlLastChain->pCompound );
-		//pUrlLastChain->pCompound = NULL;
+		DXML("%s: <INTEGRAL URL STRING>\n", "");
+
+#if (0)
+		free( pUrlLastChain->pCompound );
+		pUrlLastChain->pCompound = NULL;
+#endif /* (0) */
 
 	}
-
-	// we delete the compound while deleting an URL containing it
 
 	free(_localCopy);
 }
 
-
+int iParsing;
 
 static void _untab(char * tkn)
 {
@@ -142,18 +147,37 @@ char *cParcedOut;
 
 	_localToken=strTokIdx(_localCopy, "\t", 1);
 
-	while( _localToken != NULL ) 
+	while( (iParsing) && ( _localToken != NULL ) )
 	{
 		cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
 
 		cParcedOut[strlen(cParcedOut) -1 ] = 0;
+		
+		/* If untabbed string ist keine empty string */
+		if  ( 0 != cParcedOut[0] ) 
+		{
+			_AppendAnyUrl(&pUrlChain, "(aux;dta;)");
 
-		//_AppendAnyUrl(&pUrlChain, cParcedOut);
-		_AppendAnyUrl(&pUrlChain, "SomeBasicallyUselessString");
+			_unat(cParcedOut);
 
-		_unat(cParcedOut);
+			_localToken = strTokIdx(NULL, "\t", 1);
+		}
+		/* ill array caught into <cParcedOut>. let's finalize processing on this exact iteration in _safe_ way */
+		else
+		{		
 
-		_localToken = strTokIdx(NULL, "\t", 1);
+			iParsing=0;
+
+			free (cParcedOut);
+
+			break;
+/* 
+TODO:	basically it's subject for reasonable re-work in future. Root pf problem that we do our deeds recursively, and
+	can't avoid entering another processing loop even if we detect the data is bad. One possible solution is to 
+	avoid recursion (and pay with some code duplication for it).
+*/
+		}
+			
 
 		free (cParcedOut);
 	}
@@ -172,7 +196,7 @@ char *_localToken;
 
 	while( _localToken != NULL ) 
 	{
-//		printf(">>>>%s<<<<\n", _localToken );
+		DXML("%s: _unret: %s\n", "", _localToken );
 
 		_untab(_localToken);
 
@@ -189,6 +213,8 @@ void _find_named_element(const char * caller, xmlNode * a_node, const char * tem
 {
 	xmlNode *cur_node = NULL;
 
+	iParsing = 1;
+
 	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
 	{
 		if (XML_ELEMENT_NODE == cur_node->type)
@@ -201,18 +227,15 @@ void _find_named_element(const char * caller, xmlNode * a_node, const char * tem
 				xmlNode *_ch_cur_node = NULL;
 
 				/* melde sich */
-				printf("[%s]: The element name=<%s> has been found (type=%s)\n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+				DXML("[%s]: The element name=<%s> has been found (type=%s)\n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 
 				/* Print its contents */
 				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
 				{
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					{
-						//pUrlChainTmp = (pUrlChainType)CreateUrl(&pUrlChain);
-
 						//c_unret() --> _untab() --> _unat() ... go!
 						_unret(_ch_cur_node->content);
-
 					}				
 				}
 
@@ -237,13 +260,13 @@ void _print_element_names(const char * caller, xmlNode * a_node)
 #if (1)
 		if (XML_ELEMENT_NODE == cur_node->type)
 
-			printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+			DXML("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 #endif /* (0) */
 
 
 		if ( XML_TEXT_NODE == cur_node->type)
-			printf("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
 
+			DXML("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);;
 
 		print_element_names(cur_node->children);
 	}
