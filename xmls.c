@@ -65,7 +65,8 @@ char *tmp;
         /* Found another delimiter, split string and save state. */
         *tmp = '\0';
 
-        *lastToken = tmp + 1;    }
+        *lastToken = tmp + 1;
+    }
     else
     {
         /* Last segment, remember that. */
@@ -139,6 +140,7 @@ int iParsing;
 static void _untab(char * tkn)
 {
 char *_localCopy;
+
 char *_localToken;
 
 char *cParcedOut;
@@ -149,37 +151,40 @@ char *cParcedOut;
 
 	while( (iParsing) && ( _localToken != NULL ) )
 	{
-		cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
-
-		cParcedOut[strlen(cParcedOut) -1 ] = 0;
-		
-		/* If untabbed string ist keine empty string */
-		if  ( 0 != cParcedOut[0] ) 
-		{
-			_AppendAnyUrl(&pUrlChain, "(aux;dta;)");
-
-			_unat(cParcedOut);
-
-			_localToken = strTokIdx(NULL, "\t", 1);
-		}
-		/* ill array caught into <cParcedOut>. let's finalize processing on this exact iteration in _safe_ way */
-		else
-		{		
-
-			iParsing=0;
-
-			free (cParcedOut);
-
+		if (strlen (_localToken) <= ( strlen("URL=\"") + strlen("URL=\"") ) )
 			break;
+		else
+		{
+			cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken)/*+1*/ - strlen("URL=\"") );
+
+			cParcedOut[strlen(cParcedOut) -1 -1 ] = 0;
+		
+			/* If untabbed string ist keine empty string */
+			if  ( 0 != cParcedOut[0] )
+			{
+				_AppendAnyUrl(&pUrlChain, "(aux;dta;)");
+
+				_unat(cParcedOut);
+
+				_localToken = strTokIdx(NULL, "\t", 1);
+			}
+			/* ill array caught into <cParcedOut>. let's finalize processing on this exact iteration in _safe_ way */
+			else
+			{		
+				iParsing=0;
+
+				free (cParcedOut);
+
+				break;
 /* 
 TODO:	basically it's subject for reasonable re-work in future. Root pf problem that we do our deeds recursively, and
 	can't avoid entering another processing loop even if we detect the data is bad. One possible solution is to 
 	avoid recursion (and pay with some code duplication for it).
 */
-		}
-			
+			}			
 
-		free (cParcedOut);
+			free (cParcedOut);
+		}
 	}
 
 	free(_localCopy);
@@ -194,9 +199,9 @@ char *_localToken;
 
 	_localToken=strTokIdx(_localCopy, "\n", 0);
 
-	while( _localToken != NULL ) 
+	while( (iParsing) &&( _localToken != NULL ) )
 	{
-		DXML("%s: _unret: %s\n", "", _localToken );
+		//DXML("%s: _unret: %s\n", "", _localToken );
 
 		_untab(_localToken);
 
@@ -234,7 +239,8 @@ void _find_named_element(const char * caller, xmlNode * a_node, const char * tem
 				{
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					{
-						//c_unret() --> _untab() --> _unat() ... go!
+						//DXML("[%s]: about to parse=<%s> \n", caller,  _ch_cur_node->content);
+
 						_unret(_ch_cur_node->content);
 					}				
 				}

@@ -20,6 +20,7 @@
 #ifndef _LISTS_H_
 #define _LISTS_H_
 
+#define IP_LEN (3*4 + 3)
 
 typedef struct _CompoundType {
 
@@ -38,6 +39,10 @@ typedef struct _UrlChainType {
 	struct _CompoundType * pCompound;
 	
 	unsigned long uloDataAddr; /* Opt'l */
+
+	char IpAddrMain[IP_LEN];
+
+	char IpAddrAux[IP_LEN];
 
 	struct _UrlChainType * pNextChain; 
 
