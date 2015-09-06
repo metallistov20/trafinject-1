@@ -29,8 +29,11 @@
 /* Show URLs for verification */
 #define DEBUG_URL	1
 
-/* Show XMLs particales during XML-parsing */
+/* Show XMLs particles during XML-parsing */
 #define DEBUG_XML	1
+
+/* Very specific XML-paring info needed mostly while coding and never else */
+#define DEBUG_XML_AUX	0
 
 
 /* Display common debug info */
@@ -54,6 +57,14 @@
 #else
 	#define DXML(format, ...)
 #endif /* (DXML) */
+
+/* XML-parsing info with merkyp for */
+#if (DEBUG_XML_AUX)
+	#define DXMLAUX(format, ...) fprintf (stdout, format, __VA_ARGS__)
+#else
+	#define DXMLAUX(format, ...)
+#endif /* (DXML) */
+
 
 
 #define VERBOSE_STATUS(x) \

@@ -99,7 +99,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	{
 		iChunked++;
 
-		DXML("%s: \t\t%s\n", "", _localToken);
+		DXMLAUX("%s: \t\t%s\n", "", _localToken);
 
 		_AppendAnyCompound(&pUrlLastChain->pCompound, _localToken);
 
@@ -114,7 +114,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 	if (iChunked>0) 
 	{
-		DXML("%s: <URL STRING IS SPLIT INTO %d PARTS>\n", "", iChunked+1);
+		DXMLAUX("%s: <URL STRING IS SPLIT INTO %d PARTS>\n", "", iChunked+1);
 
 #if (0)
 		if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;		
@@ -123,7 +123,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	}
 	else
 	{
-		DXML("%s: <INTEGRAL URL STRING>\n", "");
+		DXMLAUX("%s: <INTEGRAL URL STRING>\n", "");
 
 #if (0)
 		free( pUrlLastChain->pCompound );
@@ -201,7 +201,7 @@ char *_localToken;
 
 	while( (iParsing) &&( _localToken != NULL ) )
 	{
-		//DXML("%s: _unret: %s\n", "", _localToken );
+		//DXMLAUX("%s: _unret: %s\n", "", _localToken );
 
 		_untab(_localToken);
 

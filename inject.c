@@ -653,7 +653,8 @@ xmlNode *root_element = NULL;
 
 #endif /* (0) */
 
-printf("============================ data display starts below =================\n");
+	DXMLAUX("%s: ============================ data display starts below =================\n", cArg0);
+
 	DisplayUrl(pUrlChain);
 
 	/* Delete entire list with URLs along with its compounds */

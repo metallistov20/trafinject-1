@@ -22,39 +22,44 @@
 
 #define IP_LEN (3*4 + 3)
 
-typedef struct _CompoundType {
-
+typedef struct _CompoundType
+{
+	/* String to represent URL */
 	char * pcData;	
 
+	/* Next string in chain */
 	struct _CompoundType * pNext; 
 
 } CompoundType, *pCompoundType;
 
-typedef struct _UrlChainType {
-
-	/* Either <pcData> contains _integral ULR-injection string ... */
-	char * pcData;
+typedef struct _UrlChainType
+{
 
 	/* either _composite ULR-injection is stored in few <pcCompData> fields. */
 	struct _CompoundType * pCompound;
 	
-	unsigned long uloDataAddr; /* Opt'l */
+	/* Service data. Optional. */
+	unsigned long uloDataAddr;
 
+	/* Exact IP-address of target */
 	char IpAddrMain[IP_LEN];
 
+	/* Auxilary IP-address, such as new IP address after assignment */
 	char IpAddrAux[IP_LEN];
 
+	/* Next URL in chain */
 	struct _UrlChainType * pNextChain; 
 
 } UrlChainType, *pUrlChainType;
 
-#define CreateUrl(x) _CreateUrl(__func__, (x))
+/* #define CreateUrl(x) _CreateUrl(__func__, (x))
 
 #define CreateCompound(x) _CreateCompound(__func__, (x))
 
 #define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
 
 #define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
+*/
 
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
 
