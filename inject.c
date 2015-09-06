@@ -629,8 +629,8 @@ xmlNode *root_element = NULL;
 #if (0)
 	print_element_names(root_element);
 #else
-/*	find_named_element(root_element, "TL-SL5428E");
-*/
+	find_named_element(root_element, "TL-SL5428E");
+
 	find_named_element(root_element, "System_Info");
 
 	find_named_element(root_element, "Device_Description");
@@ -667,6 +667,221 @@ xmlNode *root_element = NULL;
 	xmlCleanupParser();
 
 	return INJ_SUCCESS;
+
+	DCOMMON("%s: ============================ parsing parameters starts below =================\n", cArg0);
+
+	/* Avoid dafault 0 value */
+	iOperation=DO_NO_OP;
+
+	/* Assign program name, requirted for output*/
+	strcpy (cArg0, argv[0]);
+
+	/* Parsing command line arguments */
+	while (1)
+	{
+	static struct option long_options[] =
+	{
+		/* Singletons: opearion names */
+		{"open",no_argument, 0, 	'o'},
+		{"close",  no_argument, 0,	'x'},
+
+		{"create",no_argument, 0,	'c'},
+		{"save",  no_argument, 0,	's'},
+		{"ACL",	  no_argument, 0,	'a'},
+		{"upgrade",  no_argument, 0,	'r'},
+		{"reboot",  no_argument, 0,	'b'},
+		{"ipassign",  no_argument, 0,	'g'},// TODO: change to 'static' or sort of that.
+
+		/* Couples: names of variables and their values */
+		{"target",  required_argument, 0,	't'},
+		{"id",   required_argument, 0, 		'i'},
+		{"model",   required_argument, 0,	'm'},
+		{"community",required_argument, 0,	'u'},
+		{"filename",required_argument, 0,	'f'},
+		{"acl-data",required_argument, 0,	'l'},
+		{"ip-addr",required_argument, 0,	'0'},
+		{"ip-mask",required_argument, 0,	'1'},
+
+		/* End of array */
+		{0, 0, 0, 0}
+	};
+
+	/* Index of the option */
+	int option_index = 0;
+
+		/* Get each paramter */
+		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:m:u:f:l:0:1:", long_options, &option_index);
+
+		/* Break cycle at the end of the options */
+		if (-1 == iOption) break;
+
+		/* Parce each parameter */
+		switch (iOption)
+		{
+
+			/* Single: open site */
+			case 'o':
+				DCOMMON("%s: option -k\n", cArg0);
+				iOperation = DO_OPEN_OP;
+				break;
+
+			/* Single: close site */
+			case 'x':
+				DCOMMON("%s: option -x\n", cArg0);
+				iOperation = DO_CLOSE_OP;
+				break;
+
+			/* Single: create SNMP group */
+			case 'c':
+				DCOMMON("%s: option -c\n", cArg0);
+				iOperation = DO_CREATE_OP;
+				break;
+
+			/* Single: save changes on site  */
+			case 's':
+				DCOMMON("%s: option -s\n", cArg0);
+				iOperation = DO_SAVE_OP;
+				break;
+
+			/* Single: perform ACL setting */
+			case 'a':
+				DCOMMON("%s: option -a\n", cArg0);
+				iOperation = DO_ACL_OP;
+				break;
+
+			/* Single: firmware upload and upgrade */
+			case 'r':
+				DCOMMON("%s: option -r\n", cArg0);
+				iOperation = DO_FIRMWARE_OP;
+				break;
+
+			/* Single: switch reboot */
+			case 'b':
+				DCOMMON("%s: option -b\n", cArg0);
+				iOperation = DO_REBOOT_OP;
+				break;
+
+			/* Single: ipset */
+			case 'g':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_IPSET_OP;
+				break;
+
+
+			/* Couple: IP addr of target switch */
+			case 't':
+				DCOMMON("%s: option -t with value `%s'\n", cArg0, optarg);
+				strcpy(cIpAddr, optarg);
+				break;
+
+			/* Couple: tID of the session */
+			case 'i':
+				DCOMMON("%s: option -i with value `%s'\n", cArg0, optarg);
+				strcpy(cTid, optarg);
+				break;
+
+			/* Couple: model name of target switch. */
+			case 'm':
+				DCOMMON("%s: option -m with value `%s'\n", cArg0, optarg);
+				strcpy(cModel, optarg);
+				break;
+
+			/* Couple: SNMP community name to be created on target switch*/
+			case 'u':
+				DCOMMON("%s: option -u with value `%s'\n", cArg0, optarg);
+				strcpy(cSnmp, optarg);
+				break;
+
+			/* Couple: Firmware name to be uploaded and upgraded on switch*/
+			case 'f':
+				DCOMMON("%s: option -f with value `%s'\n", cArg0, optarg);
+				strcpy(cFwName, optarg);
+				break;
+
+			/* Couple: Assign ACL setings */
+			case 'l':
+				DCOMMON("%s: option -l (--acl-data) with value `%s'\n", cArg0, optarg);
+				strcpy(cAcl, optarg);
+				break;
+
+			/* Couple: ip address */
+			case '0':
+				DCOMMON("%s: option -0 (--ip-addr) with value `%s'\n", cArg0, optarg);
+				strcpy(cAddr, optarg);
+				break;
+
+			/* Couple: ip network mask */
+			case '1':
+				DCOMMON("%s: option -1 (--ip-mask) with value `%s'\n", cArg0, optarg);
+				strcpy(cMask, optarg);
+				break;
+
+
+			case '?':
+				/* getopt_long prints an error message, so we don't */
+				break;
+
+			default:
+				DCOMMON("%s: bad usage, exiting", cArg0);
+				abort ();
+		}
+	} /* Command line arguments were parsed */	
+
+
+	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
+	curl = curl_easy_init();
+
+	if(curl)
+	{
+		switch (iOperation)
+		{
+			case DO_OPEN_OP:
+				VERBOSE_STATUS(iOpenSite)
+				break;
+
+			case DO_CLOSE_OP:
+				VERBOSE_STATUS(iCloseSite)
+				break;
+
+			case DO_CREATE_OP:
+				VERBOSE_STATUS(iCreateSnmp)
+				break;
+
+			case DO_SAVE_OP:
+				VERBOSE_STATUS(iSaveSite)
+				break;
+
+			case DO_ACL_OP:
+				VERBOSE_STATUS(iAclGroup)
+				break;
+
+			case DO_FIRMWARE_OP:
+				VERBOSE_STATUS(iUpgradeFirmware)
+				break;
+
+			case DO_REBOOT_OP:
+				VERBOSE_STATUS(iRebootSwitch)
+				break;
+
+			case DO_IPSET_OP:
+				VERBOSE_STATUS(iAssignIp)
+				break;
+
+
+			case DO_NO_OP:
+			default:
+				DCOMMON("%s: there's no operation with OPCODE=%d, exiting\n", cArg0, iOperation);
+				break;
+			
+		}
+
+		/* Close URL lib */
+		curl_easy_cleanup(curl);
+
+	}
+
+ 	exit (0);
+
 
 	DCOMMON("%s: this line is not seen\n", cArg0, iOperation);
 

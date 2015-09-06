@@ -37,6 +37,7 @@ pUrlChainType  pUrlChain;
 static char * strTokIdx(char *s1, const char *delimit, int iIdx)
 {
 char ** lastToken;
+
 char *tmp;
 
     lastToken =  &(aLastToken[iIdx]) ;
@@ -53,9 +54,8 @@ char *tmp;
             return NULL;
     }
     else
-    {
         s1 += strspn(s1, delimit);
-    }
+
 
     /* Find end of segment */
     tmp = strpbrk(s1, delimit);
@@ -101,7 +101,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 		DXMLAUX("%s: \t\t%s\n", "", _localToken);
 
-		if (INJ_SUCCESS != _AppendAnyCompound(&pUrlLastChain->pCompound, _localToken) )
+		if (INJ_SUCCESS != AppendCompound(&pUrlLastChain->pCompound, _localToken) )
 		{
 			_localToken = NULL;
 
@@ -111,34 +111,13 @@ pUrlChainType pUrlLastChain = pUrlChain;
 			break;
 		};
 
-#if (0)
-		/* Clean String data, we have Compond <set of strings> instaed */
-		if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;
-#endif /* (0) */
-
-		_localToken = strTokIdx(NULL, "@", 2);
-	}
+		_localToken = strTokIdx(NULL, "@", 2);	}
 
 
 	if (iChunked>0) 
-	{
 		DXMLAUX("%s: <URL STRING IS SPLIT INTO %d PARTS>\n", "", iChunked+1);
-
-#if (0)
-		if (NULL != pUrlLastChain->pcData) pUrlLastChain->pcData = NULL;		
-#endif /* (0) */
-
-	}
 	else
-	{
 		DXMLAUX("%s: <INTEGRAL URL STRING>\n", "");
-
-#if (0)
-		free( pUrlLastChain->pCompound );
-		pUrlLastChain->pCompound = NULL;
-#endif /* (0) */
-
-	}
 
 	free(_localCopy);
 }
@@ -161,11 +140,11 @@ char *cParcedOut;
 			break;
 		else
 		{
-			cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken)/*+1*/ - strlen("URL=\"") );
+			cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
 
 			cParcedOut[strlen(cParcedOut) -1 -1 ] = 0;
 		
-			if (INJ_SUCCESS != _AppendAnyUrl(&pUrlChain, "(aux;dta;)") )
+			if (INJ_SUCCESS != AppendUrl(&pUrlChain, "(aux;dta;)") )
 			{
 				DXMLAUX("%s: FAILURE: memory error on appenging new URL\n", "");
 
@@ -192,17 +171,15 @@ char *cParcedOut;
 static void _unret(char * tkn)
 {
 char *_localCopy;
+
 char *_localToken;
 
 	_localCopy=strndup(tkn, strlen(tkn));
 
 	_localToken=strTokIdx(_localCopy, "\n", 0);
 
-	//while( (iParsing) &&( _localToken != NULL ) )
 	while( _localToken != NULL )
 	{
-		//DXMLAUX("%s: _unret: %s\n", "", _localToken );
-
 		_untab(_localToken);
 
 		_localToken = strTokIdx(NULL, "\n", 0);
@@ -210,29 +187,27 @@ char *_localToken;
 
 
 	free(_localCopy);
-
 }
 
 
 void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
 {
-	xmlNode *cur_node = NULL;
+xmlNode *cur_node = NULL;
 
 	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
 	{
 		if (XML_ELEMENT_NODE == cur_node->type)
 		{
-			/* DEBUG: printf("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE"); */
+			//DXML("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 	
-			/* El't has been found by template?  */
+			/* Element has been found by template?  */
 			if ( 0 == strcmp (template, cur_node->name) )
 			{
 				xmlNode *_ch_cur_node = NULL;
 
-				/* melde sich */
 				DXML("[%s]: The element name=<%s> has been found (type=%s)\n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 
-				/* Print its contents */
+				/* Go and parce it, store results of paring into URL&CMPND structures  */
 				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
 				{
 					if ( XML_TEXT_NODE == _ch_cur_node->type)

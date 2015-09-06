@@ -63,8 +63,8 @@ typedef struct _UrlChainType
 
 #define DisplayUrl(x) _DisplayUrl(__func__, (x))
 
-#define AppendAnyUrl(x, y) _AppendAnyUrl(__func__, (x), (y))
+#define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
 
-#define AppendAnyCompound(x, y) _AppendAnyCompound(__func__, (x), (y))
+#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
 
 #endif /* _LISTS_H_ */

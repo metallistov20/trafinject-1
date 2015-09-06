@@ -25,7 +25,7 @@
 #include "verbose.h"
 
 
-int _AppendAnyUrl(pUrlChainType * pThisUrlChain, char * pcData)
+int _AppendUrl(const char * caller, pUrlChainType * pThisUrlChain, char * pcData)
 {
 pUrlChainType pChild, pTempUrlChain;
 
@@ -56,7 +56,7 @@ pUrlChainType pChild, pTempUrlChain;
 		}
 
 		/* Skip everything */
-		while ((NULL != pChild) && (NULL != pChild->pNextChain ) )
+		while ( (NULL != pChild) && (NULL != pChild->pNextChain ) )
 		{
 			/* til the tail */
 			pChild = pChild->pNextChain;
@@ -77,7 +77,7 @@ pUrlChainType pChild, pTempUrlChain;
 	return INJ_SUCCESS;
 }
 
-int _AppendAnyCompound(pCompoundType * pThisCompound, char * pcData)
+int _AppendCompound(const char * caller, pCompoundType * pThisCompound, char * pcData)
 {
 pCompoundType pChild, pTempCompound;
 
@@ -112,7 +112,7 @@ pCompoundType pChild, pTempCompound;
 		}
 
 		/* Skip everything */
-		while ((NULL != pChild) && (NULL != pChild->pNext ) )
+		while ( (NULL != pChild) && (NULL != pChild->pNext ) )
 		{
 			/* til the tail */
 			pChild = pChild->pNext;
@@ -193,7 +193,7 @@ pUrlChainType pChild;
 
 void _DisplayString(const char * caller, char * pcDataPar)
 {    
-	if (pcDataPar)
+	if (NULL != pcDataPar)
 		DXML("[%s]: STRING(%s)\n", caller, pcDataPar);
 	else
 		DXML("[%s]: EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
@@ -204,7 +204,7 @@ void _DisplayCompound(const char * caller, pCompoundType pCompoundPar)
 pCompoundType pCompound = pCompoundPar;
 
     /* process each  entry of chain */
-    while (pCompound != NULL )
+    while (NULL != pCompound)
     {
 	/* issue item's name */	
 	if (NULL != pCompound->pcData)
@@ -221,7 +221,7 @@ void _DisplayUrl(const char * caller, pUrlChainType pThisUrlChainPar)
 pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
     /* process each  entry of chain */
-    while (pThisUrlChain != NULL )
+    while (NULL != pThisUrlChain)
     {
 
 	if (NULL != pThisUrlChain->pCompound)
