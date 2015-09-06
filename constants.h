@@ -32,6 +32,9 @@
 /* Bad data */
 #define INJ_XML_ERROR	(-2)
 
+/* Memory was not allocated, or bad mem. address being referred */
+#define INJ_MEM_ERROR	(-3)
+
 /* Operation is not yet impelmented */
 #define INJ_NOT_IMPL	(-8)
 

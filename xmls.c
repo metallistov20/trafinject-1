@@ -101,7 +101,15 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 		DXMLAUX("%s: \t\t%s\n", "", _localToken);
 
-		_AppendAnyCompound(&pUrlLastChain->pCompound, _localToken);
+		if (INJ_SUCCESS != _AppendAnyCompound(&pUrlLastChain->pCompound, _localToken) )
+		{
+			_localToken = NULL;
+
+			DXMLAUX("%s: FAILURE: memory error on appenging new compound\n", "");
+
+			/* exiting from while-loop. */
+			break;
+		};
 
 #if (0)
 		/* Clean String data, we have Compond <set of strings> instaed */
@@ -135,8 +143,6 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	free(_localCopy);
 }
 
-int iParsing;
-
 static void _untab(char * tkn)
 {
 char *_localCopy;
@@ -149,7 +155,7 @@ char *cParcedOut;
 
 	_localToken=strTokIdx(_localCopy, "\t", 1);
 
-	while( (iParsing) && ( _localToken != NULL ) )
+	while( _localToken != NULL )
 	{
 		if (strlen (_localToken) <= ( strlen("URL=\"") + strlen("URL=\"") ) )
 			break;
@@ -159,29 +165,22 @@ char *cParcedOut;
 
 			cParcedOut[strlen(cParcedOut) -1 -1 ] = 0;
 		
-			/* If untabbed string ist keine empty string */
-			if  ( 0 != cParcedOut[0] )
+			if (INJ_SUCCESS != _AppendAnyUrl(&pUrlChain, "(aux;dta;)") )
 			{
-				_AppendAnyUrl(&pUrlChain, "(aux;dta;)");
+				DXMLAUX("%s: FAILURE: memory error on appenging new URL\n", "");
 
-				_unat(cParcedOut);
-
-				_localToken = strTokIdx(NULL, "\t", 1);
-			}
-			/* ill array caught into <cParcedOut>. let's finalize processing on this exact iteration in _safe_ way */
-			else
-			{		
-				iParsing=0;
+				_localToken = NULL;
 
 				free (cParcedOut);
 
+				/* exiting from while-loop */
 				break;
-/* 
-TODO:	basically it's subject for reasonable re-work in future. Root pf problem that we do our deeds recursively, and
-	can't avoid entering another processing loop even if we detect the data is bad. One possible solution is to 
-	avoid recursion (and pay with some code duplication for it).
-*/
-			}			
+
+			}
+
+			_unat(cParcedOut);
+
+			_localToken = strTokIdx(NULL, "\t", 1);
 
 			free (cParcedOut);
 		}
@@ -199,7 +198,8 @@ char *_localToken;
 
 	_localToken=strTokIdx(_localCopy, "\n", 0);
 
-	while( (iParsing) &&( _localToken != NULL ) )
+	//while( (iParsing) &&( _localToken != NULL ) )
+	while( _localToken != NULL )
 	{
 		//DXMLAUX("%s: _unret: %s\n", "", _localToken );
 
@@ -217,8 +217,6 @@ char *_localToken;
 void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
 {
 	xmlNode *cur_node = NULL;
-
-	iParsing = 1;
 
 	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
 	{
@@ -266,13 +264,13 @@ void _print_element_names(const char * caller, xmlNode * a_node)
 #if (1)
 		if (XML_ELEMENT_NODE == cur_node->type)
 
-			DXML("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+			DXMLAUX("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 #endif /* (0) */
 
 
 		if ( XML_TEXT_NODE == cur_node->type)
 
-			DXML("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);;
+			DXMLAUX("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
 
 		print_element_names(cur_node->children);
 	}

@@ -66,7 +66,7 @@
 #endif /* (DXML) */
 
 
-
+/* Report operation execution was finished depending on its status */
 #define VERBOSE_STATUS(x) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x() ) ) { printf("operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("operation WAS NOT %d done.\n",  iOperation ); } }
 

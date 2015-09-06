@@ -20,7 +20,7 @@
 #ifndef _LISTS_H_
 #define _LISTS_H_
 
-#define IP_LEN (3*4 + 3)
+#include "constants.h"
 
 typedef struct _CompoundType
 {
@@ -42,24 +42,16 @@ typedef struct _UrlChainType
 	unsigned long uloDataAddr;
 
 	/* Exact IP-address of target */
-	char IpAddrMain[IP_LEN];
+	char IpAddrMain[MAX_IP_SIZE];
 
 	/* Auxilary IP-address, such as new IP address after assignment */
-	char IpAddrAux[IP_LEN];
+	char IpAddrAux[MAX_IP_SIZE];
 
 	/* Next URL in chain */
 	struct _UrlChainType * pNextChain; 
 
 } UrlChainType, *pUrlChainType;
 
-/* #define CreateUrl(x) _CreateUrl(__func__, (x))
-
-#define CreateCompound(x) _CreateCompound(__func__, (x))
-
-#define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
-
-#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
-*/
 
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
 

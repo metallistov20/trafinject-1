@@ -25,7 +25,7 @@
 #include "verbose.h"
 
 
-void _AppendAnyUrl(/*const char * caller, */pUrlChainType * pThisUrlChain, char * pcData)
+int _AppendAnyUrl(pUrlChainType * pThisUrlChain, char * pcData)
 {
 pUrlChainType pChild, pTempUrlChain;
 
@@ -38,7 +38,7 @@ pUrlChainType pChild, pTempUrlChain;
 		if (NULL == *pThisUrlChain)
 		{
 			/* TODO: verbose"failure on creation" error */
-			return  ;//NULL;
+			return INJ_MEM_ERROR;
 		}
 	}
 	else
@@ -52,7 +52,7 @@ pUrlChainType pChild, pTempUrlChain;
 		{
 
 			/* TODO: verbose"failure on creation" error */
-			return;
+			return INJ_MEM_ERROR;
 		}
 
 		/* Skip everything */
@@ -71,20 +71,15 @@ pUrlChainType pChild, pTempUrlChain;
 		else
 		{
 			/* TODO: verbose memory for new ch. was not allocated  */
-			return;
+			return INJ_MEM_ERROR;
 		}
 	}
+	return INJ_SUCCESS;
 }
 
-void _AppendAnyCompound(/*const char * caller, */pCompoundType * pThisCompound, char * pcData)
+int _AppendAnyCompound(pCompoundType * pThisCompound, char * pcData)
 {
 pCompoundType pChild, pTempCompound;
-
-/* 
-	1. Check if NILL
-	2. If so then create new and fulfill
-	3. If not then run till the tail, create new, fulfill and attach (one which was created) onto tail
-*/
 
 	if (NULL == *pThisCompound)
 	{
@@ -95,10 +90,10 @@ pCompoundType pChild, pTempCompound;
 		if (NULL == *pThisCompound)
 		{
 			/* TODO: verbose"failure on creation" error */
-			return  ;//NULL;
+			return INJ_MEM_ERROR;
 		}
 
-		(*pThisCompound)->pcData = malloc (strlen (pcData) +1 );
+		(*pThisCompound)->pcData = calloc (1, strlen (pcData) +1 );
 	
 		strcpy ((*pThisCompound)->pcData, pcData );
 	}
@@ -113,7 +108,7 @@ pCompoundType pChild, pTempCompound;
 		{
 
 			/* TODO: verbose"failure on creation" error */
-			return;
+			return INJ_MEM_ERROR;
 		}
 
 		/* Skip everything */
@@ -127,7 +122,7 @@ pCompoundType pChild, pTempCompound;
 		if(NULL != pTempCompound)
 		{
 			/* allocate a space needed for item's name */
-			pTempCompound->pcData = (char *) malloc ( strlen(pcData) + 1 );
+			pTempCompound->pcData = (char *) calloc ( 1, strlen(pcData) + 1 );
 		
 			/* do copy item's name */
 			strcpy(pTempCompound->pcData, pcData);
@@ -138,9 +133,10 @@ pCompoundType pChild, pTempCompound;
 		else
 		{
 			/* TODO: verbose memory for new ch. was not allocated  */
-			return;
+			return INJ_MEM_ERROR;
 		}
 	}
+	return INJ_SUCCESS;
 }
 
 void _DeleteCompound(const char * caller, pCompoundType pThisCompound)
@@ -200,7 +196,7 @@ void _DisplayString(const char * caller, char * pcDataPar)
 	if (pcDataPar)
 		DXML("[%s]: STRING(%s)\n", caller, pcDataPar);
 	else
-		DXML("[%s]  EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
+		DXML("[%s]: EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
 }
 
 void _DisplayCompound(const char * caller, pCompoundType pCompoundPar)
