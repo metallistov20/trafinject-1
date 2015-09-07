@@ -68,10 +68,14 @@ typedef struct _UrlChainType
 
 #define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
 
-#define DeployCompound(x, y) _DeployCompound(__func__, (x), (y))
+#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
+
+#define GlueCompound(x, y) _GlueCompound(__func__, (x), (y))
+
+#define GlueUrl(x) _GlueUrl(__func__, (x))
 
 #define DeployUrl(x) _DeployUrl(__func__, (x))
 
-#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
+
 
 #endif /* _LISTS_H_ */

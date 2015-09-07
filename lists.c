@@ -253,6 +253,7 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 }
 
 
+/*
 void _DeployString(const char * caller, char * pcDataPar)
 {    
 	if (NULL != pcDataPar)
@@ -260,8 +261,9 @@ void _DeployString(const char * caller, char * pcDataPar)
 	else
 		DXML("[%s]: EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
 }
+*/
 
-static int _DeployCompound(const char * caller, pCompoundType pCompoundPar, pUrlChainType pUrlChain)
+static int _GlueCompound(const char * caller, pCompoundType pCompoundPar, pUrlChainType pUrlChain)
 {    
 pCompoundType pCompound = pCompoundPar;
 
@@ -289,7 +291,7 @@ int iCnt=0;
 	return INJ_SUCCESS;
 }
 
-int _DeployUrl(const char * caller, pUrlChainType pThisUrlChainPar)
+int _GlueUrl(const char * caller, pUrlChainType pThisUrlChainPar)
 {    
 pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
@@ -314,9 +316,9 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
 	if (NULL != pThisUrlChain->pCompound)
 	{
-		DXMLAUX("\t[%s]: ______:\n", caller);
+		//.DXMLAUX("\t[%s]: URL is going to be composed of its particles\n", caller);
 
-		DeployCompound(pThisUrlChain->pCompound, pThisUrlChain);
+		GlueCompound(pThisUrlChain->pCompound, pThisUrlChain);
 	}
 	
 	/* Go to next record of Chainwork */
@@ -324,4 +326,49 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
     };
 
     return INJ_SUCCESS;
+}
+
+/* CURLOPT_URL */
+#include <curl/curl.h>
+
+int _DeployUrl(const char * caller, pUrlChainType pThisUrlChainPar)
+{    
+pUrlChainType pThisUrlChain = pThisUrlChainPar;
+
+int iRes;
+
+    /* process each  entry of chain */
+    while (NULL != pThisUrlChain)
+    {
+
+	if ( NULL == pThisUrlChain->pcSumm ) 
+	{
+		DXML("\t[%s]: can't allocate %d bytes for URL data:\n", caller, MAX_URL_SIZE );
+
+		return INJ_MEM_ERROR;
+	}
+
+	DURL("%s: summURL(at:<%p>;<%p>) = %s\n", caller, (&pThisUrlChain), &(pThisUrlChain->pcSumm) , pThisUrlChain->pcSumm);
+
+
+	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
+
+		/* here we start do the traffict injection itself */
+		iRes = curl_easy_perform(curl);
+	else
+		/* don't precess other chaing, return immediately */
+		return iRes;
+
+	
+	/* Go to next record of Chainwork */
+	pThisUrlChain =  pThisUrlChain->pNextChain;
+    };
+
+
+    if ( CURLE_OK == iRes)
+	/* goid out quietly if all correct */
+	return  INJ_SUCCESS;
+    else
+	/* verbosing CURLcode returned as <iRes> if error occured */
+	{ printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); return   INJ_CURL_ERROR;}
 }

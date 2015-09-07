@@ -35,6 +35,9 @@
 /* Memory was not allocated, or bad mem. address being referred */
 #define INJ_MEM_ERROR	(-3)
 
+/* call to fn. of library cURL was failed */
+#define INJ_CURL_ERROR	(-4)
+
 /* Operation is not yet impelmented */
 #define INJ_NOT_IMPL	(-8)
 

@@ -606,7 +606,7 @@ xmlDoc *doc = NULL;
 xmlNode *root_element = NULL;
 
 
-	DCOMMON("%s: ============================ parsing parameters starts =================\n", cArg0);
+	DCOMMON("%s: ============================ parsing command line parameters  =================\n", cArg0);
 
 	/* Avoid dafault 0 value */
 	iOperation=DO_NO_OP;
@@ -775,6 +775,8 @@ xmlNode *root_element = NULL;
 
 	DXMLAUX("%s: ============================ command line arguments were parsed =================\n", cArg0);
 
+	DXMLAUX("%s: ============================ porocessing XMl file  =================\n", cArg0);
+
 	/* Name of XML file to parse must be given */
 	if ( NULL == cXmlName )
 	{
@@ -826,20 +828,17 @@ xmlNode *root_element = NULL;
 */
 #endif /* (0) */
 
-	DXMLAUX("%s: ============================ data deployment starts  =================\n", cArg0);
+	DXMLAUX("%s: ============================ XMl file was processed =================\n", cArg0);
 
-//	DeployUrl(pUrlChain);
+	DXMLAUX("%s: ============================ data post-processing  =================\n", cArg0);
 
-	DXMLAUX("%s: ============================ data display starts below =================\n", cArg0);
+	GlueUrl(pUrlChain);
+
+	DXMLAUX("%s: ============================ data display =================\n", cArg0);
 
 	DisplayUrl(pUrlChain);
 
-	DXMLAUX("%s: ============================ data deletion starts =================\n", cArg0);
-
-	/* Delete entire list with URLs along with its compounds */
-	DeleteUrl(pUrlChain);
-
-	DXMLAUX("%s: ============================ finalizing library =================\n", cArg0);
+	DXMLAUX("%s: ============================ finalizing XML library =================\n", cArg0);
 
 	/* Free the document */
 	xmlFreeDoc(doc);
@@ -850,12 +849,12 @@ xmlNode *root_element = NULL;
 	return INJ_SUCCESS;
 
 
-	DXMLAUX("%s: ============================ data processing starts =================\n", cArg0);
+	DXMLAUX("%s: ============================ data deployment =================\n", cArg0);
 
 	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
 	curl = curl_easy_init();
 
-	if(curl)
+	if (0) if(curl)
 	{
 		switch (iOperation)
 		{
@@ -903,6 +902,18 @@ xmlNode *root_element = NULL;
 		curl_easy_cleanup(curl);
 
 	}
+
+	//  	exit (0);
+
+	DeployUrl(pUrlChain);
+
+	DXMLAUX("%s: ============================ data deletion  =================\n", cArg0);
+
+	/* Delete entire list with URLs along with its compounds */
+	DeleteUrl(pUrlChain);
+
+	curl_aesy_cleanup(curl);// TODO: remove after above <if(0)> removed
+
 
  	exit (0);
 
