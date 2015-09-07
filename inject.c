@@ -112,6 +112,11 @@ char ** pcPtr2Extra1, **pcPtr2Extra2;
 /* Extra payload should be attached  */
 int iExtra;
 
+/* XML data for in memory */
+xmlNode *root_element = NULL;
+
+xmlDoc *doc = NULL;
+
 /*
  Function to open the secure HTTP stream on network switches 
  TL-SLxxxxx.
@@ -164,6 +169,13 @@ int iOpenSite()
 	/* Now the site is opened */
 	return INJ_SUCCESS;
 #else
+DXMLAUX("%s: ============================ open  ================= 1\n", cArg0);
+	find_named_element(root_element, "TL-SL5428E");
+DXMLAUX("%s: ============================ open  ================= 2\n", cArg0);
+	GlueUrl(pUrlChain);
+DXMLAUX("%s: ============================ open  ================= 3\n", cArg0);
+	DisplayUrl(pUrlChain);
+DXMLAUX("%s: ============================ open  ================= 4\n", cArg0);
 	return DeployUrlEx(pUrlChain, 1);
 #endif /* (0) */
 }
@@ -175,7 +187,7 @@ int iOpenSite()
 int iCloseSite()
 {
 #if (0)
-#if (1) //TODO: CHECK IF IT IS NECESSARY ON L2-MANAGED SWITCHES. ASSUMING THAT IS.
+//TODO: CHECK IF IT IS NECESSARY ON L2-MANAGED SWITCHES. ASSUMING THAT IS.
 	strcpy (cUrlScc, "http://");
 	strcat (cUrlScc, &cIpAddr[0]);
 	strcat (cUrlScc, "/userRpm/SystemInfoRpm.htm?t=both&_tid_=");
@@ -184,7 +196,7 @@ int iCloseSite()
 
 	curl_easy_setopt(curl, CURLOPT_URL, cUrlScc);
 	res = curl_easy_perform(curl);
-#endif /* (0) */
+
 
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, (char*)cIpAddr);
@@ -209,6 +221,12 @@ int iCloseSite()
 	iCreateSnmp(), iSaveSite(), etc.. unless the iOpenSite() is called again. */
 	return INJ_SUCCESS;
 #else
+	find_named_element(root_element, "Logout");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
 	return DeployUrlEx(pUrlChain, 0);
 #endif /* (0) */
 }
@@ -614,9 +632,9 @@ int main (int argc, char **argv)
 {
 int iOption;
 
-xmlDoc *doc = NULL;
+//xmlDoc *doc = NULL;
 
-xmlNode *root_element = NULL;
+//TODO: find a way to hold it in same segment with <xmlDoc *doc>: xmlNode *root_element = NULL;
 
 
 	DCOMMON("%s: ============================ parsing command line parameters  =================\n", cArg0);
@@ -820,11 +838,12 @@ xmlNode *root_element = NULL;
 	root_element = xmlDocGetRootElement(doc);
 
 #if (0)
+#if (0)
 	print_element_names(root_element);
 #else
-//	find_named_element(root_element, "TL-SL5428E");
+	find_named_element(root_element, "TL-SL5428E");
 
-	find_named_element(root_element, "System_Info");
+//	find_named_element(root_element, "System_Info");
 
 /*	find_named_element(root_element, "Device_Description");
 
@@ -845,26 +864,20 @@ xmlNode *root_element = NULL;
 	find_named_element(root_element, "Logout");
 */
 #endif /* (0) */
+#endif /* (0) */
 
 	DXMLAUX("%s: ============================ XMl file was processed =================\n", cArg0);
 
 	DXMLAUX("%s: ============================ data post-processing  =================\n", cArg0);
 
-	GlueUrl(pUrlChain);
+//	GlueUrl(pUrlChain);
 
 	DXMLAUX("%s: ============================ data display =================\n", cArg0);
 
-	DisplayUrl(pUrlChain);
+//	DisplayUrl(pUrlChain);
 
-	DXMLAUX("%s: ============================ finalizing XML library =================\n", cArg0);
 
-	/* Free the document */
-	xmlFreeDoc(doc);
-
-	/* Free the global variables that may have been allocated by the parser */
-	xmlCleanupParser();
-
-	return INJ_SUCCESS;
+	//return INJ_SUCCESS;
 
 
 	DXMLAUX("%s: ============================ data deployment =================\n", cArg0);
@@ -872,7 +885,7 @@ xmlNode *root_element = NULL;
 	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
 	curl = curl_easy_init();
 
-	if (0) if(curl)
+	if(curl)
 	{
 		switch (iOperation)
 		{
@@ -921,16 +934,19 @@ xmlNode *root_element = NULL;
 
 	}
 
-//DeployUrl(pUrlChain);
-
 
 	DXMLAUX("%s: ============================ data deletion  =================\n", cArg0);
 
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrl(pUrlChain);
 
-	curl_aesy_cleanup(curl);// TODO: remove after above <if(0)> removed
+	DXMLAUX("%s: ============================ finalizing XML library =================\n", cArg0);
 
+	/* Free the document */
+	xmlFreeDoc(doc);
+
+	/* Free the global variables that may have been allocated by the parser */
+	xmlCleanupParser();
 
  	exit (0);
 

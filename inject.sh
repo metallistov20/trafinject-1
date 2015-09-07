@@ -61,7 +61,7 @@ tID_e=$tID
 		echo "SNMP_GRP <$SNMP_GRP>";
 		echo "ACL_GRP <$ACL_GRP>";
 
-	./inject --open --target="$IP">$TMP_NAME
+	./inject --xml-data=cast.5428E.txt.xml --open --target="$IP" >$TMP_NAME
 
 	while read line; do
 
@@ -119,9 +119,9 @@ tID_e=$tID
 
 		echo "<$0>: Performing remote reboot of (TL-SL$MODEL) switch";
 
-		./inject --reboot --id="$tID" --target="$IP" 
+		./inject --reboot --id="$tID" --target="$IP"  --xml-data=cast.5428E.txt.xml
 
-		./inject --close --target="$IP"
+		./inject --close --target="$IP"  --xml-data=cast.5428E.txt.xml
 
 		exit 0
 

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <TL-SL5428E>
 	URL="/logon/LogonRpm.htm"
+	URL="/login"
 	<System>
 		URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=c812dfebbc936bbd"
 		URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd@_tid_=c812dfebbc936bbd"
