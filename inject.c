@@ -809,9 +809,6 @@ int iOption;
 	} /* Command line arguments were parsed */
 
 
-	DXMLAUX("%s: ============================ command line arguments were parsed =================\n", cArg0);
-
-	DXMLAUX("%s: ============================ porocessing XMl file  =================\n", cArg0);
 
 	/* Name of XML file to parse must be given */
 	if ( NULL == cXmlName )
@@ -838,14 +835,13 @@ int iOption;
 	root_element = xmlDocGetRootElement(doc);
 
 #if (0)
-#if (0)
-	print_element_names(root_element);
-#else
+	//print_element_names(root_element);
+
 	find_named_element(root_element, "TL-SL5428E");
+/*
+	find_named_element(root_element, "System_Info");
 
-//	find_named_element(root_element, "System_Info");
-
-/*	find_named_element(root_element, "Device_Description");
+	find_named_element(root_element, "Device_Description");
 
 	find_named_element(root_element, "System_Time");
 
@@ -863,24 +859,12 @@ int iOption;
 
 	find_named_element(root_element, "Logout");
 */
+
+GlueUrl(pUrlChain);
+DisplayUrl(pUrlChain);
+return INJ_SUCCESS;
+
 #endif /* (0) */
-#endif /* (0) */
-
-	DXMLAUX("%s: ============================ XMl file was processed =================\n", cArg0);
-
-	DXMLAUX("%s: ============================ data post-processing  =================\n", cArg0);
-
-//	GlueUrl(pUrlChain);
-
-	DXMLAUX("%s: ============================ data display =================\n", cArg0);
-
-//	DisplayUrl(pUrlChain);
-
-
-	//return INJ_SUCCESS;
-
-
-	DXMLAUX("%s: ============================ data deployment =================\n", cArg0);
 
 	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
 	curl = curl_easy_init();
@@ -935,12 +919,10 @@ int iOption;
 	}
 
 
-	DXMLAUX("%s: ============================ data deletion  =================\n", cArg0);
+	DXMLAUX("%s: ============================ finalizing XML library, freeing mem occupied by structures =================\n", cArg0);
 
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrl(pUrlChain);
-
-	DXMLAUX("%s: ============================ finalizing XML library =================\n", cArg0);
 
 	/* Free the document */
 	xmlFreeDoc(doc);

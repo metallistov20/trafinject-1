@@ -136,8 +136,9 @@ char *cParcedOut;
 
 	while( _localToken != NULL )
 	{
-		if (strlen (_localToken) <= ( strlen("URL=\"") + strlen("URL=\"") ) )
+		if (strlen (_localToken) <= ( strlen("URL=\"") + strlen("\"") ) )
 			break;
+
 		else
 		{
 			cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
