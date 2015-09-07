@@ -107,6 +107,11 @@ static const char *cPostMethodString2="user=admin&level=1&userID=0";
 /* Sometimes we just to post not empty payload */
 static const char *cAny="ArbitraryString";
 
+char ** pcPtr2Extra1, **pcPtr2Extra2;
+
+/* Extra payload should be attached  */
+int iExtra;
+
 /*
  Function to open the secure HTTP stream on network switches 
  TL-SLxxxxx.
@@ -129,6 +134,7 @@ static const char *cAny="ArbitraryString";
 */
 int iOpenSite()
 {
+#if (0)
 	/* Create URL for first POST injection  */
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
@@ -157,6 +163,9 @@ int iOpenSite()
 
 	/* Now the site is opened */
 	return INJ_SUCCESS;
+#else
+	return DeployUrlEx(pUrlChain, 1);
+#endif /* (0) */
 }
 
 /*
@@ -165,6 +174,7 @@ int iOpenSite()
 */
 int iCloseSite()
 {
+#if (0)
 #if (1) //TODO: CHECK IF IT IS NECESSARY ON L2-MANAGED SWITCHES. ASSUMING THAT IS.
 	strcpy (cUrlScc, "http://");
 	strcat (cUrlScc, &cIpAddr[0]);
@@ -198,6 +208,9 @@ int iCloseSite()
 	/* Now the site is closed, secure session is terminated, and there's no other way to call 
 	iCreateSnmp(), iSaveSite(), etc.. unless the iOpenSite() is called again. */
 	return INJ_SUCCESS;
+#else
+	return DeployUrlEx(pUrlChain, 0);
+#endif /* (0) */
 }
 
 /*
@@ -614,6 +627,11 @@ xmlNode *root_element = NULL;
 	/* Assign program name, requirted for output*/
 	strcpy (cArg0, argv[0]);
 
+	iExtra = 0;
+
+	pcPtr2Extra1 = &cPostMethodString;
+	pcPtr2Extra2 = &cPostMethodString2;
+
 	/* Parsing command line arguments */
 	while (1)
 	{
@@ -903,9 +921,8 @@ xmlNode *root_element = NULL;
 
 	}
 
-	//  	exit (0);
+//DeployUrl(pUrlChain);
 
-	DeployUrl(pUrlChain);
 
 	DXMLAUX("%s: ============================ data deletion  =================\n", cArg0);
 

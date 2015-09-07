@@ -142,7 +142,7 @@ char *cParcedOut;
 		{
 			cParcedOut = strndup(_localToken+strlen("URL=\""), strlen(_localToken) - strlen("URL=\"") );
 
-			cParcedOut[strlen(cParcedOut) -1 ] = 0;
+			cParcedOut[strlen(cParcedOut) -1] = 0;
 		
 			if (INJ_SUCCESS != AppendUrl(&pUrlChain, "(aux;dta;)") )
 			{

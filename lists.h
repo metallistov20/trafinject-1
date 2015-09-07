@@ -76,6 +76,8 @@ typedef struct _UrlChainType
 
 #define DeployUrl(x) _DeployUrl(__func__, (x))
 
+#define DeployUrlEx(x, y) _DeployUrlEx(__func__, (x), (y))
+
 
 
 #endif /* _LISTS_H_ */

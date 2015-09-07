@@ -21,6 +21,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* CURLOPT_URL */
+#include <curl/curl.h>
+
 #include "lists.h"
 #include "inject.h"
 #include "verbose.h"
@@ -252,17 +255,6 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
     };	    
 }
 
-
-/*
-void _DeployString(const char * caller, char * pcDataPar)
-{    
-	if (NULL != pcDataPar)
-		DXML("[%s]: STRING(%s)\n", caller, pcDataPar);
-	else
-		DXML("[%s]: EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
-}
-*/
-
 static int _GlueCompound(const char * caller, pCompoundType pCompoundPar, pUrlChainType pUrlChain)
 {    
 pCompoundType pCompound = pCompoundPar;
@@ -328,9 +320,6 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
     return INJ_SUCCESS;
 }
 
-/* CURLOPT_URL */
-#include <curl/curl.h>
-
 int _DeployUrl(const char * caller, pUrlChainType pThisUrlChainPar)
 {    
 pUrlChainType pThisUrlChain = pThisUrlChainPar;
@@ -352,9 +341,13 @@ int iRes;
 
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
+	{
 
 		/* here we start do the traffict injection itself */
 		iRes = curl_easy_perform(curl);
+
+
+	}
 	else
 		/* don't precess other chaing, return immediately */
 		return iRes;
@@ -366,7 +359,96 @@ int iRes;
 
 
     if ( CURLE_OK == iRes)
-	/* goid out quietly if all correct */
+	/* go out quietly if all correct */
+	return  INJ_SUCCESS;
+    else
+	/* verbosing CURLcode returned as <iRes> if error occured */
+	{ printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); return   INJ_CURL_ERROR;}
+}
+
+int _DeployUrlEx(const char * caller, pUrlChainType pThisUrlChainPar, int iExtra)
+{    
+pUrlChainType pThisUrlChain = pThisUrlChainPar;
+
+int iRes;
+
+/* Index of 'extras' to be processed */
+int iExtras = 0;
+
+    /* process each  entry of chain */
+    while (NULL != pThisUrlChain)
+    {
+
+	if ( NULL == pThisUrlChain->pcSumm ) 
+	{
+		DXML("\t[%s]: can't allocate %d bytes for URL data:\n", caller, MAX_URL_SIZE );
+
+		return INJ_MEM_ERROR;
+	}
+
+	DURL("%s: summURL(at:<%p>;<%p>) = %s\n", caller, (&pThisUrlChain), &(pThisUrlChain->pcSumm) , pThisUrlChain->pcSumm);
+
+
+	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
+	{
+		if ( iExtra )
+		{
+			switch (iExtras++)
+			{
+				case 0:
+				{
+					if( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_POSTFIELDS, *pcPtr2Extra1) ))
+					{
+						if( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, 
+							strlen(*pcPtr2Extra1))) )
+						{
+							break;
+						}
+					}
+
+					printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); 
+
+					return   INJ_CURL_ERROR;
+
+				}
+				case 1:
+					if( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_POSTFIELDS, *pcPtr2Extra2) ))
+					{
+						if( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, 
+							strlen(*pcPtr2Extra2))) )
+						{
+							break;
+						}
+					}
+
+					printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); 
+
+					return   INJ_CURL_ERROR;
+
+				default:
+					break;
+			}
+
+
+		}
+
+		/* here we start do the traffict injection itself */
+		iRes = curl_easy_perform(curl);
+
+
+	}
+	else
+		/* don't precess other chaing, return immediately */
+		return iRes;
+
+	
+	/* Go to next record of Chainwork */
+	pThisUrlChain =  pThisUrlChain->pNextChain;
+    };
+
+
+    if ( CURLE_OK == iRes)
+	/* go out quietly if all correct */
 	return  INJ_SUCCESS;
     else
 	/* verbosing CURLcode returned as <iRes> if error occured */
