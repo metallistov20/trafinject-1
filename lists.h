@@ -25,7 +25,7 @@
 typedef struct _CompoundType
 {
 	/* String to represent URL */
-	char * pcData;	
+	char * pcData;
 
 	/* Next string in chain */
 	struct _CompoundType * pNext; 
@@ -47,6 +47,9 @@ typedef struct _UrlChainType
 	/* Auxilary IP-address, such as new IP address after assignment */
 	char IpAddrAux[MAX_IP_SIZE];
 
+	/* Cumulative URL string made of compounds distributed across Compound->pcData */
+	char * pcSumm;
+
 	/* Next URL in chain */
 	struct _UrlChainType * pNextChain; 
 
@@ -64,6 +67,10 @@ typedef struct _UrlChainType
 #define DisplayUrl(x) _DisplayUrl(__func__, (x))
 
 #define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
+
+#define DeployCompound(x, y) _DeployCompound(__func__, (x), (y))
+
+#define DeployUrl(x) _DeployUrl(__func__, (x))
 
 #define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
 

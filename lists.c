@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include "lists.h"
+#include "inject.h"
 #include "verbose.h"
 
 
@@ -176,7 +177,13 @@ pUrlChainType pChild;
 		
 		    /* then release this space */
 		    DeleteCompound(pThisUrlChain->pCompound);
-		    
+
+		/* if we've allocated area for cumulative URL */
+		if (pThisUrlChain->pcSumm)
+		
+		    /* then release this space */
+		    free(pThisUrlChain->pcSumm);
+
 		/* preserve a pointer to next record */		    
 		pChild = pThisUrlChain->pNextChain;
 		
@@ -209,7 +216,7 @@ pCompoundType pCompound = pCompoundPar;
 	/* issue item's name */	
 	if (NULL != pCompound->pcData)
 
-		DisplayString((unsigned char *)(pCompound->pcData));
+		DisplayString((char *)(pCompound->pcData));
 	
 	/* Go to next record of Chainwork */
 	pCompound =  pCompound->pNext;
@@ -230,8 +237,91 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
 		DisplayCompound(pThisUrlChain->pCompound);
 	}
+
+	if (NULL != pThisUrlChain->pCompound)
+	{
+
+		DXMLAUX("\t[%s]: Cumulative resulting URL is :\n", caller);
+
+		DisplayString(pThisUrlChain->pcSumm);
+
+	}
 	
 	/* Go to next record of Chainwork */
 	pThisUrlChain =  pThisUrlChain->pNextChain;
     };	    
+}
+
+
+void _DeployString(const char * caller, char * pcDataPar)
+{    
+	if (NULL != pcDataPar)
+		DXML("[%s]: STRING(%s)\n", caller, pcDataPar);
+	else
+		DXML("[%s]: EMPTY_STR_AT(%p)\n", caller, &pcDataPar);
+}
+
+static int _DeployCompound(const char * caller, pCompoundType pCompoundPar, pUrlChainType pUrlChain)
+{    
+pCompoundType pCompound = pCompoundPar;
+
+int iCnt=0;
+
+	/* process each  entry of chain */
+	while (NULL != pCompound)
+	{
+		/* issue item's name */	
+		if (NULL != pCompound->pcData)
+		{
+			/* glue all burt first */
+			if ( 0 < iCnt++ )
+
+				/* standatrd delimited for parameters on URL requets string */
+				strcat( (char *)(pUrlChain->pcSumm),  "&" );
+
+			strcat( (char *)(pUrlChain->pcSumm),  (char *)(pCompound->pcData) );
+		}
+
+		/* Go to next record of Chainwork */
+		pCompound =  pCompound->pNext;
+	}
+
+	return INJ_SUCCESS;
+}
+
+int _DeployUrl(const char * caller, pUrlChainType pThisUrlChainPar)
+{    
+pUrlChainType pThisUrlChain = pThisUrlChainPar;
+
+    /* process each  entry of chain */
+    while (NULL != pThisUrlChain)
+    {
+
+	pThisUrlChain->pcSumm = (char *) malloc ( MAX_URL_SIZE*8 );
+
+	if ( NULL == pThisUrlChain->pcSumm ) 
+	{
+		DXML("\t[%s]: can't allocate %d bytes for URL data:\n", caller, MAX_URL_SIZE );
+
+		return INJ_MEM_ERROR;
+	}
+
+	strcpy (pThisUrlChain->pcSumm, "http://");
+
+	if ( NULL != cIpAddr ) 
+
+		strcat (pThisUrlChain->pcSumm, cIpAddr);
+
+	if (NULL != pThisUrlChain->pCompound)
+	{
+		DXMLAUX("\t[%s]: ______:\n", caller);
+
+		DeployCompound(pThisUrlChain->pCompound, pThisUrlChain);
+	}
+	
+	/* Go to next record of Chainwork */
+	pThisUrlChain =  pThisUrlChain->pNextChain;
+    };
+
+    return INJ_SUCCESS;
 }

@@ -94,6 +94,9 @@ char cFwName[MAX_STR_SIZE];
 /* IP adress to ve assigned of target switch */
 char cNewIpAddr[MAX_IP_SIZE];
 
+/* Name of XML file with cast of given switch */
+char cXmlName[MAX_STR_SIZE];
+
 
 /* Payload of POST method during user authenticate */
 static const char *cPostMethodString="username=admin&password=admin&logon=Login";
@@ -602,73 +605,8 @@ xmlDoc *doc = NULL;
 
 xmlNode *root_element = NULL;
 
-	/* Name of XML file to parse must be given */
-	if (argc != 2)
-	{
-		DCOMMON("%s: ERROR: name of XML file to parse should be passed on command line\n", cArg0);
 
-		return INJ_PAR_ERROR;
-	}
-
-	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
-	LIBXML_TEST_VERSION
-
-	/* Parse the file and get the DOM */
-	doc = xmlReadFile(argv[1], NULL, 0);
-
-	if (NULL == doc)
-	{
-		DCOMMON("%s: ERROR: could not parse file %s\n", cArg0, argv[1]);
-
-		return INJ_XML_ERROR;
-	}
-
-	/*Get the root element node */
-	root_element = xmlDocGetRootElement(doc);
-
-#if (0)
-	print_element_names(root_element);
-#else
-	find_named_element(root_element, "TL-SL5428E");
-
-	find_named_element(root_element, "System_Info");
-
-	find_named_element(root_element, "Device_Description");
-
-	find_named_element(root_element, "System_Time");
-
-	find_named_element(root_element, "Daylight_Saving_Time");
-
-	find_named_element(root_element, "System_IP");
-
-	find_named_element(root_element, "System_IPv6");
-
-	find_named_element(root_element, "System_Reboot");
-
-	find_named_element(root_element, "ACL_Create");
-
-	find_named_element(root_element, "Save_Config");
-
-	find_named_element(root_element, "Logout");
-
-#endif /* (0) */
-
-	DXMLAUX("%s: ============================ data display starts below =================\n", cArg0);
-
-	DisplayUrl(pUrlChain);
-
-	/* Delete entire list with URLs along with its compounds */
-	DeleteUrl(pUrlChain);
-
-	/* Free the document */
-	xmlFreeDoc(doc);
-
-	/* Free the global variables that may have been allocated by the parser */
-	xmlCleanupParser();
-
-	return INJ_SUCCESS;
-
-	DCOMMON("%s: ============================ parsing parameters starts below =================\n", cArg0);
+	DCOMMON("%s: ============================ parsing parameters starts =================\n", cArg0);
 
 	/* Avoid dafault 0 value */
 	iOperation=DO_NO_OP;
@@ -701,6 +639,7 @@ xmlNode *root_element = NULL;
 		{"acl-data",required_argument, 0,	'l'},
 		{"ip-addr",required_argument, 0,	'0'},
 		{"ip-mask",required_argument, 0,	'1'},
+		{"xml-data",required_argument, 0,	'd'},
 
 		/* End of array */
 		{0, 0, 0, 0}
@@ -710,7 +649,7 @@ xmlNode *root_element = NULL;
 	int option_index = 0;
 
 		/* Get each paramter */
-		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:m:u:f:l:0:1:", long_options, &option_index);
+		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:m:u:f:l:0:1:d:", long_options, &option_index);
 
 		/* Break cycle at the end of the options */
 		if (-1 == iOption) break;
@@ -798,6 +737,12 @@ xmlNode *root_element = NULL;
 				strcpy(cFwName, optarg);
 				break;
 
+			/* Couple: Filename of XML file with data */
+			case 'd':
+				DCOMMON("%s: option -d with value `%s'\n", cArg0, optarg);
+				strcpy(cXmlName, optarg);
+				break;
+
 			/* Couple: Assign ACL setings */
 			case 'l':
 				DCOMMON("%s: option -l (--acl-data) with value `%s'\n", cArg0, optarg);
@@ -825,8 +770,87 @@ xmlNode *root_element = NULL;
 				DCOMMON("%s: bad usage, exiting", cArg0);
 				abort ();
 		}
-	} /* Command line arguments were parsed */	
+	} /* Command line arguments were parsed */
 
+
+	DXMLAUX("%s: ============================ command line arguments were parsed =================\n", cArg0);
+
+	/* Name of XML file to parse must be given */
+	if ( NULL == cXmlName )
+	{
+		DCOMMON("%s: ERROR: name of XML file to parse should be passed on command line\n", cArg0);
+
+		return INJ_PAR_ERROR;
+	}
+
+	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
+	LIBXML_TEST_VERSION
+
+	/* Parse the file and get the DOM */
+	doc = xmlReadFile(cXmlName, NULL, 0);
+
+	if (NULL == doc)
+	{
+		DCOMMON("%s: ERROR: could not parse file %s\n", cArg0, cXmlName);
+
+		return INJ_XML_ERROR;
+	}
+
+	/*Get the root element node */
+	root_element = xmlDocGetRootElement(doc);
+
+#if (0)
+	print_element_names(root_element);
+#else
+//	find_named_element(root_element, "TL-SL5428E");
+
+	find_named_element(root_element, "System_Info");
+
+/*	find_named_element(root_element, "Device_Description");
+
+	find_named_element(root_element, "System_Time");
+
+	find_named_element(root_element, "Daylight_Saving_Time");
+
+	find_named_element(root_element, "System_IP");
+
+	find_named_element(root_element, "System_IPv6");
+
+	find_named_element(root_element, "System_Reboot");
+
+	find_named_element(root_element, "ACL_Create");
+
+	find_named_element(root_element, "Save_Config");
+
+	find_named_element(root_element, "Logout");
+*/
+#endif /* (0) */
+
+	DXMLAUX("%s: ============================ data deployment starts  =================\n", cArg0);
+
+//	DeployUrl(pUrlChain);
+
+	DXMLAUX("%s: ============================ data display starts below =================\n", cArg0);
+
+	DisplayUrl(pUrlChain);
+
+	DXMLAUX("%s: ============================ data deletion starts =================\n", cArg0);
+
+	/* Delete entire list with URLs along with its compounds */
+	DeleteUrl(pUrlChain);
+
+	DXMLAUX("%s: ============================ finalizing library =================\n", cArg0);
+
+	/* Free the document */
+	xmlFreeDoc(doc);
+
+	/* Free the global variables that may have been allocated by the parser */
+	xmlCleanupParser();
+
+	return INJ_SUCCESS;
+
+
+	DXMLAUX("%s: ============================ data processing starts =================\n", cArg0);
 
 	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
 	curl = curl_easy_init();
@@ -882,8 +906,5 @@ xmlNode *root_element = NULL;
 
  	exit (0);
 
-
 	DCOMMON("%s: this line is not seen\n", cArg0, iOperation);
-
-
 }
