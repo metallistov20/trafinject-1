@@ -343,15 +343,17 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 
-		/* here we start do the traffict injection itself */
+		/* here we start generate the 'live' HTTP traffic */
 		iRes = curl_easy_perform(curl);
-
 
 	}
 	else
-		/* don't precess other chaing, return immediately */
-		return iRes;
+	{
+		DURL("%s: cURL call setopt(CURLOPT_URL) failed with ERR_CODE(%d)\n", caller, iRes); 
 
+		/* don't process other chaing, return immediately */
+		return iRes;
+	}
 	
 	/* Go to next record of Chainwork */
 	pThisUrlChain =  pThisUrlChain->pNextChain;
@@ -406,7 +408,7 @@ int iExtras = 0;
 						}
 					}
 
-					printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); 
+					DURL("%s: cURL call setopt(CURLOPT_POSTFIELDS) failed with ERR_CODE(%d)\n", caller, iRes); 
 
 					return   INJ_CURL_ERROR;
 
@@ -421,9 +423,9 @@ int iExtras = 0;
 						}
 					}
 
-					printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); 
+					DURL("%s: cURL call setopt(CURLOPT_POSTFIELDS) failed with ERR_CODE(%d)\n", caller, iRes); 
 
-					return   INJ_CURL_ERROR;
+					return  INJ_CURL_ERROR;
 
 				default:
 					break;
@@ -432,14 +434,17 @@ int iExtras = 0;
 
 		}
 
-		/* here we start do the traffict injection itself */
+		/* here we start generate the 'live' HTTP traffic */
 		iRes = curl_easy_perform(curl);
-
 
 	}
 	else
-		/* don't precess other chaing, return immediately */
+	{
+		DURL("%s: cURL call setopt(CURLOPT_URL) failed with ERR_CODE(%d)\n", caller, iRes); 
+
+		/* don't process other chaing, return immediately */
 		return iRes;
+	}
 
 	
 	/* Go to next record of Chainwork */
@@ -451,6 +456,10 @@ int iExtras = 0;
 	/* go out quietly if all correct */
 	return  INJ_SUCCESS;
     else
+    {
 	/* verbosing CURLcode returned as <iRes> if error occured */
-	{ printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); return   INJ_CURL_ERROR;}
+	DURL("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes);
+
+	return   INJ_CURL_ERROR;
+    }
 }

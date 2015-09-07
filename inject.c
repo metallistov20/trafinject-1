@@ -1,3 +1,7 @@
+// TESTS:
+// ./inject --xml-data=cast.5428E.txt.xml --target=192.168.0.1 --open
+// ./REBOOT.2218.cmd
+
 /*
  (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
 
@@ -112,9 +116,10 @@ char ** pcPtr2Extra1, **pcPtr2Extra2;
 /* Extra payload should be attached  */
 int iExtra;
 
-/* XML data for in memory */
+/* Ptr to XML data for in memory */
 xmlNode *root_element = NULL;
 
+/* Ptr to XML data document */
 xmlDoc *doc = NULL;
 
 /*
@@ -632,11 +637,6 @@ int main (int argc, char **argv)
 {
 int iOption;
 
-//xmlDoc *doc = NULL;
-
-//TODO: find a way to hold it in same segment with <xmlDoc *doc>: xmlNode *root_element = NULL;
-
-
 	DCOMMON("%s: ============================ parsing command line parameters  =================\n", cArg0);
 
 	/* Avoid dafault 0 value */
@@ -647,8 +647,8 @@ int iOption;
 
 	iExtra = 0;
 
-	pcPtr2Extra1 = &cPostMethodString;
-	pcPtr2Extra2 = &cPostMethodString2;
+	pcPtr2Extra1 = (char**)&cPostMethodString;
+	pcPtr2Extra2 = (char**)&cPostMethodString2;
 
 	/* Parsing command line arguments */
 	while (1)
@@ -860,9 +860,6 @@ int iOption;
 	find_named_element(root_element, "Logout");
 */
 
-GlueUrl(pUrlChain);
-DisplayUrl(pUrlChain);
-return INJ_SUCCESS;
 
 #endif /* (0) */
 
@@ -918,6 +915,14 @@ return INJ_SUCCESS;
 
 	}
 
+
+
+/*
+GlueUrl(pUrlChain);
+DisplayUrl(pUrlChain);
+DeployUrlEx(pUrlChain, 0);
+return INJ_SUCCESS;
+*/
 
 	DXMLAUX("%s: ============================ finalizing XML library, freeing mem occupied by structures =================\n", cArg0);
 

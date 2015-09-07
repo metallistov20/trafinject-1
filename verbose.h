@@ -33,7 +33,7 @@
 #define DEBUG_XML	1
 
 /* Very specific XML-paring info needed mostly while coding and never else */
-#define DEBUG_XML_AUX	1
+#define DEBUG_XML_AUX	0
 
 
 /* Display common debug info */
