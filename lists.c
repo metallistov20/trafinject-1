@@ -41,7 +41,8 @@ pUrlChainType pChild, pTempUrlChain;
 		/* check if successful */
 		if (NULL == *ppThisUrlChain)
 		{
-			/* TODO: verbose"failure on creation" error */
+			DCOMMON("%s: ERROR: can't allocate memory for first chain, URL(%s)\n", caller, pcData);
+
 			return INJ_MEM_ERROR;
 		}
 	}
@@ -54,8 +55,8 @@ pUrlChainType pChild, pTempUrlChain;
 
 		if (NULL == pTempUrlChain)
 		{
+			DCOMMON("%s: ERROR: can't allocate memory for next chain, URL(%s)\n", caller, pcData);
 
-			/* TODO: verbose"failure on creation" error */
 			return INJ_MEM_ERROR;
 		}
 
@@ -66,52 +67,48 @@ pUrlChainType pChild, pTempUrlChain;
 			pChild = pChild->pNextChain;
 		}
 
-		/* if nex chunk was created allright */
-		if(NULL != pTempUrlChain)
-		{		
-			/* attach a new chain entry to the end of existing chain */
-			pChild->pNextChain = pTempUrlChain;
-		}
-		else
-		{
-			/* TODO: verbose memory for new ch. was not allocated  */
-			return INJ_MEM_ERROR;
-		}
+		/* before while we've already ensured that next chunk was created allright */
+
+		/* attach a new chain entry to the end of existing chain */
+		pChild->pNextChain = pTempUrlChain;
+
 	}
 	return INJ_SUCCESS;
 }
 
-int _AppendCompound(const char * caller, pCompoundType * pThisCompound, char * pcData)
+int _AppendCompound(const char * caller, pCompoundType * ppThisCompound, char * pcData)
 {
 pCompoundType pChild, pTempCompound;
 
-	if (NULL == *pThisCompound)
+	if (NULL == *ppThisCompound)
 	{
 		/* only one chain, for breginning */
-		*pThisCompound = (pCompoundType) calloc ( 1, sizeof (CompoundType) );
+		*ppThisCompound = (pCompoundType) calloc ( 1, sizeof (CompoundType) );
 
 		/* check if successful */
-		if (NULL == *pThisCompound)
+		if (NULL == *ppThisCompound)
 		{
-			/* TODO: verbose"failure on creation" error */
+			DCOMMON("%s: ERROR: can't allocate memory for first compound, URL(%s)\n", caller, pcData);
+
 			return INJ_MEM_ERROR;
 		}
 
-		(*pThisCompound)->pcData = calloc (1, strlen (pcData) +1 );
+		(*ppThisCompound)->pcData = calloc (1, strlen (pcData) +1 );
 	
-		strcpy ((*pThisCompound)->pcData, pcData );
+		strcpy ((*ppThisCompound)->pcData, pcData );
 	}
 	else
 	{
 		/* point with first temporary element to head of chain */
-		pChild = *pThisCompound;
+		pChild = *ppThisCompound;
 
 		pTempCompound = (pCompoundType) calloc ( 1, sizeof (CompoundType) );
 
 		if (NULL == pTempCompound)
 		{
 
-			/* TODO: verbose"failure on creation" error */
+			DCOMMON("%s: ERROR: can't allocate memory for next compound, URL(%s)\n", caller, pcData);
+
 			return INJ_MEM_ERROR;
 		}
 
@@ -122,27 +119,21 @@ pCompoundType pChild, pTempCompound;
 			pChild = pChild->pNext;
 		}
 
-		/* if nex chunk was created allright */
-		if(NULL != pTempCompound)
-		{
-			/* allocate a space needed for item's name */
-			pTempCompound->pcData = (char *) calloc ( 1, strlen(pcData) + 1 );
-		
-			/* do copy item's name */
-			strcpy(pTempCompound->pcData, pcData);
-		
-			/* attach a new chain entry to the end of existing chain */
-			pChild->pNext = pTempCompound;
-		}
-		else
-		{
-			/* TODO: verbose memory for new ch. was not allocated  */
-			return INJ_MEM_ERROR;
-		}
+		/* before while we've already ensured that next chunk was created allright */
+
+		/* allocate a space needed for item's name */
+		pTempCompound->pcData = (char *) calloc ( 1, strlen(pcData) + 1 );
+	
+		/* do copy item's name */
+		strcpy(pTempCompound->pcData, pcData);
+	
+		/* attach a new chain entry to the end of existing chain */
+		pChild->pNext = pTempCompound;
 	}
 	return INJ_SUCCESS;
 }
 
+#if (0)
 void _DeleteCompound(const char * caller, pCompoundType pThisCompound)
 {
 pCompoundType pChild;
@@ -166,6 +157,7 @@ pCompoundType pChild;
 		pThisCompound = pChild;
 	}
 }
+#endif /* (0) */
 
 void _DeleteCompoundEx(const char * caller, pCompoundType * ppThisCompound)
 {
@@ -193,6 +185,8 @@ pCompoundType pChild, pThisCompound = *ppThisCompound;
 	*ppThisCompound = NULL;
 }
 
+
+#if (0)
 void _DeleteUrl(const char * caller, pUrlChainType pThisUrlChain)
 {
 pUrlChainType pChild;
@@ -225,6 +219,7 @@ pUrlChainType pChild;
 	/* done */
 	return; 
 }
+#endif /* (0) */
 
 void _DeleteUrlEx(const char * caller, pUrlChainType * ppThisUrlChain)
 {
@@ -351,7 +346,7 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
     while (NULL != pThisUrlChain)
     {
 
-	pThisUrlChain->pcSumm = (char *) malloc ( MAX_URL_SIZE*8 );
+	pThisUrlChain->pcSumm = (char *) malloc ( MAX_URL_SIZE );
 
 	if ( NULL == pThisUrlChain->pcSumm ) 
 	{
@@ -396,12 +391,18 @@ int iRes;
 		return INJ_MEM_ERROR;
 	}
 
+#if (0)
 	DURL("%s: summURL(at:<%p>;<%p>;<%p>) = %s\n", caller, pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain, pThisUrlChain->pcSumm);
+#else
+	DURL("%s: summURL", caller);
+	DXMLAUX("(at:<%p>;<%p>;<%p>)", pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain);
+	DURL(" = %s\n", pThisUrlChain->pcSumm);
+#endif /* (0) */
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we start generate the 'live' HTTP traffic */
-		iRes = curl_easy_perform(curl);
+//		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -450,8 +451,13 @@ int iExtras = 0;
 		return INJ_MEM_ERROR;
 	}
 
-	DURL("%s: summURL(at:<%p>;<%p>) = %s\n", caller, (&pThisUrlChain), &(pThisUrlChain->pcSumm) , pThisUrlChain->pcSumm);
-
+#if (0)
+	DURL("%s: summURL(at:<%p>;<%p>;<%p>) = %s\n", caller, pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain, pThisUrlChain->pcSumm);
+#else
+	DURL("%s: summURL", caller);
+	DXMLAUX("(at:<%p>;<%p>;<%p>)", pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain);
+	DURL(" = %s\n", pThisUrlChain->pcSumm);
+#endif /* (0) */
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
@@ -497,7 +503,7 @@ int iExtras = 0;
 		}
 
 		/* here we start generate the 'live' HTTP traffic */
-		iRes = curl_easy_perform(curl);
+//		iRes = curl_easy_perform(curl);
 
 	}
 	else

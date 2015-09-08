@@ -55,12 +55,15 @@ typedef struct _UrlChainType
 
 } UrlChainType, *pUrlChainType;
 
-
+#if (0)
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
+#endif /* (0) */
 
 #define DeleteUrlEx(x) _DeleteUrlEx(__func__, (x))
 
+#if (0)
 #define DeleteCompound(x) _DeleteCompound(__func__, (x))
+#endif /* (0) */
 
 #define DeleteCompoundEx(x) _DeleteCompoundEx(__func__, (x))
 

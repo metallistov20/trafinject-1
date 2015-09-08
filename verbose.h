@@ -30,7 +30,7 @@
 #define DEBUG_URL	1
 
 /* Show XMLs particles during XML-parsing */
-#define DEBUG_XML	1
+#define DEBUG_XML	0
 
 /* Very specific XML-paring info needed mostly while coding and never else */
 #define DEBUG_XML_AUX	0

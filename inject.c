@@ -978,7 +978,7 @@ int iOption;
 
 
 	/* Delete entire list with URLs along with its compounds */
-	DeleteUrl(pUrlChain);
+	DeleteUrlEx(&pUrlChain);
 
 	/* Free the document */
 	xmlFreeDoc(doc);
