@@ -23,10 +23,12 @@
 /* Intermediate URL structure */
 CURL *curl;
 
+/* Flag to define extra payload should be attached  */
+int iExtra;
+
 /* IP adress of target switch */
 char cIpAddr[MAX_IP_SIZE];
 
-char ** pcPtr2Extra1, **pcPtr2Extra2;	
-
+char ** pcPtr2Extra1, **pcPtr2Extra2;
 
 #endif /* _INJECT_H_ */

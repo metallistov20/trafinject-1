@@ -165,7 +165,6 @@ pCompoundType pChild;
 		/* Go to next record */
 		pThisCompound = pChild;
 	}
-
 }
 
 void _DeleteUrl(const char * caller, pUrlChainType pThisUrlChain)
@@ -329,7 +328,6 @@ int iRes;
     /* process each  entry of chain */
     while (NULL != pThisUrlChain)
     {
-
 	if ( NULL == pThisUrlChain->pcSumm ) 
 	{
 		DXML("\t[%s]: can't allocate %d bytes for URL data:\n", caller, MAX_URL_SIZE );
@@ -339,13 +337,10 @@ int iRes;
 
 	DURL("%s: summURL(at:<%p>;<%p>) = %s\n", caller, (&pThisUrlChain), &(pThisUrlChain->pcSumm) , pThisUrlChain->pcSumm);
 
-
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
-
 		/* here we start generate the 'live' HTTP traffic */
 		iRes = curl_easy_perform(curl);
-
 	}
 	else
 	{
@@ -361,11 +356,17 @@ int iRes;
 
 
     if ( CURLE_OK == iRes)
+    {
 	/* go out quietly if all correct */
 	return  INJ_SUCCESS;
-    else
+    }
+    else	
+    {
 	/* verbosing CURLcode returned as <iRes> if error occured */
-	{ printf ("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes); return   INJ_CURL_ERROR;}
+	DURL("%s: recent cURL call failed with ERR_CODE(%d)\n", caller, iRes);
+
+	return   INJ_CURL_ERROR;
+    }
 }
 
 int _DeployUrlEx(const char * caller, pUrlChainType pThisUrlChainPar, int iExtra)

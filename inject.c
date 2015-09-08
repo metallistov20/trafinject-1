@@ -43,7 +43,6 @@
 /* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' )*/
 int iOperation;
 
-
 /* Intermediate URL structure */
 CURL *curl;
 
@@ -174,13 +173,13 @@ int iOpenSite()
 	/* Now the site is opened */
 	return INJ_SUCCESS;
 #else
-DXMLAUX("%s: ============================ open  ================= 1\n", cArg0);
-	find_named_element(root_element, "TL-SL5428E");
-DXMLAUX("%s: ============================ open  ================= 2\n", cArg0);
+// from here we came: find_named_element(root_element, "TL-SL5428E");
+	parse_xml_cast(root_element, "TL-SL5428E");
+
 	GlueUrl(pUrlChain);
-DXMLAUX("%s: ============================ open  ================= 3\n", cArg0);
+
 	DisplayUrl(pUrlChain);
-DXMLAUX("%s: ============================ open  ================= 4\n", cArg0);
+
 	return DeployUrlEx(pUrlChain, 1);
 #endif /* (0) */
 }
@@ -226,7 +225,7 @@ int iCloseSite()
 	iCreateSnmp(), iSaveSite(), etc.. unless the iOpenSite() is called again. */
 	return INJ_SUCCESS;
 #else
-	find_named_element(root_element, "Logout");
+	parse_xml_cast(root_element, "Logout");
 
 	GlueUrl(pUrlChain);
 
@@ -247,6 +246,7 @@ int iCloseSite()
 */
 int iCreateSnmp()
 {
+#if (0)
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
 	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
@@ -296,6 +296,16 @@ int iCreateSnmp()
 
 	/* SNMP gruop created */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "SNMP_Community");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 /*
@@ -307,6 +317,7 @@ int iCreateSnmp()
 */
 int iSaveSite()
 {
+#if (0)
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
 	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1) ;
@@ -350,6 +361,17 @@ int iSaveSite()
 
 	/* Chages on site were saved */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "Save_Config");
+// from here we came: 	find_named_element(root_element, "Save_Config");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 /*
@@ -359,6 +381,7 @@ int iSaveSite()
 */
 int iUpgradeFirmware()
 {
+#if (0)
 	/* Under construction */
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
@@ -409,6 +432,16 @@ int iUpgradeFirmware()
 
 	/* Firmware was being flashed into EEROM now */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "__");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 /* 
@@ -418,6 +451,7 @@ Performs an ACL settings (group creation). Tested on switches: TL-SL2428 (TODO: 
 */
 int iAclGroup()
 {
+#if (0)
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
 	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
@@ -446,7 +480,16 @@ int iAclGroup()
 	/* TODO: add comment 2 */
 	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
 	res = curl_easy_perform(curl);
+#else
+	parse_xml_cast(root_element, "ACL_Create");
 
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 /* 
@@ -456,6 +499,7 @@ Issue reboot command. Tested on switches: TL-SL2428, TL-SL2218, TL-SL5428E.
 */
 int iRebootSwitch()
 {
+#if (0)
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
 	strcat (cUrl1, "/userRpm/RestoreRpm.htm?s_userlevel=1&_tid_=");
@@ -488,6 +532,17 @@ int iRebootSwitch()
 
 	/*  TODO: add comm */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "System_Reboot");
+// from here we came; 	find_named_element(root_element, "System_Reboot");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 /* 
@@ -499,6 +554,7 @@ Was tested on TL-SL2428, TL-SL2218, TL-SL5428E.
 */
 int iAssignIp()
 {
+#if (0)
 	/* TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
 	strcpy (cUrl1, "http://");
 	strcat (cUrl1, cIpAddr);
@@ -568,6 +624,17 @@ int iAssignIp()
 
 	/*  TODO: add comm */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "System_IP");
+// from here we came; 	find_named_element(root_element, "System_Reboot");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 int iBindMacIp()
@@ -586,11 +653,12 @@ Not tested. TODO: test on 2218, 2428, 5428E
 int iEnablePort()
 {
 #if (0)
-//TODO: remove what is below
- GET /userRpm/SystemInfoRpm.htm?t=port&_tid_=58b10980f6f32c2f
- GET /userRpm/PortStatusSetRpm.htm?s_userlevel=1&_tid_=58b10980f6f32c2f
- GET /userRpm/PortStatusSetRpm.htm?txt_ipaddr=&state=1&spd=0&flowctrl=0&chk_1=1&chk_2=1&chk_3=1&submit=Apply&_tid_=58b10980f6f32c2f&t_port_name= 
-#endif /* (0) */
+	#if (0)
+	//TODO: remove what is below
+	 GET /userRpm/SystemInfoRpm.htm?t=port&_tid_=58b10980f6f32c2f
+	 GET /userRpm/PortStatusSetRpm.htm?s_userlevel=1&_tid_=58b10980f6f32c2f
+	 GET /userRpm/PortStatusSetRpm.htm?txt_ipaddr=&state=1&spd=0&flowctrl=0&chk_1=1&chk_2=1&chk_3=1&submit=Apply&_tid_=58b10980f6f32c2f&t_port_name= 
+	#endif /* (0) */
 
 	/* TODO: add comment */
 	strcpy (cUrl1, "http://");
@@ -628,6 +696,16 @@ int iEnablePort()
 
 	/* Opetation is not yet implemented */
 	return INJ_SUCCESS;
+#else
+	parse_xml_cast(root_element, "Enable_Port");// temporarily not in present in XML
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	//return DeployUrlEx(pUrlChain, 0);
+	return DeployUrl(pUrlChain);
+#endif /* (0) */
 }
 
 
@@ -636,8 +714,6 @@ int iEnablePort()
 int main (int argc, char **argv)
 {
 int iOption;
-
-	DCOMMON("%s: ============================ parsing command line parameters  =================\n", cArg0);
 
 	/* Avoid dafault 0 value */
 	iOperation=DO_NO_OP;
@@ -809,7 +885,6 @@ int iOption;
 	} /* Command line arguments were parsed */
 
 
-
 	/* Name of XML file to parse must be given */
 	if ( NULL == cXmlName )
 	{
@@ -835,31 +910,8 @@ int iOption;
 	root_element = xmlDocGetRootElement(doc);
 
 #if (0)
-	//print_element_names(root_element);
 
-	find_named_element(root_element, "TL-SL5428E");
-/*
-	find_named_element(root_element, "System_Info");
-
-	find_named_element(root_element, "Device_Description");
-
-	find_named_element(root_element, "System_Time");
-
-	find_named_element(root_element, "Daylight_Saving_Time");
-
-	find_named_element(root_element, "System_IP");
-
-	find_named_element(root_element, "System_IPv6");
-
-	find_named_element(root_element, "System_Reboot");
-
-	find_named_element(root_element, "ACL_Create");
-
-	find_named_element(root_element, "Save_Config");
-
-	find_named_element(root_element, "Logout");
-*/
-
+	print_element_names(root_element);
 
 #endif /* (0) */
 
@@ -912,7 +964,6 @@ int iOption;
 
 		/* Close URL lib */
 		curl_easy_cleanup(curl);
-
 	}
 
 
@@ -923,8 +974,6 @@ DisplayUrl(pUrlChain);
 DeployUrlEx(pUrlChain, 0);
 return INJ_SUCCESS;
 */
-
-	DXMLAUX("%s: ============================ finalizing XML library, freeing mem occupied by structures =================\n", cArg0);
 
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrl(pUrlChain);

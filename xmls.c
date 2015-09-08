@@ -93,7 +93,9 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	_localToken=strTokIdx(_localCopy, "@", 2);
 
 	/* Shift <pUrlLastChain> to the end of <pUrlChain> */
-	if (NULL != pUrlLastChain) while (pUrlLastChain->pNextChain) pUrlLastChain=pUrlLastChain->pNextChain;
+	if (NULL != pUrlLastChain)
+
+		while (pUrlLastChain->pNextChain) pUrlLastChain=pUrlLastChain->pNextChain;
 
 	while( _localToken != NULL ) 
 	{
@@ -191,7 +193,7 @@ char *_localToken;
 }
 
 
-void _find_named_element(const char * caller, xmlNode * a_node, const char * template)
+void _parse_xml_cast(const char * caller, xmlNode * a_node, const char * template)
 {
 xmlNode *cur_node = NULL;
 
@@ -224,13 +226,12 @@ xmlNode *cur_node = NULL;
 			}
 		}
 
-
 		/* If not found by template let's try with its children */
-		find_named_element(cur_node->children, template);
+		parse_xml_cast(cur_node->children, template);
 	}
-
 }
 
+#if (0)
 void _print_element_names(const char * caller, xmlNode * a_node)
 {
 	xmlNode *cur_node = NULL;
@@ -243,7 +244,6 @@ void _print_element_names(const char * caller, xmlNode * a_node)
 			DXMLAUX("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 #endif /* (0) */
 
-
 		if ( XML_TEXT_NODE == cur_node->type)
 
 			DXMLAUX("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
@@ -251,3 +251,4 @@ void _print_element_names(const char * caller, xmlNode * a_node)
 		print_element_names(cur_node->children);
 	}
 }
+#endif /* (0) */
