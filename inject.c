@@ -630,15 +630,12 @@ int iAssignIp()
 		return res;
 
 	}
-	DeleteUrl(pUrlChain);
-
-	memset(&pUrlChain[0],0,sizeof (struct _UrlChainType) );
+	DeleteUrlEx(&pUrlChain);
 
 	memset(&cIpAddr[0],0,MAX_IP_SIZE);
 	memcpy(cIpAddr, cAddr, MAX_IP_SIZE);
 
-DURL("%s: ================================ backdraft starts ============== \n", "");
-
+	
 	parse_xml_cast(root_element, "System_IP_backdraft");
 
 	GlueUrl(pUrlChain);

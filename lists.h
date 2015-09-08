@@ -58,7 +58,11 @@ typedef struct _UrlChainType
 
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
 
+#define DeleteUrlEx(x) _DeleteUrlEx(__func__, (x))
+
 #define DeleteCompound(x) _DeleteCompound(__func__, (x))
+
+#define DeleteCompoundEx(x) _DeleteCompoundEx(__func__, (x))
 
 #define DisplayString(x) _DisplayString(__func__, (x))
 

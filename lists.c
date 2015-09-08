@@ -29,17 +29,17 @@
 #include "verbose.h"
 
 
-int _AppendUrl(const char * caller, pUrlChainType * pThisUrlChain, char * pcData)
+int _AppendUrl(const char * caller, pUrlChainType * ppThisUrlChain, char * pcData)
 {
 pUrlChainType pChild, pTempUrlChain;
 
-	if (NULL == *pThisUrlChain)
+	if (NULL == *ppThisUrlChain)
 	{
 		/* only one chain, for breginning */
-		*pThisUrlChain = (pUrlChainType) calloc ( 1, sizeof (UrlChainType) );
+		*ppThisUrlChain = (pUrlChainType) calloc ( 1, sizeof (UrlChainType) );
 
 		/* check if successful */
-		if (NULL == *pThisUrlChain)
+		if (NULL == *ppThisUrlChain)
 		{
 			/* TODO: verbose"failure on creation" error */
 			return INJ_MEM_ERROR;
@@ -48,7 +48,7 @@ pUrlChainType pChild, pTempUrlChain;
 	else
 	{
 		/* point with first temporary element to head of chain */
-		pChild = *pThisUrlChain;
+		pChild = *ppThisUrlChain;
 
 		pTempUrlChain = (pUrlChainType) calloc ( 1, sizeof (UrlChainType) );
 
@@ -156,8 +156,6 @@ pCompoundType pChild;
 		    /* then release this space */
 		    free(pThisCompound->pcData);
 
-		pThisCompound->pcData = NULL;// TODO: strictly needed?
-		    
 		/* preserve a pointer to next record */		    
 		pChild = pThisCompound->pNext;
 		
@@ -167,6 +165,32 @@ pCompoundType pChild;
 		/* Go to next record */
 		pThisCompound = pChild;
 	}
+}
+
+void _DeleteCompoundEx(const char * caller, pCompoundType * ppThisCompound)
+{
+pCompoundType pChild, pThisCompound = *ppThisCompound;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisCompound)
+	{
+		/* if space to keep item's name is allocated */
+		if (pThisCompound->pcData)
+		
+		    /* then release this space */
+		    free(pThisCompound->pcData);
+
+		/* preserve a pointer to next record */		    
+		pChild = pThisCompound->pNext;
+		
+		/* free space occupied by current record */
+		free (pThisCompound);
+		
+		/* Go to next record */
+		pThisCompound = pChild;
+	}
+
+	*ppThisCompound = NULL;
 }
 
 void _DeleteUrl(const char * caller, pUrlChainType pThisUrlChain)
@@ -188,8 +212,6 @@ pUrlChainType pChild;
 		    /* then release this space */
 		    free(pThisUrlChain->pcSumm);
 
-		pThisUrlChain->pcSumm = NULL;// TODO: strictly needed?
-
 		/* preserve a pointer to next record */		    
 		pChild = pThisUrlChain->pNextChain;
 		
@@ -199,6 +221,41 @@ pUrlChainType pChild;
 		/* Go to next record  */
 		pThisUrlChain = pChild;
 	}
+	
+	/* done */
+	return; 
+}
+
+void _DeleteUrlEx(const char * caller, pUrlChainType * ppThisUrlChain)
+{
+pUrlChainType pChild, pThisUrlChain = *ppThisUrlChain;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisUrlChain)
+	{
+		/* if we have compound data (i.e. binded-list insted of single string) release  */
+		if ( pThisUrlChain->pCompound)
+		
+		    /* then release this space */
+		    DeleteCompoundEx( & pThisUrlChain->pCompound );
+
+		/* if we've allocated area for cumulative URL */
+		if ( pThisUrlChain->pcSumm)
+		
+		    /* then release this space */
+		    free( pThisUrlChain->pcSumm);
+
+		/* preserve a pointer to next record */		    
+		pChild = pThisUrlChain->pNextChain;
+		
+		/* free space occupied by current record */
+		free(pThisUrlChain);
+		
+		/* Go to next record  */
+		pThisUrlChain = pChild;
+	}
+
+	*ppThisUrlChain=NULL;
 	
 	/* done */
 	return; 
