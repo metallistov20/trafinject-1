@@ -28,15 +28,14 @@
 				URL="/userRpm/DstConfigRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
 			</Daylight_Saving_Time>
 			<System_IP>
-				URL="/SystemInfoRpm.htm?s_userlevel=1@_tid_="
-				URL="@_tid_="
-				URL="/userRpm/SystemIpRpm.htm?s_userlevel=1@_tid_="
-				URL="/userRpm/SystemIpRpm.htm?ip_mode=0@ip_mgmt_vlanid=1@ip_address="
-				URL="@ip_mask="
-				URL="@ip_gateway=@submit=Apply@_tid_="
-				URL="/userRpm/SystemIpRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
-				URL="/userRpm/SystemIPv6CfgRpm.htm?btn_ipv6_config_submit=1@ipv6_mode=1@_tid_=36f8f49a4957d0b5"
+				URL="/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd@_tid_=c812dfebbc936bbd"
+				URL="/userRpm/SystemIpRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd"
+				URL="/userRpm/SystemIpRpm.htm?ip_mode=0@ip_mgmt_vlanid=1@ip_address=192.168.0.23@ip_mask=255.255.255.0@ip_gateway=@submit=Apply@_tid_=c812dfebbc936bbd"
 			</System_IP>
+			<System_IP_backdraft>
+				URL="/"
+				URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd"
+			</System_IP_backdraft>
 			<System_IPv6>
 				URL="/userRpm/SystemIPv6CfgRpm.htm?s_userlevel=1@_tid_=36f8f49a4957d0b5"
 				URL="/help/SystemIPv6CfgHelpRpm.htm"

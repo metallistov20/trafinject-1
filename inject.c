@@ -621,7 +621,39 @@ int iAssignIp()
 
 	DisplayUrl(pUrlChain);
 
-	return DeployUrl(pUrlChain);
+	res= DeployUrl(pUrlChain);
+
+	if (res != CURLE_OK)
+	{
+		DURL("%s: direct part of SetStaticIp failed ERR_CODE(%d)\n", "", res);
+
+		return res;
+
+	}
+	DeleteUrl(pUrlChain);
+
+	memset(&pUrlChain[0],0,sizeof (struct _UrlChainType) );
+
+	memset(&cIpAddr[0],0,MAX_IP_SIZE);
+	memcpy(cIpAddr, cAddr, MAX_IP_SIZE);
+
+DURL("%s: ================================ backdraft starts ============== \n", "");
+
+	parse_xml_cast(root_element, "System_IP_backdraft");
+
+	GlueUrl(pUrlChain);
+
+	DisplayUrl(pUrlChain);
+
+	res = DeployUrl(pUrlChain);
+
+	if (res != CURLE_OK)
+	{
+		DURL("%s: reverse part of SetStaticIp failed ERR_CODE(%d)\n", "", res);
+	}
+
+	return res;
+
 #endif /* (0) */
 }
 

@@ -155,6 +155,8 @@ pCompoundType pChild;
 		
 		    /* then release this space */
 		    free(pThisCompound->pcData);
+
+		pThisCompound->pcData = NULL;// TODO: strictly needed?
 		    
 		/* preserve a pointer to next record */		    
 		pChild = pThisCompound->pNext;
@@ -185,6 +187,8 @@ pUrlChainType pChild;
 		
 		    /* then release this space */
 		    free(pThisUrlChain->pcSumm);
+
+		pThisUrlChain->pcSumm = NULL;// TODO: strictly needed?
 
 		/* preserve a pointer to next record */		    
 		pChild = pThisUrlChain->pNextChain;
@@ -307,7 +311,7 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
 	if (NULL != pThisUrlChain->pCompound)
 	{
-		//.DXMLAUX("\t[%s]: URL is going to be composed of its particles\n", caller);
+		DXMLAUX("\t[%s]: URL is going to be composed of its particles\n", caller);
 
 		GlueCompound(pThisUrlChain->pCompound, pThisUrlChain);
 	}
@@ -335,7 +339,7 @@ int iRes;
 		return INJ_MEM_ERROR;
 	}
 
-	DURL("%s: summURL(at:<%p>;<%p>) = %s\n", caller, (&pThisUrlChain), &(pThisUrlChain->pcSumm) , pThisUrlChain->pcSumm);
+	DURL("%s: summURL(at:<%p>;<%p>;<%p>) = %s\n", caller, pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain, pThisUrlChain->pcSumm);
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
