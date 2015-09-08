@@ -1,7 +1,3 @@
-// TESTS:
-// ./inject --xml-data=cast.5428E.txt.xml --target=192.168.0.1 --open
-// ./REBOOT.2218.cmd
-
 /*
  (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
 

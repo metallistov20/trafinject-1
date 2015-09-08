@@ -61,7 +61,7 @@ tID_e=$tID
 		echo "SNMP_GRP <$SNMP_GRP>";
 		echo "ACL_GRP <$ACL_GRP>";
 
-	./inject --xml-data=cast.5428E.txt.xml --open --target="$IP" >$TMP_NAME
+	./inject --open --target="$IP" --xml-data=cast.5428E.txt.xml>$TMP_NAME
 
 	while read line; do
 
@@ -91,7 +91,7 @@ tID_e=$tID
 
 			# site was opened. but not tID ofund. closing site, going out .
 
-			./inject --close --target="$IP"
+			./inject --close --target="$IP" --xml-data=cast.5428E.txt.xml
 
 			exit -1
 		fi
@@ -99,13 +99,13 @@ tID_e=$tID
 
 	if  [[ $OPERATION == "upgrade" ]]; then
 
-		./inject --upgrade --target="$IP" --id="$tID" --filename=$FILENAME
+		./inject --upgrade --target="$IP" --id="$tID" --filename=$FILENAME --xml-data=cast.5428E.txt.xml
 
 		# 1. no use to call --save because normally it will reboot right now)
 
 		# 2. but in case smth went wrong (and it is not being rebooted now) way we need close site
 
-		./inject --close --target="$IP"
+		./inject --close --target="$IP" --xml-data=cast.5428E.txt.xml
 
 		exit 0
 
@@ -113,13 +113,13 @@ tID_e=$tID
 
 		echo "<$0>: Simulating user manipulations on SNMP Tab in web interface of (TL-SL$MODEL) switch";
 
-		./inject --create --id="$tID" --target="$IP" --community="$SNMP_GRP"
+		./inject --create --id="$tID" --target="$IP" --community="$SNMP_GRP"  --xml-data=cast.5428E.txt.xml
 
 	elif  [[ $OPERATION == "reboot" ]]; then
 
 		echo "<$0>: Performing remote reboot of (TL-SL$MODEL) switch";
 
-		./inject --reboot --id="$tID" --target="$IP"  --xml-data=cast.5428E.txt.xml
+		./inject --reboot --id="$tID" --target="$IP" --xml-data=cast.5428E.txt.xml
 
 		./inject --close --target="$IP"  --xml-data=cast.5428E.txt.xml
 
@@ -129,9 +129,9 @@ tID_e=$tID
 
 		echo "<$0>: Doing ACL settings ( --acl-data=$ACL_GRP )";
 
-		./inject --ACL --id="$tID" --target="$IP" --acl-data="$ACL_GRP"
+		./inject --ACL --id="$tID" --target="$IP" --acl-data="$ACL_GRP" --xml-data=cast.5428E.txt.xml
 
-		./inject --close --target="$IP"
+		./inject --close --target="$IP" --xml-data=cast.5428E.txt.xml
 
 		exit 0
 
@@ -139,10 +139,11 @@ tID_e=$tID
 
 		echo "<$0>: Assigning static IP address ( --ip-addr="$4" --ip-mask="$5")";
 
-		./inject --ipassign --id="$tID" --target="$IP" --ip-addr="$4" --ip-mask="$5"
+		./inject --ipassign --id="$tID" --target="$IP" --ip-addr="$4" --ip-mask="$5" --xml-data=cast.5428E.txt.xml
 
 		# The adress on switch has already been changed. Beware what you pass as <--target> .
-		./inject --close --target="$4"
+
+		./inject --close --target="$4" --xml-data=cast.5428E.txt.xml
 
 		exit 0
 
@@ -157,7 +158,7 @@ tID_e=$tID
 
 		# some really odd case- the faster we gat away from here the better. but opened site must be closed before
 
-		./inject --close --target="$IP"
+		./inject --close --target="$IP" --xml-data=cast.5428E.txt.xml
 
 		exit -1
 	fi
@@ -165,9 +166,9 @@ tID_e=$tID
 
 	echo "<$0>: Simulating click <Save> button in web interface of (TL-SL$MODEL) switch";
 
-	./inject --save --id="$tID" --target="$IP"
+	./inject --save --id="$tID" --target="$IP" --xml-data=cast.5428E.txt.xml
 
-	./inject --close --target="$IP"
+	./inject --close --target="$IP" --xml-data=cast.5428E.txt.xml
 	
 exit 0
 
