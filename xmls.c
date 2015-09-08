@@ -230,25 +230,3 @@ xmlNode *cur_node = NULL;
 		parse_xml_cast(cur_node->children, template);
 	}
 }
-
-#if (0)
-void _print_element_names(const char * caller, xmlNode * a_node)
-{
-	xmlNode *cur_node = NULL;
-
-	for (cur_node = a_node; cur_node; cur_node = cur_node->next)
-	{
-#if (1)
-		if (XML_ELEMENT_NODE == cur_node->type)
-
-			DXMLAUX("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
-#endif /* (0) */
-
-		if ( XML_TEXT_NODE == cur_node->type)
-
-			DXMLAUX("[%s]:   type=%d  content=(%s)\n", caller,  cur_node->type, cur_node->content);
-
-		print_element_names(cur_node->children);
-	}
-}
-#endif /* (0) */

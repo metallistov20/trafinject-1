@@ -169,7 +169,6 @@ int iOpenSite()
 	/* Now the site is opened */
 	return INJ_SUCCESS;
 #else
-// from here we came: find_named_element(root_element, "TL-SL5428E");
 	parse_xml_cast(root_element, "TL-SL5428E");
 
 	GlueUrl(pUrlChain);
@@ -359,7 +358,6 @@ int iSaveSite()
 	return INJ_SUCCESS;
 #else
 	parse_xml_cast(root_element, "Save_Config");
-// from here we came: 	find_named_element(root_element, "Save_Config");
 
 	GlueUrl(pUrlChain);
 
@@ -435,7 +433,6 @@ int iUpgradeFirmware()
 
 	DisplayUrl(pUrlChain);
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -483,7 +480,6 @@ int iAclGroup()
 
 	DisplayUrl(pUrlChain);
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -530,13 +526,11 @@ int iRebootSwitch()
 	return INJ_SUCCESS;
 #else
 	parse_xml_cast(root_element, "System_Reboot");
-// from here we came; 	find_named_element(root_element, "System_Reboot");
 
 	GlueUrl(pUrlChain);
 
 	DisplayUrl(pUrlChain);
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -622,13 +616,11 @@ int iAssignIp()
 	return INJ_SUCCESS;
 #else
 	parse_xml_cast(root_element, "System_IP");
-// from here we came; 	find_named_element(root_element, "System_Reboot");
 
 	GlueUrl(pUrlChain);
 
 	DisplayUrl(pUrlChain);
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -699,7 +691,6 @@ int iEnablePort()
 
 	DisplayUrl(pUrlChain);
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -905,12 +896,6 @@ int iOption;
 	/*Get the root element node */
 	root_element = xmlDocGetRootElement(doc);
 
-#if (0)
-
-	print_element_names(root_element);
-
-#endif /* (0) */
-
 	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
 	curl = curl_easy_init();
 
@@ -962,14 +947,6 @@ int iOption;
 		curl_easy_cleanup(curl);
 	}
 
-
-
-/*
-GlueUrl(pUrlChain);
-DisplayUrl(pUrlChain);
-DeployUrlEx(pUrlChain, 0);
-return INJ_SUCCESS;
-*/
 
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrl(pUrlChain);

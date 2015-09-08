@@ -340,7 +340,7 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we start generate the 'live' HTTP traffic */
-//.		iRes = curl_easy_perform(curl);
+		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -436,7 +436,7 @@ int iExtras = 0;
 		}
 
 		/* here we start generate the 'live' HTTP traffic */
-//.		iRes = curl_easy_perform(curl);
+		iRes = curl_easy_perform(curl);
 
 	}
 	else
