@@ -583,9 +583,9 @@ void * pVoid;
 
 	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
 	{
-		while (EOF != fscanf(fp, "char %s %s\n", cStr, cGarb))
+		while (EOF != fscanf(fp, "char %s %s = %s\n", cStr, cGarb, cGarb))
 		{
-			DVOC("%s: adding keyword (%s=) to vocabulary\n", caller, cStr);
+			DVOC("%s: adding keyword (%s=) to vocabulary {%s}\n", caller, cStr, cGarb);
 
 			// ----------------- TODO: re-work the entire block ----------------
 			if (0 == strncmp (cStr, "_tid_", strlen ("_tid_=") ) )

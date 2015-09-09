@@ -74,7 +74,7 @@ clean:
 	rm -fv inject compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log
 	rm -rfv autom4te.cache
 
-inject: inject.o lists.o xmls.o
+inject: inject.o lists.o xmls.o 
 	$(CC)  -o inject inject.o lists.o xmls.o $(LDFLAGS) $(LIBS)
 
 compute_tabs: compute_tabs.c
