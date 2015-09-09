@@ -20,10 +20,6 @@
 #ifndef _XMLS_H_
 #define _XMLS_H_
 
-#if (0)
-#define print_element_names(x) _print_element_names(__func__, (x))
-#endif /* (0) */
-
 #define parse_xml_cast(x,y) _parse_xml_cast(__func__, (x), (y))
 
 /* Disclose type <pUrlChainType> */

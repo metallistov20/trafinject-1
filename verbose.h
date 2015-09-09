@@ -27,16 +27,19 @@
 #define DEBUG_COMMON	1 
 
 /* Show URLs for verification */
-#define DEBUG_URL	1
+#define DEBUG_URL	0
 
 /* Very specific URL-composing info needed mostly while coding and never else */
-#define DEBUG_URL_AUX	0
+#define DEBUG_URL_AUX	1
 
 /* Show XMLs particles during XML-parsing */
-#define DEBUG_XML	0
+#define DEBUG_XML	1
 
 /* Very specific XML-paring info needed mostly while coding and never else */
 #define DEBUG_XML_AUX	0
+
+/* Show vocabulary generation and usage */
+#define DEBUG_VOC	0
 
 
 /* Display common debug info */
@@ -73,7 +76,16 @@
 	#define DXMLAUX(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DXMLAUX(format, ...)
+#endif /* (DXMLAUX) */
+
+/* Show vocabulary generation and usage */
+#if (DEBUG_VOC)
+	#define DVOC(format, ...) fprintf (stdout, format, __VA_ARGS__)
+#else
+	#define DVOC(format, ...)
 #endif /* (DXML) */
+
+
 
 
 /* Report operation execution was finished depending on its status */

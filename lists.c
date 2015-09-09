@@ -300,8 +300,7 @@ pCompoundType pCompound = pCompoundPar;
 	/* issue item's name */	
 	if (NULL != pCompound->pVar)
 
-		// DisplayString((char *)(pCompound->pVar));
-		DXML("[%s]: STRING((%s))\n", caller, pCompound->pVar);
+		DisplayString((char *)(pCompound->pVar));
 	
 	/* Go to next record of Chainwork */
 	pCompound =  pCompound->pNext;
@@ -441,7 +440,7 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we produce 'live' HTTP traffic in wire */
-		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -538,7 +537,7 @@ int iExtras = 0;
 		}
 
 		/* here we produce 'live' HTTP traffic in wire */
-		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 
 	}
 	else
@@ -586,7 +585,7 @@ void * pVoid;
 	{
 		while (EOF != fscanf(fp, "char %s %s\n", cStr, cGarb))
 		{
-			DXMLAUX("%s: adding keyword (%s=) to vocabulary\n", caller, cStr);
+			DVOC("%s: adding keyword (%s=) to vocabulary\n", caller, cStr);
 
 			// ----------------- TODO: re-work the entire block ----------------
 			if (0 == strncmp (cStr, "_tid_", strlen ("_tid_=") ) )

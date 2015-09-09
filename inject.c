@@ -145,7 +145,9 @@ int iOpenSite()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrlEx(pUrlChain, 1);
 #endif /* (0) */
@@ -196,7 +198,9 @@ int iCloseSite()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrlEx(pUrlChain, 0);
 #endif /* (0) */
@@ -268,9 +272,10 @@ int iCreateSnmp()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
-	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
 }
@@ -333,7 +338,9 @@ int iSaveSite()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	//return DeployUrlEx(pUrlChain, 0);
 	return DeployUrl(pUrlChain);
@@ -403,7 +410,9 @@ int iUpgradeFirmware()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
@@ -450,7 +459,9 @@ int iAclGroup()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
@@ -501,7 +512,9 @@ int iRebootSwitch()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrl(pUrlChain);
 #endif /* (0) */
@@ -591,7 +604,9 @@ int iAssignIp()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */	
 
 	res= DeployUrl(pUrlChain);
 
@@ -612,7 +627,9 @@ int iAssignIp()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	res = DeployUrl(pUrlChain);
 
@@ -690,7 +707,9 @@ int iEnablePort()
 
 	GlueUrl(pUrlChain);
 
+#if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
+#endif /* (0) */
 
 	return DeployUrl(pUrlChain);
 #endif /* (0) */

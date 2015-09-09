@@ -86,45 +86,10 @@ char * _parseToken (char * pcToken)
 {
 char * pcNewToken;
 
-#if (0) 
-	if (0 == strncmp (pcToken, "_tid_=", strlen ("_tid_=") ) )
-	{
-		pcNewToken = malloc (strlen ("_tid_=") + strlen (cTid) + 1 );
-		strcpy (pcNewToken, "_tid_=");
-		strcat (pcNewToken, cTid);
-
-		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "_tid_=", pcNewToken);
-
-		return pcNewToken;
-	}
-
-	if (0 == strncmp (pcToken, "ip_address=", strlen ("ip_address=") ) )
-	{
-		pcNewToken = malloc (strlen ("ip_address=") + strlen (cNewIpAddr) + 1 );
-		strcpy (pcNewToken, "ip_address=");
-		strcat (pcNewToken, cNewIpAddr);
-
-		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "ip_address=", pcNewToken);
-
-		return pcNewToken;
-	}
-
-	if (0 == strncmp (pcToken, "ip_mask=", strlen ("ip_mask=") ) )
-	{
-		pcNewToken = malloc (strlen ("ip_mask=") + strlen (cMask) + 1 );
-		strcpy (pcNewToken, "ip_mask=");
-		strcat (pcNewToken, cMask);
-
-		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "ip_mask=", pcNewToken);
-
-		return pcNewToken;
-	}
-#else
-
 	/* at this moment it's not NULL, but we double-check to provide safety */
 	if (NULL == pAuxiliary)
 	{
-		DURLAUX("%s: PARSING: pAuxiliary = <%p>\n", "ERROR", pAuxiliary);
+		DVOC("%s: PARSING: pAuxiliary = <%p>\n", "ERROR", pAuxiliary);
 		return pcToken;
 	}
 
@@ -133,21 +98,21 @@ char * pcNewToken;
 	/* at this moment it's not NULL, but we double-check to provide safety */
 	if (NULL == pTmpVoc)
 	{
-		DURLAUX("%s: PARSING: pTmpVoc = pAuxiliary->pVocabulary = <%p>\n", "ERROR", pTmpVoc);
+		DVOC("%s: PARSING: pTmpVoc = pAuxiliary->pVocabulary = <%p>\n", "ERROR", pTmpVoc);
 		return pcToken;
 	}
 
 	/* at this moment IT CAN BE not NULL, so let's get aut safely */
 	if (NULL == pTmpVoc->pcData)
 	{
-		DURLAUX("%s: PARSING: pTmpVoc->pcData = <%p>\n", "ERROR", pTmpVoc->pcData);
+		DVOC("%s: PARSING: pTmpVoc->pcData = <%p>\n", "ERROR", pTmpVoc->pcData);
 		return pcToken;
 	}
 
 	/* at this moment IT CAN BE not NULL, so let's get aut safely */
 	if (NULL == pTmpVoc->pVar)
 	{
-		DURLAUX("%s: PARSING: pTmpVoc->pVar = <%p>\n", "ERROR", pTmpVoc->pVar);
+		DVOC("%s: PARSING: pTmpVoc->pVar = <%p>\n", "ERROR", pTmpVoc->pVar);
 		return pcToken;
 	}
 
@@ -161,7 +126,7 @@ char * pcNewToken;
 			strcat (pcNewToken, "=");
 			strcat (pcNewToken, pTmpVoc->pVar );
 
-			DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", pTmpVoc->pcData, pcNewToken);
+			DVOC("%s: PARSING: parsed <%s>, output <%s>\n", "", pTmpVoc->pcData, pcNewToken);
 
 			return pcNewToken;
 		}
@@ -170,7 +135,6 @@ char * pcNewToken;
 		pTmpVoc = pTmpVoc->pNext;
 
 	}
-#endif /* (0) */
 
 	return pcToken;
 }
@@ -299,21 +263,21 @@ xmlNode *cur_node = NULL;
 	{
 		if (XML_ELEMENT_NODE == cur_node->type)
 		{
-			//DXML("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+			//.DXMLAUX("[%s]: name=%s  type=%s \n", caller,  cur_node->name, "XML_ELEMENT_NODE");
 	
 			/* Element has been found by template?  */
 			if ( 0 == strcmp (template, cur_node->name) )
 			{
 				xmlNode *_ch_cur_node = NULL;
 
-				DXML("[%s]: The element name=<%s> has been found (type=%s)\n", caller,  cur_node->name, "XML_ELEMENT_NODE");
+				DXMLAUX("[%s]: The element name=<%s> has been found (type=%s)\n",caller,cur_node->name,"XML_ELEMENT_NODE");
 
 				/* Go and parce it, store results of paring into URL&CMPND structures  */
 				for (_ch_cur_node = cur_node->children; _ch_cur_node; _ch_cur_node = _ch_cur_node->next)
 				{
 					if ( XML_TEXT_NODE == _ch_cur_node->type)
 					{
-						//DXML("[%s]: about to parse=<%s> \n", caller,  _ch_cur_node->content);
+						//.DXMLAUX("[%s]: about to parse=<%s> \n", caller,  _ch_cur_node->content);
 
 						_unret(_ch_cur_node->content);
 					}				
