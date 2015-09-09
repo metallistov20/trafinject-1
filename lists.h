@@ -27,6 +27,9 @@ typedef struct _CompoundType
 	/* String to represent URL */
 	char * pcData;
 
+	/* in case of Vocabulary - pointer to variable corr. to keyword <pcData> */
+	void * pVar;
+
 	/* Next string in chain */
 	struct _CompoundType * pNext; 
 
@@ -62,15 +65,7 @@ typedef struct _XmlAuxType
 
 } XmlAuxType, *pXmlAuxType;
 
-#if (0)
-#define DeleteUrl(x) _DeleteUrl(__func__, (x))
-#endif /* (0) */
-
 #define DeleteUrlEx(x) _DeleteUrlEx(__func__, (x))
-
-#if (0)
-#define DeleteCompound(x) _DeleteCompound(__func__, (x))
-#endif /* (0) */
 
 #define DeleteCompoundEx(x) _DeleteCompoundEx(__func__, (x))
 
@@ -82,7 +77,7 @@ typedef struct _XmlAuxType
 
 #define AppendUrl(x, y) _AppendUrl(__func__, (x), (y))
 
-#define AppendCompound(x, y) _AppendCompound(__func__, (x), (y))
+#define AppendCompound(x, y, z) _AppendCompound(__func__, (x), (y), (z))
 
 #define GlueCompound(x, y) _GlueCompound(__func__, (x), (y))
 
@@ -99,6 +94,8 @@ typedef struct _XmlAuxType
 #define DeleteXmlAuxEx(x) _DeleteXmlAuxEx(__func__, (x))
 
 #define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
+
+#define DisplayXmlAux(x) _DisplayXmlAux(__func__, (x))
 
 
 

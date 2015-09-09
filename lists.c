@@ -27,6 +27,7 @@
 #include "xmls.h"
 #include "lists.h"
 #include "inject.h"
+#include "auxiliary.h"
 #include "verbose.h"
 
 int _AppendXmlAux(const char * caller, pXmlAuxType * ppXmlAux)
@@ -44,6 +45,7 @@ int _AppendXmlAux(const char * caller, pXmlAuxType * ppXmlAux)
 			return INJ_MEM_ERROR;
 		}
 	}
+
 	return INJ_SUCCESS;
 }
 
@@ -79,59 +81,24 @@ void _DeleteXmlAuxEx(const char * caller, pXmlAuxType * ppXmlAux)
 pXmlAuxType pThisXmlAux = *ppXmlAux;
 
 	/* Walk through entire list and delete each chain */
-	while (NULL != pThisXmlAux)
+	if (NULL != pThisXmlAux)
 	{
 		/* if we have vocabulary */
-		if ( pThisXmlAux->pVocabulary)
-		
+
+		if (NULL != pThisXmlAux->pVocabulary)
+
 		    /* then release it */
 		    DeleteVocabularyEx( & pThisXmlAux->pVocabulary );
-		
+
 		/* free space occupied by current record */
 		free(pThisXmlAux);
+
 	}
 
 	*ppXmlAux=NULL;
 	
 	/* done */
 	return; 
-}
-
-int _XmlAuxCreate(const char * caller, char *pcFileName)
-{
-FILE *fp;
-
-char cStr[MAX_URL_SIZE];
-
-	if(NULL == (fp=fopen(pcFileName, "r")) )
-	{
-		DCOMMON("%s: ERROR: no such file (%s), or <%s> permission not granted\n", caller, pcFileName, "r");
-
-		return INJ_NOFILE_ERROR; 
-	}
-
-	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
-	{
-		while (EOF != fscanf(fp, "%s", cStr))
-		{
-			DXMLAUX("%s: adding string (%s=) to vocabulary", caller, cStr);
-
-			AppendCompound(&pAuxiliary->pVocabulary, cStr );
-
-		}
-		fclose(fp);
-
-	}
-	else
-	{
-		DCOMMON("%s: ERROR: auxilary data structure was not created\n", caller);
-
-		return INJ_MEM_ERROR;
-	}
-
-
-
-	return INJ_SUCCESS;
 }
 
 int _AppendUrl(const char * caller, pUrlChainType * ppThisUrlChain, char * pcData)
@@ -181,7 +148,7 @@ pUrlChainType pChild, pTempUrlChain;
 	return INJ_SUCCESS;
 }
 
-int _AppendCompound(const char * caller, pCompoundType * ppThisCompound, char * pcData)
+int _AppendCompound(const char * caller, pCompoundType * ppThisCompound, char * pcData, void * pThisVoid)
 {
 pCompoundType pChild, pTempCompound;
 
@@ -201,6 +168,11 @@ pCompoundType pChild, pTempCompound;
 		(*ppThisCompound)->pcData = calloc (1, strlen (pcData) +1 );
 	
 		strcpy ((*ppThisCompound)->pcData, pcData );
+
+		/* Serve case of vocabulary */
+		if (NULL != pThisVoid)
+
+			(*ppThisCompound)->pVar = pThisVoid;
 	}
 	else
 	{
@@ -231,38 +203,17 @@ pCompoundType pChild, pTempCompound;
 	
 		/* do copy item's name */
 		strcpy(pTempCompound->pcData, pcData);
+
+		/* Serve case of vocabulary */
+		if (NULL != pThisVoid)
+
+			pTempCompound->pVar = pThisVoid;
 	
 		/* attach a new chain entry to the end of existing chain */
 		pChild->pNext = pTempCompound;
 	}
 	return INJ_SUCCESS;
 }
-
-#if (0)
-void _DeleteCompound(const char * caller, pCompoundType pThisCompound)
-{
-pCompoundType pChild;
-
-	/* Walk through entire list and delete each chain */
-	while (NULL != pThisCompound)
-	{
-		/* if space to keep item's name is allocated */
-		if (pThisCompound->pcData)
-		
-		    /* then release this space */
-		    free(pThisCompound->pcData);
-
-		/* preserve a pointer to next record */		    
-		pChild = pThisCompound->pNext;
-		
-		/* free space occupied by current record */
-		free (pThisCompound);
-		
-		/* Go to next record */
-		pThisCompound = pChild;
-	}
-}
-#endif /* (0) */
 
 void _DeleteCompoundEx(const char * caller, pCompoundType * ppThisCompound)
 {
@@ -290,42 +241,6 @@ pCompoundType pChild, pThisCompound = *ppThisCompound;
 	*ppThisCompound = NULL;
 }
 
-
-#if (0)
-void _DeleteUrl(const char * caller, pUrlChainType pThisUrlChain)
-{
-pUrlChainType pChild;
-
-	/* Walk through entire list and delete each chain */
-	while (NULL != pThisUrlChain)
-	{
-		/* if we have compound data (i.e. binded-list insted of single string) release  */
-		if (pThisUrlChain->pCompound)
-		
-		    /* then release this space */
-		    DeleteCompound(pThisUrlChain->pCompound);
-
-		/* if we've allocated area for cumulative URL */
-		if (pThisUrlChain->pcSumm)
-		
-		    /* then release this space */
-		    free(pThisUrlChain->pcSumm);
-
-		/* preserve a pointer to next record */		    
-		pChild = pThisUrlChain->pNextChain;
-		
-		/* free space occupied by current record */
-		free (pThisUrlChain);
-		
-		/* Go to next record  */
-		pThisUrlChain = pChild;
-	}
-	
-	/* done */
-	return; 
-}
-#endif /* (0) */
-
 void _DeleteUrlEx(const char * caller, pUrlChainType * ppThisUrlChain)
 {
 pUrlChainType pChild, pThisUrlChain = *ppThisUrlChain;
@@ -335,13 +250,14 @@ pUrlChainType pChild, pThisUrlChain = *ppThisUrlChain;
 	{
 		/* if we have compound data (i.e. binded-list insted of single string) release  */
 		if ( pThisUrlChain->pCompound)
-		
+
 		    /* then release this space */
 		    DeleteCompoundEx( & pThisUrlChain->pCompound );
 
+
 		/* if we've allocated area for cumulative URL */
 		if ( pThisUrlChain->pcSumm)
-		
+
 		    /* then release this space */
 		    free( pThisUrlChain->pcSumm);
 
@@ -380,9 +296,31 @@ pCompoundType pCompound = pCompoundPar;
 	if (NULL != pCompound->pcData)
 
 		DisplayString((char *)(pCompound->pcData));
+
+	/* issue item's name */	
+	if (NULL != pCompound->pVar)
+
+		// DisplayString((char *)(pCompound->pVar));
+		DXML("[%s]: STRING((%s))\n", caller, pCompound->pVar);
 	
 	/* Go to next record of Chainwork */
 	pCompound =  pCompound->pNext;
+    }
+}
+
+void _DisplayXmlAux(const char * caller, pXmlAuxType pXmlAuxPar)
+{    
+pXmlAuxType pThisXmlAux = pXmlAuxPar;
+
+    /* process each  entry of chain */
+    if (NULL != pThisXmlAux)
+    {
+	if (NULL != pThisXmlAux->pVocabulary)
+	{
+		DXMLAUX("\t[%s]: pCompund is not NULL, its contents are:\n", caller);
+
+		DisplayCompound(pThisXmlAux->pVocabulary);
+	}	
     }
 }
 
@@ -496,18 +434,14 @@ int iRes;
 		return INJ_MEM_ERROR;
 	}
 
-#if (0)
-	DURL("%s: summURL(at:<%p>;<%p>;<%p>) = %s\n", caller, pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain, pThisUrlChain->pcSumm);
-#else
 	DURL("%s: summURL", caller);
 	DXMLAUX("(at:<%p>;<%p>;<%p>)", pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain);
 	DURL(" = %s\n", pThisUrlChain->pcSumm);
-#endif /* (0) */
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
-		/* here we start generate the 'live' HTTP traffic */
-//.		iRes = curl_easy_perform(curl);
+		/* here we produce 'live' HTTP traffic in wire */
+		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -556,13 +490,9 @@ int iExtras = 0;
 		return INJ_MEM_ERROR;
 	}
 
-#if (0)
-	DURL("%s: summURL(at:<%p>;<%p>;<%p>) = %s\n", caller, pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain, pThisUrlChain->pcSumm);
-#else
 	DURL("%s: summURL", caller);
 	DXMLAUX("(at:<%p>;<%p>;<%p>)", pThisUrlChain, pThisUrlChain->pcSumm, pThisUrlChain->pNextChain);
 	DURL(" = %s\n", pThisUrlChain->pcSumm);
-#endif /* (0) */
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
@@ -607,8 +537,8 @@ int iExtras = 0;
 
 		}
 
-		/* here we start generate the 'live' HTTP traffic */
-//.		iRes = curl_easy_perform(curl);
+		/* here we produce 'live' HTTP traffic in wire */
+		iRes = curl_easy_perform(curl);
 
 	}
 	else
@@ -635,4 +565,66 @@ int iExtras = 0;
 
 	return   INJ_CURL_ERROR;
     }
+}
+
+int _XmlAuxCreate(const char * caller, char *pcFileName)
+{
+FILE *fp;
+
+char cStr[MAX_URL_SIZE], cGarb[MAX_URL_SIZE];
+
+void * pVoid;
+
+	if(NULL == (fp=fopen(pcFileName, "r")) )
+	{
+		DCOMMON("%s: ERROR: no such file (%s), or <%s> permission not granted\n", caller, pcFileName, "r");
+
+		return INJ_NOFILE_ERROR; 
+	}
+
+	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
+	{
+		while (EOF != fscanf(fp, "char %s %s\n", cStr, cGarb))
+		{
+			DXMLAUX("%s: adding keyword (%s=) to vocabulary\n", caller, cStr);
+
+			// ----------------- TODO: re-work the entire block ----------------
+			if (0 == strncmp (cStr, "_tid_", strlen ("_tid_=") ) )
+			{
+				pVoid = &_tid_;
+			}
+			else if (0 == strncmp (cStr, "ip_address", strlen ("ip_address=") ) )
+			{
+				pVoid = &ip_address;
+			}
+			else  if (0 == strncmp (cStr, "ip_mask", strlen ("ip_mask=") ) )
+			{
+				pVoid = &ip_mask;
+			}
+			else
+			{
+				memset ( cStr, 0, MAX_URL_SIZE);
+				pVoid = NULL;	
+			}
+
+			if (pVoid) 
+			{
+				AppendCompound(&pAuxiliary->pVocabulary, cStr, pVoid);
+			}
+			// ----------------- TODO: end of block to rework ----------------
+
+
+		}
+		fclose(fp);
+
+		//.DisplayXmlAux(pAuxiliary);
+	}
+	else
+	{
+		DCOMMON("%s: ERROR: auxilary data structure was not created\n", caller);
+
+		return INJ_MEM_ERROR;
+	}
+
+	return INJ_SUCCESS;
 }

@@ -29,6 +29,9 @@
 /* Show URLs for verification */
 #define DEBUG_URL	1
 
+/* Very specific URL-composing info needed mostly while coding and never else */
+#define DEBUG_URL_AUX	0
+
 /* Show XMLs particles during XML-parsing */
 #define DEBUG_XML	0
 
@@ -50,6 +53,13 @@
 #else
 	#define DURL(format, ...) 
 #endif /* (DURL) */
+
+/* Very specific URL-composing info */
+#if (DEBUG_URL_AUX)
+	#define DURLAUX(format, ...) fprintf (stdout, format, __VA_ARGS__)
+#else
+	#define DURLAUX(format, ...)
+#endif /* (DXML) */
 
 /* Debug XML-parsing and related info */
 #if (DEBUG_XML)

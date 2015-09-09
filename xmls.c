@@ -24,7 +24,7 @@
 
 #include "xmls.h"
 #include "lists.h"
-#include "inject.h"
+#include "auxiliary.h"
 #include "verbose.h"
 
 
@@ -80,13 +80,13 @@ char *tmp;
     return s1;
 }
 
-
+pCompoundType pTmpVoc;
 
 char * _parseToken (char * pcToken)
 {
 char * pcNewToken;
 
-#if (1) 
+#if (0) 
 	if (0 == strncmp (pcToken, "_tid_=", strlen ("_tid_=") ) )
 	{
 		pcNewToken = malloc (strlen ("_tid_=") + strlen (cTid) + 1 );
@@ -120,30 +120,55 @@ char * pcNewToken;
 		return pcNewToken;
 	}
 #else
-	pXmlAuxType pTmpAux = pAuxiliary;
 
-	/* at this mopment it's not NULL, but we double-check to provide safety */
-	if (NULL == pTmpAux) return pcToken;
-
-	/* at this mopment it's not NULL, but we double-check to provide safety */
-	if (NULL == pTmpAux->pVocabulary) return pcToken;
-
-	while (pTmpAux->pVocabulary)
+	/* at this moment it's not NULL, but we double-check to provide safety */
+	if (NULL == pAuxiliary)
 	{
-		if (0 == strncmp (pcToken, pTmpAux->pVocabulary->pcData, strlen (pTmpAux->pVocabulary->pcData) ) )
+		DURLAUX("%s: PARSING: pAuxiliary = <%p>\n", "ERROR", pAuxiliary);
+		return pcToken;
+	}
+
+	pTmpVoc = pAuxiliary->pVocabulary;
+
+	/* at this moment it's not NULL, but we double-check to provide safety */
+	if (NULL == pTmpVoc)
+	{
+		DURLAUX("%s: PARSING: pTmpVoc = pAuxiliary->pVocabulary = <%p>\n", "ERROR", pTmpVoc);
+		return pcToken;
+	}
+
+	/* at this moment IT CAN BE not NULL, so let's get aut safely */
+	if (NULL == pTmpVoc->pcData)
+	{
+		DURLAUX("%s: PARSING: pTmpVoc->pcData = <%p>\n", "ERROR", pTmpVoc->pcData);
+		return pcToken;
+	}
+
+	/* at this moment IT CAN BE not NULL, so let's get aut safely */
+	if (NULL == pTmpVoc->pVar)
+	{
+		DURLAUX("%s: PARSING: pTmpVoc->pVar = <%p>\n", "ERROR", pTmpVoc->pVar);
+		return pcToken;
+	}
+
+	while (pTmpVoc)
+	{
+		if (0 == strncmp (pcToken, pTmpVoc->pcData, strlen (pTmpVoc->pcData)  ) )
 		{
-			pcNewToken = malloc (strlen (pTmpAux->pVocabulary->pcData) + strlen (cNewIpAddr) + 1 );
-			strcpy (pcNewToken, pTmpAux->pVocabulary->pcData);
+			pcNewToken = malloc (64 + 1 );
+
+			strcpy (pcNewToken, pTmpVoc->pcData);
 			strcat (pcNewToken, "=");
+			strcat (pcNewToken, pTmpVoc->pVar );
 
-			//?? strcat (pcNewToken, cNewIpAddr);
-
-			DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", pTmpAux->pVocabulary->pcData, pcNewToken);
+			DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", pTmpVoc->pcData, pcNewToken);
 
 			return pcNewToken;
 		}
+
 		
-		pTmpAux->pVocabulary = pTmpAux->pVocabulary->pNext;
+		pTmpVoc = pTmpVoc->pNext;
+
 	}
 #endif /* (0) */
 
@@ -176,7 +201,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 		DXMLAUX("%s: \t\t%s\n", "", _localToken);
 
-		if (INJ_SUCCESS != AppendCompound(&pUrlLastChain->pCompound, _parseToken ( _localToken ) ) )
+		if (INJ_SUCCESS != AppendCompound(&pUrlLastChain->pCompound, _parseToken ( _localToken ), NULL ) )
 		{
 			_localToken = NULL;
 

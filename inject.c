@@ -34,6 +34,7 @@
 #include "constants.h"
 #include "lists.h"
 #include "xmls.h"
+#include "auxiliary.h"
 
 
 /* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' )*/
@@ -66,32 +67,6 @@ char cUrlScc[MAX_URL_SIZE];
 /*  Program name */
 char cArg0[MAX_URL_SIZE];
 
-/* IP adress of target switch */
-char cIpAddr[MAX_IP_SIZE];
-
-/* Session tID, valid between calls <iOpenSite> and <post_site>  */
-char cTid[MAX_TID_SIZE];
-
-/* Name of SNMP community to be created on target switch */
-char cSnmp[MAX_SNMP_SIZE];
-
-/* Parameters of ACL froup to be created on target switch */
-char cAcl[MAX_STR_SIZE];
-
-/* static IP address to be assigned to a switch */
-char cNewIpAddr[MAX_IP_SIZE];
-
-/* sbnet mask to be assigned along with static IP address */
-char cMask[MAX_IP_SIZE];
-
-/* Name of switch model. 5 chars long, so assuming MAX_SNMP_SIZE is enough */
-char cModel[MAX_STR_SIZE];
-
-/* Name of firmware to upload and burn. Assuming length MAX_SNMP_SIZE is sifficient */
-char cFwName[MAX_STR_SIZE];
-
-/* Name of XML file with cast of given switch */
-char cXmlName[MAX_STR_SIZE];
 
 
 /* Payload of POST method during user authenticate */
@@ -630,7 +605,7 @@ int iAssignIp()
 	DeleteUrlEx(&pUrlChain);
 
 	memset(&cIpAddr[0],0,MAX_IP_SIZE);
-	memcpy(cIpAddr, cNewIpAddr, MAX_IP_SIZE);
+	memcpy(cIpAddr, ip_address, MAX_IP_SIZE);
 
 	
 	parse_xml_cast(root_element, "System_IP_backdraft");
@@ -841,7 +816,7 @@ int iOption;
 			/* Couple: tID of the session */
 			case 'i':
 				DCOMMON("%s: option -i with value `%s'\n", cArg0, optarg);
-				strcpy(cTid, optarg);
+				strcpy(_tid_, optarg);
 				break;
 
 			/* Couple: model name of target switch. */
@@ -877,13 +852,13 @@ int iOption;
 			/* Couple: ip address */
 			case '0':
 				DCOMMON("%s: option -0 (--ip-addr) with value `%s'\n", cArg0, optarg);
-				strcpy(cNewIpAddr, optarg);
+				strcpy(ip_address, optarg);
 				break;
 
 			/* Couple: ip network mask */
 			case '1':
 				DCOMMON("%s: option -1 (--ip-mask) with value `%s'\n", cArg0, optarg);
-				strcpy(cMask, optarg);
+				strcpy(ip_mask, optarg);
 				break;
 
 
@@ -907,17 +882,10 @@ int iOption;
 	}
 
 //--
-	char AuxFileName[MAX_INJ_PATH];
 
-	/* Duplicated body of name */
-	strcpy(AuxFileName, cXmlName);
-
-	/* Concatenate extension */
-	strcat(AuxFileName, ".aux");
-
-	if (INJ_SUCCESS != XmlAuxCreate(AuxFileName)) 
+	if (INJ_SUCCESS != XmlAuxCreate(AUX_FNAME)) 
 	{
-		DCOMMON("%s: ERROR: no rules to handle (%s); check if (%s) exists\n", cArg0, cXmlName, AuxFileName);
+		DCOMMON("%s: ERROR: no rules to handle (%s); check if (%s) exists\n", cArg0, cXmlName, AUX_FNAME);
 
 		return INJ_NOAUX_ERROR;
 	}
@@ -994,8 +962,9 @@ int iOption;
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrlEx(&pUrlChain);
 
-	/* Delete aux. data - vocabuilary, et al */
+	/* Delete vocabuilary, et al*/
 	DeleteXmlAuxEx(&pAuxiliary);
+
 
 	/* Free the document */
 	xmlFreeDoc(doc);
