@@ -600,6 +600,14 @@ void * pVoid;
 			{
 				pVoid = &ip_mask;
 			}
+			else  if (0 == strncmp (cStr, "txt_comname", strlen ("txt_comname=") ) )
+			{
+				pVoid = &txt_comname;
+			}
+			else  if (0 == strncmp (cStr, "aclId", strlen ("aclId=") ) )
+			{
+				pVoid = &aclId;
+			}
 			else
 			{
 				memset ( cStr, 0, MAX_URL_SIZE);

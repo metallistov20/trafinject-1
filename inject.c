@@ -703,7 +703,8 @@ int iEnablePort()
 	/* Opetation is not yet implemented */
 	return INJ_SUCCESS;
 #else
-	parse_xml_cast(root_element, "Enable_Port");// temporarily not in present in XML
+	// TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN?
+	parse_xml_cast(root_element, "Port_Enable");
 
 	GlueUrl(pUrlChain);
 
@@ -730,6 +731,7 @@ int iOption;
 
 	iExtra = 0;
 
+	/* TODO: find better place for this init */
 	pcPtr2Extra1 = (char**)&cPostMethodString;
 	pcPtr2Extra2 = (char**)&cPostMethodString2;
 
@@ -752,7 +754,6 @@ int iOption;
 		/* Couples: names of variables and their values */
 		{"target",  required_argument, 0,	't'},
 		{"id",   required_argument, 0, 		'i'},
-		{"model",   required_argument, 0,	'm'},
 		{"community",required_argument, 0,	'u'},
 		{"filename",required_argument, 0,	'f'},
 		{"acl-data",required_argument, 0,	'l'},
@@ -768,7 +769,7 @@ int iOption;
 	int option_index = 0;
 
 		/* Get each paramter */
-		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:m:u:f:l:0:1:d:", long_options, &option_index);
+		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:u:f:l:0:1:d:", long_options, &option_index);
 
 		/* Break cycle at the end of the options */
 		if (-1 == iOption) break;
@@ -838,16 +839,10 @@ int iOption;
 				strcpy(_tid_, optarg);
 				break;
 
-			/* Couple: model name of target switch. */
-			case 'm':
-				DCOMMON("%s: option -m with value `%s'\n", cArg0, optarg);
-				strcpy(cModel, optarg);
-				break;
-
 			/* Couple: SNMP community name to be created on target switch*/
 			case 'u':
 				DCOMMON("%s: option -u with value `%s'\n", cArg0, optarg);
-				strcpy(cSnmp, optarg);
+				strcpy(txt_comname, optarg);
 				break;
 
 			/* Couple: Firmware name to be uploaded and upgraded on switch*/
@@ -865,7 +860,7 @@ int iOption;
 			/* Couple: Assign ACL setings */
 			case 'l':
 				DCOMMON("%s: option -l (--acl-data) with value `%s'\n", cArg0, optarg);
-				strcpy(cAcl, optarg);
+				strcpy(aclId, optarg);
 				break;
 
 			/* Couple: ip address */
@@ -900,15 +895,15 @@ int iOption;
 		return INJ_PAR_ERROR;
 	}
 
-//--
 
+	/* TODO: find better place for this block */
 	if (INJ_SUCCESS != XmlAuxCreate(AUX_FNAME)) 
 	{
 		DCOMMON("%s: ERROR: no rules to handle (%s); check if (%s) exists\n", cArg0, cXmlName, AUX_FNAME);
 
 		return INJ_NOAUX_ERROR;
 	}
-//--
+
 
 	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
 	LIBXML_TEST_VERSION

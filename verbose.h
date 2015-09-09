@@ -27,10 +27,10 @@
 #define DEBUG_COMMON	1 
 
 /* Show URLs for verification */
-#define DEBUG_URL	0
+#define DEBUG_URL	1
 
 /* Very specific URL-composing info needed mostly while coding and never else */
-#define DEBUG_URL_AUX	1
+#define DEBUG_URL_AUX	0
 
 /* Show XMLs particles during XML-parsing */
 #define DEBUG_XML	1
@@ -39,7 +39,7 @@
 #define DEBUG_XML_AUX	0
 
 /* Show vocabulary generation and usage */
-#define DEBUG_VOC	0
+#define DEBUG_VOC	1
 
 
 /* Display common debug info */

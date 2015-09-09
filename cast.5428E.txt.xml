@@ -122,6 +122,9 @@
 			<MAC_VLAN>
 			</MAC_VLAN>
 			<Port_Enable>
+				 URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=58b10980f6f32c2f"
+				 URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=58b10980f6f32c2f"
+				 URL="/userRpm/PortStatusSetRpm.htm?txt_ipaddr=@state=1@spd=0@flowctrl=0@chk_1=1@chk_2=1@chk_3=1@submit=Apply@_tid_=58b10980f6f32c2f@t_port_name="
 			</Port_Enable>
 		</MAC_VLAN>
 		<Protocol_VLAN>
@@ -276,8 +279,9 @@
 			<ACL_Summary>
 			</ACL_Summary>
 			<ACL_Create>
-				URL="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1@_tid_="
-				URL="/userRpm/ACLRuleCreateRpm.htm?submit=Submit@aclId="
+				URL=""
+				URL="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1@_tid_=58b10980f6f32c2f"
+				URL="/userRpm/ACLRuleCreateRpm.htm?submit=Submit@aclId=aclid@ruleOrder=1@_tid_=58b10980f6f32c2f"
 			</ACL_Create>
 			<MAC_ACL>
 			</MAC_ACL>
