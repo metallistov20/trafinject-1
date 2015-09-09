@@ -34,7 +34,6 @@ typedef struct _CompoundType
 
 typedef struct _UrlChainType
 {
-
 	/* either _composite ULR-injection is stored in few <pcCompData> fields. */
 	struct _CompoundType * pCompound;
 	
@@ -54,6 +53,14 @@ typedef struct _UrlChainType
 	struct _UrlChainType * pNextChain; 
 
 } UrlChainType, *pUrlChainType;
+
+
+typedef struct _XmlAuxType
+{
+	/* Vocabulary of keywords relevant to this XML file */
+	struct _CompoundType * pVocabulary;	
+
+} XmlAuxType, *pXmlAuxType;
 
 #if (0)
 #define DeleteUrl(x) _DeleteUrl(__func__, (x))
@@ -84,6 +91,14 @@ typedef struct _UrlChainType
 #define DeployUrl(x) _DeployUrl(__func__, (x))
 
 #define DeployUrlEx(x, y) _DeployUrlEx(__func__, (x), (y))
+
+#define AppendXmlAux(x) _AppendXmlAux(__func__, (x))
+
+#define DeleteVocabularyEx(x) _DeleteVocabularyEx(__func__, (x))
+
+#define DeleteXmlAuxEx(x) _DeleteXmlAuxEx(__func__, (x))
+
+#define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
 
 
 

@@ -24,14 +24,18 @@
 
 #include "xmls.h"
 #include "lists.h"
+#include "inject.h"
 #include "verbose.h"
 
 
 /* Static array in scope of curr. file. We store aux strings StrTokIdx() inside  */
 static char * aLastToken[3];
 
-/* Variable to store URL list for current command */
+/* Pointer to single-binded URL list for current command */
 pUrlChainType  pUrlChain;
+
+/* Pointer to auxiliary data for current XML file  */
+pXmlAuxType pAuxiliary;
 
 
 static char * strTokIdx(char *s1, const char *delimit, int iIdx)
@@ -78,6 +82,75 @@ char *tmp;
 
 
 
+char * _parseToken (char * pcToken)
+{
+char * pcNewToken;
+
+#if (1) 
+	if (0 == strncmp (pcToken, "_tid_=", strlen ("_tid_=") ) )
+	{
+		pcNewToken = malloc (strlen ("_tid_=") + strlen (cTid) + 1 );
+		strcpy (pcNewToken, "_tid_=");
+		strcat (pcNewToken, cTid);
+
+		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "_tid_=", pcNewToken);
+
+		return pcNewToken;
+	}
+
+	if (0 == strncmp (pcToken, "ip_address=", strlen ("ip_address=") ) )
+	{
+		pcNewToken = malloc (strlen ("ip_address=") + strlen (cNewIpAddr) + 1 );
+		strcpy (pcNewToken, "ip_address=");
+		strcat (pcNewToken, cNewIpAddr);
+
+		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "ip_address=", pcNewToken);
+
+		return pcNewToken;
+	}
+
+	if (0 == strncmp (pcToken, "ip_mask=", strlen ("ip_mask=") ) )
+	{
+		pcNewToken = malloc (strlen ("ip_mask=") + strlen (cMask) + 1 );
+		strcpy (pcNewToken, "ip_mask=");
+		strcat (pcNewToken, cMask);
+
+		DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", "ip_mask=", pcNewToken);
+
+		return pcNewToken;
+	}
+#else
+	pXmlAuxType pTmpAux = pAuxiliary;
+
+	/* at this mopment it's not NULL, but we double-check to provide safety */
+	if (NULL == pTmpAux) return pcToken;
+
+	/* at this mopment it's not NULL, but we double-check to provide safety */
+	if (NULL == pTmpAux->pVocabulary) return pcToken;
+
+	while (pTmpAux->pVocabulary)
+	{
+		if (0 == strncmp (pcToken, pTmpAux->pVocabulary->pcData, strlen (pTmpAux->pVocabulary->pcData) ) )
+		{
+			pcNewToken = malloc (strlen (pTmpAux->pVocabulary->pcData) + strlen (cNewIpAddr) + 1 );
+			strcpy (pcNewToken, pTmpAux->pVocabulary->pcData);
+			strcat (pcNewToken, "=");
+
+			//?? strcat (pcNewToken, cNewIpAddr);
+
+			DCOMMON("%s: PARSING: parsed <%s>, output <%s>\n", "", pTmpAux->pVocabulary->pcData, pcNewToken);
+
+			return pcNewToken;
+		}
+		
+		pTmpAux->pVocabulary = pTmpAux->pVocabulary->pNext;
+	}
+#endif /* (0) */
+
+	return pcToken;
+}
+
+
 static void _unat(char * tkn)
 {
 char *_localCopy;
@@ -103,7 +176,7 @@ pUrlChainType pUrlLastChain = pUrlChain;
 
 		DXMLAUX("%s: \t\t%s\n", "", _localToken);
 
-		if (INJ_SUCCESS != AppendCompound(&pUrlLastChain->pCompound, _localToken) )
+		if (INJ_SUCCESS != AppendCompound(&pUrlLastChain->pCompound, _parseToken ( _localToken ) ) )
 		{
 			_localToken = NULL;
 

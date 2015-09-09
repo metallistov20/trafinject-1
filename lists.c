@@ -24,10 +24,115 @@
 /* CURLOPT_URL */
 #include <curl/curl.h>
 
+#include "xmls.h"
 #include "lists.h"
 #include "inject.h"
 #include "verbose.h"
 
+int _AppendXmlAux(const char * caller, pXmlAuxType * ppXmlAux)
+{
+	if (NULL == *ppXmlAux)
+	{
+		/* only one chain, for beginning */
+		*ppXmlAux = (pXmlAuxType) calloc ( 1, sizeof (XmlAuxType) );
+
+		/* check if successful */
+		if (NULL == *ppXmlAux)
+		{
+			DCOMMON("%s: ERROR: can't allocate memory for aux. XML data\n", caller);
+
+			return INJ_MEM_ERROR;
+		}
+	}
+	return INJ_SUCCESS;
+}
+
+void _DeleteVocabularyEx(const char * caller, pCompoundType * ppThisVocabulary)
+{
+pCompoundType pChild, pThisVocabulary = *ppThisVocabulary;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisVocabulary)
+	{
+		/* if space to keep item's name is allocated */
+		if (pThisVocabulary->pcData)
+		
+		    /* then release this space */
+		    free(pThisVocabulary->pcData);
+
+		/* preserve a pointer to next record */		    
+		pChild = pThisVocabulary->pNext;
+		
+		/* free space occupied by current record */
+		free (pThisVocabulary);
+		
+		/* Go to next record */
+		pThisVocabulary = pChild;
+	}
+
+	*ppThisVocabulary = NULL;
+}
+
+
+void _DeleteXmlAuxEx(const char * caller, pXmlAuxType * ppXmlAux)
+{
+pXmlAuxType pThisXmlAux = *ppXmlAux;
+
+	/* Walk through entire list and delete each chain */
+	while (NULL != pThisXmlAux)
+	{
+		/* if we have vocabulary */
+		if ( pThisXmlAux->pVocabulary)
+		
+		    /* then release it */
+		    DeleteVocabularyEx( & pThisXmlAux->pVocabulary );
+		
+		/* free space occupied by current record */
+		free(pThisXmlAux);
+	}
+
+	*ppXmlAux=NULL;
+	
+	/* done */
+	return; 
+}
+
+int _XmlAuxCreate(const char * caller, char *pcFileName)
+{
+FILE *fp;
+
+char cStr[MAX_URL_SIZE];
+
+	if(NULL == (fp=fopen(pcFileName, "r")) )
+	{
+		DCOMMON("%s: ERROR: no such file (%s), or <%s> permission not granted\n", caller, pcFileName, "r");
+
+		return INJ_NOFILE_ERROR; 
+	}
+
+	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
+	{
+		while (EOF != fscanf(fp, "%s", cStr))
+		{
+			DXMLAUX("%s: adding string (%s=) to vocabulary", caller, cStr);
+
+			AppendCompound(&pAuxiliary->pVocabulary, cStr );
+
+		}
+		fclose(fp);
+
+	}
+	else
+	{
+		DCOMMON("%s: ERROR: auxilary data structure was not created\n", caller);
+
+		return INJ_MEM_ERROR;
+	}
+
+
+
+	return INJ_SUCCESS;
+}
 
 int _AppendUrl(const char * caller, pUrlChainType * ppThisUrlChain, char * pcData)
 {
@@ -35,7 +140,7 @@ pUrlChainType pChild, pTempUrlChain;
 
 	if (NULL == *ppThisUrlChain)
 	{
-		/* only one chain, for breginning */
+		/* only one chain, for beginning */
 		*ppThisUrlChain = (pUrlChainType) calloc ( 1, sizeof (UrlChainType) );
 
 		/* check if successful */
@@ -82,7 +187,7 @@ pCompoundType pChild, pTempCompound;
 
 	if (NULL == *ppThisCompound)
 	{
-		/* only one chain, for breginning */
+		/* only one chain, for beginning */
 		*ppThisCompound = (pCompoundType) calloc ( 1, sizeof (CompoundType) );
 
 		/* check if successful */
@@ -402,7 +507,7 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we start generate the 'live' HTTP traffic */
-//		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -503,7 +608,7 @@ int iExtras = 0;
 		}
 
 		/* here we start generate the 'live' HTTP traffic */
-//		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 
 	}
 	else

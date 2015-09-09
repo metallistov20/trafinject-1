@@ -38,6 +38,12 @@
 /* call to fn. of library cURL was failed */
 #define INJ_CURL_ERROR	(-4)
 
+/* file doe not exist, or requested permission is not granted */
+#define INJ_NOFILE_ERROR (-5)
+
+/* Generalized Aux-not-build error */
+#define INJ_NOAUX_ERROR	(-6)
+
 /* Operation is not yet impelmented */
 #define INJ_NOT_IMPL	(-8)
 
@@ -57,6 +63,9 @@
 
 /* Auxiliary strings, those not library- or Barracuda-dependant */
 #define MAX_STR_SIZE 64
+
+/* On linux systems should (but not must) be same as MAX_PATH */
+#define MAX_INJ_PATH 250
 
 
 #endif /* _CONSTANTS_H_ */

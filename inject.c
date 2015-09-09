@@ -79,7 +79,7 @@ char cSnmp[MAX_SNMP_SIZE];
 char cAcl[MAX_STR_SIZE];
 
 /* static IP address to be assigned to a switch */
-char cAddr[MAX_IP_SIZE];
+char cNewIpAddr[MAX_IP_SIZE];
 
 /* sbnet mask to be assigned along with static IP address */
 char cMask[MAX_IP_SIZE];
@@ -89,9 +89,6 @@ char cModel[MAX_STR_SIZE];
 
 /* Name of firmware to upload and burn. Assuming length MAX_SNMP_SIZE is sifficient */
 char cFwName[MAX_STR_SIZE];
-
-/* IP adress to ve assigned of target switch */
-char cNewIpAddr[MAX_IP_SIZE];
 
 /* Name of XML file with cast of given switch */
 char cXmlName[MAX_STR_SIZE];
@@ -565,7 +562,7 @@ int iAssignIp()
 	strcpy (cUrl3, "http://");
 	strcat (cUrl3, cIpAddr);
 	strcat (cUrl3, "/userRpm/SystemIpRpm.htm?ip_mode=0&ip_mgmt_vlanid=1&ip_address=");
-	strcat (cUrl3, cAddr);
+	strcat (cUrl3, cNewIpAddr);
 	strcat (cUrl3, "&ip_mask=");
 	strcat (cUrl3, cMask);
 	strcat (cUrl3, "&ip_gateway=&submit=Apply&_tid_=");
@@ -579,14 +576,14 @@ int iAssignIp()
 
 	/* Target address is already new. TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
 	strcpy (cUrl5, "http://");
-	strcat (cUrl5, cAddr);
+	strcat (cUrl5, cNewIpAddr);
 	strcat (cUrl5, "/");
 	DURL("%s: cUrl5 = %s\n", cArg0, cUrl5);
 #endif /* (0) */
 
 	/* Target address is already new */
 	strcpy (cUrl4, "http://");
-	strcat (cUrl4, cAddr);
+	strcat (cUrl4, cNewIpAddr);
 	strcat (cUrl4, "/userRpm/SystemInfoRpm.htm?s_userlevel=1&_tid_=");
 	strcat (cUrl4, cTid);
 	DURL("%s: cUrl4 = %s\n", cArg0, cUrl4);
@@ -633,7 +630,7 @@ int iAssignIp()
 	DeleteUrlEx(&pUrlChain);
 
 	memset(&cIpAddr[0],0,MAX_IP_SIZE);
-	memcpy(cIpAddr, cAddr, MAX_IP_SIZE);
+	memcpy(cIpAddr, cNewIpAddr, MAX_IP_SIZE);
 
 	
 	parse_xml_cast(root_element, "System_IP_backdraft");
@@ -880,7 +877,7 @@ int iOption;
 			/* Couple: ip address */
 			case '0':
 				DCOMMON("%s: option -0 (--ip-addr) with value `%s'\n", cArg0, optarg);
-				strcpy(cAddr, optarg);
+				strcpy(cNewIpAddr, optarg);
 				break;
 
 			/* Couple: ip network mask */
@@ -908,6 +905,23 @@ int iOption;
 
 		return INJ_PAR_ERROR;
 	}
+
+//--
+	char AuxFileName[MAX_INJ_PATH];
+
+	/* Duplicated body of name */
+	strcpy(AuxFileName, cXmlName);
+
+	/* Concatenate extension */
+	strcat(AuxFileName, ".aux");
+
+	if (INJ_SUCCESS != XmlAuxCreate(AuxFileName)) 
+	{
+		DCOMMON("%s: ERROR: no rules to handle (%s); check if (%s) exists\n", cArg0, cXmlName, AuxFileName);
+
+		return INJ_NOAUX_ERROR;
+	}
+//--
 
 	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
 	LIBXML_TEST_VERSION
@@ -979,6 +993,9 @@ int iOption;
 
 	/* Delete entire list with URLs along with its compounds */
 	DeleteUrlEx(&pUrlChain);
+
+	/* Delete aux. data - vocabuilary, et al */
+	DeleteXmlAuxEx(&pAuxiliary);
 
 	/* Free the document */
 	xmlFreeDoc(doc);
