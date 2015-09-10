@@ -17,22 +17,11 @@
  MA 02111-1307 USA
 */
 
-#if (0)
 
-char _tid_ [MAX_TID_SIZE] = "_tid_";
-
-char ip_address [MAX_IP_SIZE] = "ip_address";
-
-char ip_mask [MAX_IP_SIZE] = "ip_mask";
-
-char txt_comname [MAX_SNMP_SIZE] = "txt_comname";
-
-char aclId [MAX_SNMP_SIZE] = "aclId";
-
-#else
-
+/* MAX_IP_SIZE */
 #include "constants.h"
 
+/*
 char _tid_ [MAX_TID_SIZE];
 
 char ip_address [MAX_IP_SIZE];
@@ -42,7 +31,6 @@ char ip_mask [MAX_IP_SIZE];
 char txt_comname [MAX_SNMP_SIZE];
 
 char aclId [MAX_SNMP_SIZE];
-
 
 #include "auxiliary.h"
 
@@ -60,11 +48,9 @@ struct _QuineType QuineArray[] =
 
 	{ &aclId , "aclId"},
 
-	/* End of array */
 	{0, 0}
 };
-
-#endif /* (0) */
+*/
 
 char cIpAddr [MAX_IP_SIZE];
 

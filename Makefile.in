@@ -51,38 +51,43 @@ endif
 .PHONY: all install build deps clean uninstall
 
 
-OBJS = inject.o lists.o xmls.o auxiliary.o
+OBJS = inject.o lists.o xmls.o auxiliary.o  
 
 all: build
 
-
-# TODO: since we delete Makefile in <preclean> by now <install> is not accessible. Bring it back
 install: build
 	install $(PREFIX)
 
+build:	compute_tabs gen_vocabulary gen_voHabulary voc.c voc.h voc.obj inject 
 
-# TODO: remove this odd <preclean> after draftwork finished
-#build:	$(OBJS) inject preclean
-build:	inject compute_tabs
 
-preclean:
-	rm -fv config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log
-	rm -rfv autom4te.cache
-
-# TODO: since we delete Makefile in <preclean> by now <clean> is not accessible. Bring it back
 clean:
-	rm -fv inject compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log
-	rm -rfv autom4te.cache
+	rm -fv voc.c voc.h inject gen_vocabulary gen_voHabulary compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log *.obj
+	rm -rfv autom4te.cache Makefile
 
-inject: inject.o lists.o xmls.o auxiliary.o
-	$(CC)  -o inject inject.o lists.o xmls.o auxiliary.o $(LDFLAGS) $(LIBS)
 
-compute_tabs: compute_tabs.c
-	$(CC) compute_tabs.c -o compute_tabs 
+gen_vocabulary: gen_vocabulary.c
+	$(CC) gen_vocabulary.c -o gen_vocabulary
 
-%.o: %.c
+gen_voHabulary: gen_voHabulary.c
+	$(CC) gen_voHabulary.c -o gen_voHabulary    
+
+voc.c:	gen_vocabulary
+	./gen_vocabulary >voc.c
+
+voc.h:	gen_voHabulary
+	./gen_voHabulary >voc.h
+
+voc.obj: voc.c 
+	$(CC) -o voc.obj -c voc.c  $(CFLAGS) $(LDFLAGS)
+
+.o: .c
 	$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
 
+inject: inject.o lists.o xmls.o auxiliary.o voc.obj 
+	$(CC)  -o inject inject.o lists.o xmls.o auxiliary.o voc.obj $(LDFLAGS) $(LIBS)
 
+compute_tabs: compute_tabs.c
+	$(CC) compute_tabs.c -o compute_tabs
 
 

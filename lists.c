@@ -392,7 +392,7 @@ pUrlChainType pThisUrlChain = pThisUrlChainPar;
 
 	if ( NULL == pThisUrlChain->pcSumm ) 
 	{
-		DXML("\t[%s]: can't allocate %d bytes for URL data:\n", caller, MAX_URL_SIZE );
+		DXML("\t[%s]: can't allocate %d bytes for URL data\n", caller, MAX_URL_SIZE );
 
 		return INJ_MEM_ERROR;
 	}

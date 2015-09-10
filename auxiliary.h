@@ -20,27 +20,36 @@
 #ifndef _AUXILIARY_H_
 #define _AUXILIARY_H_
 
-char _tid_ [MAX_TID_SIZE];
+#if (0)
 
-char ip_address [MAX_IP_SIZE];
+	char _tid_ [MAX_TID_SIZE];
 
-char ip_mask [MAX_IP_SIZE];
+	char ip_address [MAX_IP_SIZE];
 
-char txt_comname [MAX_SNMP_SIZE];
+	char ip_mask [MAX_IP_SIZE];
 
-char aclId [MAX_SNMP_SIZE];
+	char txt_comname [MAX_SNMP_SIZE];
+
+	char aclId [MAX_SNMP_SIZE];
+
+#else
+	/* This is something everyone can enjoy . TODO: dismiss current stuff, rest bring back to <inject.h> */
+	#include "voc.h"
+
+#endif /* (0) */
 
 typedef struct _QuineType
 {
-	/* Tip: This <void*> dereferences into <char**> */
+	/* Tip: This <void*> variable dereferences into <char**> */
 	void * vpQuineVar;
 
-	/* */
+	/* Keyword, and at the same time name of the variable itself */
 	const char * pcQuineVarValue;
 
 } QuineType, * pQuineType;
 
 
+/* (Make in visible for others) */
 extern QuineType QuineArray[];
 
 char cIpAddr [MAX_IP_SIZE];
@@ -51,41 +60,5 @@ char cXmlName [MAX_STR_SIZE];
 
 
 
-
-#if (0)
-
-//TODO: they are old
-
-/* IP adress of target switch */
-char cIpAddr[MAX_IP_SIZE];
-
-/* Session tID, valid between calls <iOpenSite> and <post_site>  */
-char cTid[MAX_TID_SIZE];
-
-/* Name of SNMP community to be created on target switch */
-char cSnmp[MAX_SNMP_SIZE];
-
-/* Parameters of ACL froup to be created on target switch */
-char cAcl[MAX_STR_SIZE];
-
-/* static IP address to be assigned to a switch */
-char cNewIpAddr[MAX_IP_SIZE];
-
-/* sbnet mask to be assigned along with static IP address */
-char cMask[MAX_IP_SIZE];
-
-/* Name of switch model. 5 chars long, so assuming MAX_SNMP_SIZE is enough */
-char cModel[MAX_STR_SIZE];
-
-/* Name of firmware to upload and burn. Assuming length MAX_SNMP_SIZE is sifficient */
-char cFwName[MAX_STR_SIZE];
-
-/* Name of XML file with cast of given switch */
-char cXmlName[MAX_STR_SIZE];
-
-#endif /* (0) */
-
-
-#define AUX_FNAME "./auxiliary.c"
 
 #endif /* _AUXILIARY_H_ */
