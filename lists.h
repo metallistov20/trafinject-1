@@ -95,6 +95,8 @@ typedef struct _XmlAuxType
 
 #define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
 
+#define XmlAuxCreateEx() _XmlAuxCreateEx(__func__)
+
 #define DisplayXmlAux(x) _DisplayXmlAux(__func__, (x))
 
 

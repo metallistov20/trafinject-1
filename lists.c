@@ -635,3 +635,35 @@ void * pVoid;
 
 	return INJ_SUCCESS;
 }
+
+int _XmlAuxCreateEx(const char * caller)
+{
+char cStr[MAX_URL_SIZE], cGarb[MAX_URL_SIZE];
+
+void * pVoid;
+
+	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
+	{
+	int i;
+		// Tip: here we presume that element QuineArray[0] exists. TODO; re-work, to avoid relying on this presumption
+		for (i = 0; ( NULL != QuineArray[i].pcQuineVarValue ) &&
+			(NULL != QuineArray[i].vpQuineVar); i++ )
+		{
+
+			DVOC("%s: adding keyword (%s=) to vocabulary; at addr<%p> \n", caller, 
+				QuineArray[i].pcQuineVarValue, QuineArray[i].vpQuineVar);
+
+			AppendCompound(&pAuxiliary->pVocabulary, (char*)QuineArray[i].pcQuineVarValue, QuineArray[i].vpQuineVar);
+		}
+
+		DisplayXmlAux(pAuxiliary);
+	}
+	else
+	{
+		DCOMMON("%s: ERROR: auxilary data structure was not created\n", caller);
+
+		return INJ_MEM_ERROR;
+	}
+
+	return INJ_SUCCESS;
+}

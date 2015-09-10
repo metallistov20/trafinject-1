@@ -895,7 +895,7 @@ int iOption;
 		return INJ_PAR_ERROR;
 	}
 
-
+#if (0)
 	/* TODO: find better place for this block */
 	if (INJ_SUCCESS != XmlAuxCreate(AUX_FNAME)) 
 	{
@@ -903,6 +903,16 @@ int iOption;
 
 		return INJ_NOAUX_ERROR;
 	}
+#else
+	/* TODO: find better place for this block */
+	if (INJ_SUCCESS != XmlAuxCreateEx() ) 
+	{
+		DCOMMON("%s: ERROR: no rules to handle (%s) learned\n", cArg0, cXmlName);
+
+		return INJ_NOAUX_ERROR;
+	}
+
+#endif /* (0) */
 
 
 	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */

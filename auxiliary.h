@@ -30,11 +30,26 @@ char txt_comname [MAX_SNMP_SIZE];
 
 char aclId [MAX_SNMP_SIZE];
 
+typedef struct _QuineType
+{
+	/* Tip: This <void*> dereferences into <char**> */
+	void * vpQuineVar;
+
+	/* */
+	const char * pcQuineVarValue;
+
+} QuineType, * pQuineType;
+
+
+extern QuineType QuineArray[];
+
 char cIpAddr [MAX_IP_SIZE];
 
 char cFwName [MAX_STR_SIZE];
 
 char cXmlName [MAX_STR_SIZE];
+
+
 
 
 #if (0)
