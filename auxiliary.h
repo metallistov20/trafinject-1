@@ -21,10 +21,10 @@
 #define _AUXILIARY_H_
 
 
-/* TODO: dismiss current stuff, rest bring back to <inject.h> */
+/* Make variables defined in <voc.c> visible to others */
 #include "voc.h"
 
-
+/* Special type to provide correspondence betwee variable address and its name; needed for vocabulary */
 typedef struct _QuineType
 {
 	/* Tip: This <void*> variable dereferences into <char**> */
@@ -36,13 +36,16 @@ typedef struct _QuineType
 } QuineType, * pQuineType;
 
 
-/* (Make in visible for others) */
+/* (Make it visible to others) */
 extern QuineType QuineArray[];
 
+/* (Make it visible to others) */
 char cIpAddr [MAX_IP_SIZE];
 
+/* (Make it visible to others) */
 char cFwName [MAX_STR_SIZE];
 
+/* (Make it visible to others) */
 char cXmlName [MAX_STR_SIZE];
 
 

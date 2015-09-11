@@ -21,10 +21,13 @@
 /* MAX_IP_SIZE */
 #include "constants.h"
 
+/* Buffere to IpAddress; needed for any operation */
 char cIpAddr [MAX_IP_SIZE];
 
+/* Buffere to keep filename; needed for <iUpgradeFirmware> */
 char cFwName [MAX_STR_SIZE];
 
+/* Buffere to keep name of XML-file */
 char cXmlName [MAX_STR_SIZE];
 
 

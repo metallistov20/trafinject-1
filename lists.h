@@ -22,6 +22,7 @@
 
 #include "constants.h"
 
+/* List of particlers of which consists certain (not all) URLs; signle-binded */
 typedef struct _CompoundType
 {
 	/* String to represent URL */
@@ -35,6 +36,7 @@ typedef struct _CompoundType
 
 } CompoundType, *pCompoundType;
 
+/* List of URLs; signle-binded */
 typedef struct _UrlChainType
 {
 	/* either _composite ULR-injection is stored in few <pcCompData> fields. */
@@ -57,7 +59,7 @@ typedef struct _UrlChainType
 
 } UrlChainType, *pUrlChainType;
 
-
+/* S.-b.-list, contains volabulary, which is s.b.-list, either */
 typedef struct _XmlAuxType
 {
 	/* Vocabulary of keywords relevant to this XML file */
@@ -92,10 +94,6 @@ typedef struct _XmlAuxType
 #define DeleteVocabularyEx(x) _DeleteVocabularyEx(__func__, (x))
 
 #define DeleteXmlAuxEx(x) _DeleteXmlAuxEx(__func__, (x))
-
-#if (0)
-	#define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
-#endif /* (0) */
 
 #define XmlAuxCreateEx() _XmlAuxCreateEx(__func__)
 

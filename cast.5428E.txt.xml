@@ -460,12 +460,12 @@
 		</Network_Diagnostics>
 	</Maintenance>
 	<Save_Config>
-		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_="
+		URL="/userRpm/ConfigsaveRpm.htm?s_userlevel=1@_tid_=6666888"
 		URL="/userRpm/ConfigsaveImg.htm"
-		URL="/userRpm/ConfigsaveFileRpm.htm?_tid_="
+		URL="/userRpm/ConfigsaveFileRpm.htm?_tid_=6666888"
 	</Save_Config>
 	<Logout>
-		URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_="
+		URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=6666888"
 		URL="/userRpm/Logout.htm"
 		URL="/"
 	</Logout>

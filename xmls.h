@@ -25,10 +25,10 @@
 /* Disclose type <pUrlChainType> */
 #include "lists.h"
 
-/* (Make in visible for others)Pointer to single-binded URL list for current command */
+/* (Make in visible to others) Pointer to single-binded URL list for current command */
 extern pUrlChainType  pUrlChain;
 
-/* (Make in visible for others)Pointer to auxiliary data for current XML file  */
+/* (Make in visible to others) Pointer to auxiliary data for current XML file */
 extern pXmlAuxType pAuxiliary;
 
 #endif /* _XMLS_H_ */

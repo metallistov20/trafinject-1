@@ -33,13 +33,13 @@
 #define DEBUG_URL_AUX	0
 
 /* Show XMLs particles during XML-parsing */
-#define DEBUG_XML	1
+#define DEBUG_XML	0
 
 /* Very specific XML-paring info needed mostly while coding and never else */
 #define DEBUG_XML_AUX	0
 
 /* Show vocabulary generation and usage */
-#define DEBUG_VOC	1
+#define DEBUG_VOC	0
 
 
 /* Display common debug info */

@@ -182,12 +182,12 @@ int iSaveSite()
 }
 
 /*
-
  Function to upload new firmware onto switch and upgrade it there 
-
 */
 int iUpgradeFirmware()
 {
+	/* First portion of URLs */
+
 	/* Put XML section <Firmware_Upgrade> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "Firmware_Upgrade");
 
@@ -218,7 +218,7 @@ int iUpgradeFirmware()
 	DURL("%s: cUrl3 = %s\n", cArg0, cUrlUploadFile);
 
 	/* Button <Upload file>. Put URLs into wire with system() command  */
-	system(cUrlUploadFile);
+//.	system(cUrlUploadFile);
 
 
 	/* Third portion of URLs */
@@ -226,10 +226,10 @@ int iUpgradeFirmware()
 	DURL("%s: cUrl4 = %s\n", cArg0, cUrlUpgrade);
 
 	/* Button <Upgrade>. Put URLs into wire with system() command  */
-	system(cUrlUpgrade);
+//.	system(cUrlUpgrade);
 
-//---------------
 
+	/* Forth portion of URLs */
 
 	/* Put XML section <Firmware_Upgrade_backdraft> into structure <pUrlChain> */	
 	parse_xml_cast(root_element, "Firmware_Upgrade_backdraft");
@@ -645,6 +645,6 @@ int iOption;
 
  	exit (0);
 
-	/* Basically, is not seen; but is kept here for accuracy */
+	/* Basically is not seen; but is kept here for accuracy */
 	DCOMMON("%s: this line is not seen\n", cArg0, iOperation);
 }

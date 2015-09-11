@@ -84,7 +84,6 @@ pXmlAuxType pThisXmlAux = *ppXmlAux;
 	if (NULL != pThisXmlAux)
 	{
 		/* if we have vocabulary */
-
 		if (NULL != pThisXmlAux->pVocabulary)
 
 		    /* then release it */
@@ -92,7 +91,6 @@ pXmlAuxType pThisXmlAux = *ppXmlAux;
 
 		/* free space occupied by current record */
 		free(pThisXmlAux);
-
 	}
 
 	*ppXmlAux=NULL;
@@ -189,7 +187,7 @@ pCompoundType pChild, pTempCompound;
 			return INJ_MEM_ERROR;
 		}
 
-		/* Skip everything */
+		/* Skip everything till last one */
 		while ( (NULL != pChild) && (NULL != pChild->pNext ) )
 		{
 			/* til the tail */
@@ -440,7 +438,7 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we produce 'live' HTTP traffic in wire */
-		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -537,7 +535,7 @@ int iExtras = 0;
 		}
 
 		/* here we produce 'live' HTTP traffic in wire */
-		iRes = curl_easy_perform(curl);
+//.		iRes = curl_easy_perform(curl);
 
 	}
 	else
@@ -566,81 +564,6 @@ int iExtras = 0;
     }
 }
 
-#if (0)
-int _XmlAuxCreate(const char * caller, char *pcFileName)
-{
-FILE *fp;
-
-char cStr[MAX_URL_SIZE], cGarb[MAX_URL_SIZE];
-
-void * pVoid;
-
-	if(NULL == (fp=fopen(pcFileName, "r")) )
-	{
-		DCOMMON("%s: ERROR: no such file (%s), or <%s> permission not granted\n", caller, pcFileName, "r");
-
-		return INJ_NOFILE_ERROR; 
-	}
-
-	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
-	{
-		while (EOF != fscanf(fp, "char %s %s = %s\n", cStr, cGarb, cGarb))
-		{
-			DVOC("%s: adding keyword (%s=) to vocabulary {%s}\n", caller, cStr, cGarb);
-
-			// ----------------- TODO: re-work the entire block ----------------
-			if (0 == strncmp (cStr, "_tid_", strlen ("_tid_=") ) )
-			{
-				pVoid = &_tid_;
-			}
-			else if (0 == strncmp (cStr, "ip_address", strlen ("ip_address=") ) )
-			{
-				pVoid = &ip_address;
-			}
-			else  if (0 == strncmp (cStr, "ip_mask", strlen ("ip_mask=") ) )
-			{
-				pVoid = &ip_mask;
-			}
-			else  if (0 == strncmp (cStr, "txt_comname", strlen ("txt_comname=") ) )
-			{
-				pVoid = &txt_comname;
-			}
-			else  if (0 == strncmp (cStr, "aclId", strlen ("aclId=") ) )
-			{
-				pVoid = &aclId;
-			}
-			else
-			{
-				memset ( cStr, 0, MAX_URL_SIZE);
-				pVoid = NULL;	
-			}
-
-			if (pVoid) 
-			{
-				AppendCompound(&pAuxiliary->pVocabulary, cStr, pVoid);
-			}
-			// ----------------- TODO: end of block to rework ----------------
-
-
-		}
-		fclose(fp);
-
-#if (DEBUG_VOC)
-		DisplayXmlAux(pAuxiliary);
-#endif /* (DEBUG_VOC) */
-
-	}
-	else
-	{
-		DCOMMON("%s: ERROR: auxilary data structure was not created\n", caller);
-
-		return INJ_MEM_ERROR;
-	}
-
-	return INJ_SUCCESS;
-}
-#endif /* (0) */
-
 int _XmlAuxCreateEx(const char * caller)
 {
 char cStr[MAX_URL_SIZE], cGarb[MAX_URL_SIZE];
@@ -650,7 +573,7 @@ void * pVoid;
 	if (INJ_SUCCESS == AppendXmlAux( &pAuxiliary ) )
 	{
 	int i;
-		// Tip: here we presume that element QuineArray[0] exists. TODO; re-work, to avoid relying on this presumption
+		/* Tip: here we presume that element QuineArray[0] exists. TODO; re-work, to avoid relying on this presumption */
 		for (i = 0; ( NULL != QuineArray[i].pcQuineVarValue ) &&
 			(NULL != QuineArray[i].vpQuineVar); i++ )
 		{
