@@ -21,37 +21,6 @@
 /* MAX_IP_SIZE */
 #include "constants.h"
 
-/*
-char _tid_ [MAX_TID_SIZE];
-
-char ip_address [MAX_IP_SIZE];
-
-char ip_mask [MAX_IP_SIZE];
-
-char txt_comname [MAX_SNMP_SIZE];
-
-char aclId [MAX_SNMP_SIZE];
-
-#include "auxiliary.h"
-
-struct _QuineType QuineArray[] =
-{
-	{ &_tid_  , "_tid_" },
-
-	{ &ip_address  , "ip_address"},
-
-	{ &ip_mask , "ip_mask"},
-
-	{ &txt_comname , "txt_comname"},
-
-	{ &txt_comname , "txt_comname"},
-
-	{ &aclId , "aclId"},
-
-	{0, 0}
-};
-*/
-
 char cIpAddr [MAX_IP_SIZE];
 
 char cFwName [MAX_STR_SIZE];

@@ -20,23 +20,10 @@
 #ifndef _AUXILIARY_H_
 #define _AUXILIARY_H_
 
-#if (0)
 
-	char _tid_ [MAX_TID_SIZE];
+/* TODO: dismiss current stuff, rest bring back to <inject.h> */
+#include "voc.h"
 
-	char ip_address [MAX_IP_SIZE];
-
-	char ip_mask [MAX_IP_SIZE];
-
-	char txt_comname [MAX_SNMP_SIZE];
-
-	char aclId [MAX_SNMP_SIZE];
-
-#else
-	/* This is something everyone can enjoy . TODO: dismiss current stuff, rest bring back to <inject.h> */
-	#include "voc.h"
-
-#endif /* (0) */
 
 typedef struct _QuineType
 {
@@ -57,8 +44,6 @@ char cIpAddr [MAX_IP_SIZE];
 char cFwName [MAX_STR_SIZE];
 
 char cXmlName [MAX_STR_SIZE];
-
-
 
 
 #endif /* _AUXILIARY_H_ */

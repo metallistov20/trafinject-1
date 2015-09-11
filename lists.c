@@ -440,7 +440,7 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 		/* here we produce 'live' HTTP traffic in wire */
-//.		iRes = curl_easy_perform(curl);
+		iRes = curl_easy_perform(curl);
 	}
 	else
 	{
@@ -537,7 +537,7 @@ int iExtras = 0;
 		}
 
 		/* here we produce 'live' HTTP traffic in wire */
-//.		iRes = curl_easy_perform(curl);
+		iRes = curl_easy_perform(curl);
 
 	}
 	else
@@ -566,6 +566,7 @@ int iExtras = 0;
     }
 }
 
+#if (0)
 int _XmlAuxCreate(const char * caller, char *pcFileName)
 {
 FILE *fp;
@@ -624,7 +625,10 @@ void * pVoid;
 		}
 		fclose(fp);
 
-		//.DisplayXmlAux(pAuxiliary);
+#if (DEBUG_VOC)
+		DisplayXmlAux(pAuxiliary);
+#endif /* (DEBUG_VOC) */
+
 	}
 	else
 	{
@@ -635,6 +639,7 @@ void * pVoid;
 
 	return INJ_SUCCESS;
 }
+#endif /* (0) */
 
 int _XmlAuxCreateEx(const char * caller)
 {
@@ -656,7 +661,9 @@ void * pVoid;
 			AppendCompound(&pAuxiliary->pVocabulary, (char*)QuineArray[i].pcQuineVarValue, QuineArray[i].vpQuineVar);
 		}
 
+#if (DEBUG_VOC)
 		DisplayXmlAux(pAuxiliary);
+#endif /* (DEBUG_VOC) */
 	}
 	else
 	{

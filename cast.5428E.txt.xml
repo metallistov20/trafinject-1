@@ -55,11 +55,16 @@
 			<Config_Backup>
 			</Config_Backup>
 			<Firmware_Upgrade>
+				URL="/userRpm/FirmwareRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd"
+				URL="/help/FirmwareHelpRpm.htm"
 			</Firmware_Upgrade>
+			<Firmware_Upgrade_backdraft>
+				URL="/userRpm/FirmwareUpdateTempRpm.htm?_tid_c812dfebbc936bbd"
+			</Firmware_Upgrade_backdraft>
 			<System_Reboot>
-				URL="/userRpm/RestoreRpm.htm?s_userlevel=1@_tid_="
-				URL="/userRpm/ReiniRstAdRpm.htm?restore=Reset@_tid_="
-				URL="/userRpm/ReiniRstAdTempRpm.htm?_tid_="
+				URL="/userRpm/RestoreRpm.htm?s_userlevel=1@_tid_=c812dfebbc936bbd"
+				URL="/userRpm/ReiniRstAdRpm.htm?restore=Reset@_tid_=c812dfebbc936bbd"
+				URL="/userRpm/ReiniRstAdTempRpm.htm?_tid_=c812dfebbc936bbd"
 			</System_Reboot>
 			<System_Reset>
 			</System_Reset>

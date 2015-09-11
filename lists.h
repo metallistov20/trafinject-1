@@ -93,7 +93,9 @@ typedef struct _XmlAuxType
 
 #define DeleteXmlAuxEx(x) _DeleteXmlAuxEx(__func__, (x))
 
-#define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
+#if (0)
+	#define XmlAuxCreate(x) _XmlAuxCreate(__func__, (x))
+#endif /* (0) */
 
 #define XmlAuxCreateEx() _XmlAuxCreateEx(__func__)
 
