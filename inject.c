@@ -111,46 +111,18 @@ xmlDoc *doc = NULL;
 */
 int iOpenSite()
 {
-#if (0)
-	/* Create URL for first POST injection  */
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	strcat (cUrl1, "/logon/LogonRpm.htm");
-	DURL("%s: iOpenSite: cUrl1 = %s\n", cArg0, cUrl1);
-
-
-	/* Create URL for second POST injection  */
-	strcpy (cUrl2, "http://");
-	strcat (cUrl2, cIpAddr);
-	strcat (cUrl2, "/");
-	DURL("%s: iOpenSite: cUrl2 = %s\n", cArg0, cUrl2) ;
-
-
-	/* Write user autentication data, attention (not '-u <parameter>') */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, cPostMethodString);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)strlen(cPostMethodString));
-	res = curl_easy_perform(curl);
-
-	/* Write tail of autentication data, results in backflow of HTTP traffic, containing t_gID */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, cPostMethodString2);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)strlen(cPostMethodString2));
-	res = curl_easy_perform(curl);
-
-	/* Now the site is opened */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <TL-SL5428E> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "TL-SL5428E");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrlEx(pUrlChain, 1);
-#endif /* (0) */
 }
 
 /*
@@ -159,51 +131,18 @@ int iOpenSite()
 */
 int iCloseSite()
 {
-#if (0)
-//TODO: CHECK IF IT IS NECESSARY ON L2-MANAGED SWITCHES. ASSUMING THAT IS.
-	strcpy (cUrlScc, "http://");
-	strcat (cUrlScc, &cIpAddr[0]);
-	strcat (cUrlScc, "/userRpm/SystemInfoRpm.htm?t=both&_tid_=");
-	strcat (cUrlScc, cAny);
-	DURL("%s: cUrlScc = %s\n", cArg0, cUrlScc) ;
-
-	curl_easy_setopt(curl, CURLOPT_URL, cUrlScc);
-	res = curl_easy_perform(curl);
-
-
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, (char*)cIpAddr);
-	strcat (cUrl1, "/userRpm/Logout.htm");
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	strcpy (cUrl2, "http://");
-	strcat (cUrl2, cIpAddr);
-	strcat (cUrl2, "/");
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-
-	/* Post reference to calling code (this results on execution of logging current user out) */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1);
-	res = curl_easy_perform(curl);
-
-	/* Finalize the HTTP-exchange with closed site (provides cosy and tide finalization of current session) */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* Now the site is closed, secure session is terminated, and there's no other way to call 
-	iCreateSnmp(), iSaveSite(), etc.. unless the iOpenSite() is called again. */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <Logout> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "Logout");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrlEx(pUrlChain, 0);
-#endif /* (0) */
 }
 
 /*
@@ -217,67 +156,18 @@ int iCloseSite()
 */
 int iCreateSnmp()
 {
-#if (0)
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	strcpy (cUrl2, cUrl1);
-	strcat (cUrl2, "/userRpm/SNMPv3CommunityConfigRpm.htm");
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-	strcpy (cUrl3, cUrl2);
-	strcat (cUrl3, "?s_userlevel=1&_tid_=");
-	strcat (cUrl3, cTid);
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-	strcpy (cUrl4, cUrl2);
-	strcat (cUrl4, "?txt_comname=");
-	strcat (cUrl4, cSnmp);
-	strcat (cUrl4, "&comRight=2&comView=0&button=Add&_tid_=");
-	strcat (cUrl4, cTid);
-	DURL("%s: cUrl4 = %s\n", cArg0, cUrl4);
-
-	strcpy (cUrl5, cUrl1);
-	strcat (cUrl5, "/userRpm/SNMPv3GlobalConfigRpm.htm?snmpState=1&button=stateSubmit&_tid_=");
-	strcat (cUrl5, cTid);
-	DURL("%s: cUrl5 = %s\n", cArg0, cUrl5);
-
-
-	/* Ener site TODO: CHECK IF 'CURLOPT_USERPWD' IS NEEDED. ASSUMING THAT IS. */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	curl_easy_setopt(curl, CURLOPT_USERPWD, "admin:admin");
-	res = curl_easy_perform(curl);
-
-	/* Generate community-generation-page */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* Link it with its rID */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-
-	/* Further preparation */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl4);
-	res = curl_easy_perform(curl);
-
-	/* Finally make a Comunity with RW rights */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl5);
-	res = curl_easy_perform(curl);
-
-	/* SNMP gruop created */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <SNMP_Community> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "SNMP_Community");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
-#endif /* (0) */
 }
 
 /*
@@ -289,62 +179,18 @@ int iCreateSnmp()
 */
 int iSaveSite()
 {
-#if (0)
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1) ;
-
-	/* strings like : userRpm/ConfigsaveRpm.htm?s_userlevel=1&_tid_=dd9ac104c8e66d9a&_tid_=dd9ac104c8e66d9a */
-	strcpy (cUrl3, cUrl1);
-	strcat (cUrl3, "/userRpm/ConfigsaveRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl3, cTid);
-	strcat (cUrl3, "&_tid_=");
-	strcat (cUrl3, cTid);
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-	/* strings like : userRpm/ConfigsaveImg.htm HTTP/1.1  */
-	strcpy (cUrl4, cUrl1);
-	strcat (cUrl4, "/userRpm/ConfigsaveImg.htm");
-	DURL("%s: cUrl4 = %s\n", cArg0, cUrl4);
-
-	/* strings like : userRpm/ConfigsaveFileRpm.htm?_tid_=ce263c00cb83ba57 HTTP/1.1  */
-	strcpy (cUrl2, cUrl1);
-	strcat (cUrl2, "/userRpm/ConfigsaveFileRpm.htm?_tid_=");
-	strcat (cUrl2, cTid);
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-
-	/* Enter site TODO: CHECK IF 'CURLOPT_USERPWD' IS NEEDED. ASSUMING THAT IS. */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	curl_easy_setopt(curl, CURLOPT_USERPWD, "admin:admin");
-	res = curl_easy_perform(curl);
-
-	/* Save */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-
-	/* Generate button */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl4);
-	res = curl_easy_perform(curl);
-
-	/* Wait for responce to arrive. TODO: CHECK IF IT IS NECESSARY ON L2-MANAGED SWITCHES. ASSUMING THAT IS. */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* Chages on site were saved */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <Save_Config> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "Save_Config");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
-	//return DeployUrlEx(pUrlChain, 0);
+	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
-#endif /* (0) */
 }
 
 /*
@@ -419,197 +265,64 @@ int iUpgradeFirmware()
 }
 
 /* 
-
 Performs an ACL settings (group creation). Tested on switches: TL-SL2428 (TODO: to be tested on TL-SL2218, TL-SL5428E).
-
 */
 int iAclGroup()
 {
-#if (0)
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	strcpy (cUrl2, cUrl1);
-	strcat (cUrl2, "/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl2, cTid);
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-	strcpy (cUrl3, cUrl1);
-	strcat (cUrl3, "/userRpm/ACLRuleCreateRpm.htm?submit=Submit&aclId=");
-	strcat (cUrl3, cAcl);
-	strcat (cUrl3, "&ruleOrder=1&_tid_=");
-	strcat (cUrl3, cTid);
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-	/* Enter site TODO: CHECK IF 'CURLOPT_USERPWD' IS NEEDED. ASSUMING THAT IS. */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	curl_easy_setopt(curl, CURLOPT_USERPWD, "admin:admin");
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 1 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 2 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-#else
+	/* Put XML section <ACL_Create> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "ACL_Create");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
-#endif /* (0) */
 }
 
 /* 
-
 Issue reboot command. Tested on switches: TL-SL2428, TL-SL2218, TL-SL5428E.
-
 */
 int iRebootSwitch()
 {
-#if (0)
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	strcat (cUrl1, "/userRpm/RestoreRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl1, cTid);
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	strcpy (cUrl2, "http://");
-	strcat (cUrl2, cIpAddr);
-	strcat (cUrl2, "/userRpm/ReiniRstAdRpm.htm?restore=Reset&_tid_=");
-	strcat (cUrl2, cTid);
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-	strcpy (cUrl3, "http://");
-	strcat (cUrl3, cIpAddr);
-	strcat (cUrl3, "/userRpm/ReiniRstAdTempRpm.htm?_tid_=");
-	strcat (cUrl3, cTid);
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-	/* TODO: add comment 1 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 2 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 3 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-
-	/*  TODO: add comm */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <System_Reboot> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "System_Reboot");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
-#endif /* (0) */
 }
 
 /* 
-
 Set a static IP address with subnet mask. 
 
 Was tested on TL-SL2428, TL-SL2218, TL-SL5428E.
-
 */
 int iAssignIp()
 {
-#if (0)
-	/* TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	strcat (cUrl1, "/SystemInfoRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl1, cTid);
-	strcat (cUrl1, "&_tid_=");
-	strcat (cUrl1, cTid);	
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	/* Enter Tab <IP v 4 address> */
-	strcpy (cUrl2, "http://");
-	strcat (cUrl2, cIpAddr);
-	strcat (cUrl2, "/userRpm/SystemIpRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl2, cTid);
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-	/* Prepare envelope with new address and subnem mask (adn rest) */
-	strcpy (cUrl3, "http://");
-	strcat (cUrl3, cIpAddr);
-	strcat (cUrl3, "/userRpm/SystemIpRpm.htm?ip_mode=0&ip_mgmt_vlanid=1&ip_address=");
-	strcat (cUrl3, cNewIpAddr);
-	strcat (cUrl3, "&ip_mask=");
-	strcat (cUrl3, cMask);
-	strcat (cUrl3, "&ip_gateway=&submit=Apply&_tid_=");
-	strcat (cUrl3, cTid);
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-#if (1)
-// TODO: L4 (TCP) generates retransmission here. Why?
-// 192.168.0.138	HTTP	638	GET /userRpm/SystemIpRpm.htm?ip_mode=0&ip_mgmt_vlanid=1&ip_address=192.168.0.139&ip_mask=255.255.255.0&ip_gateway=&submit=Apply&_tid_=88cd6bf5f8f06e81
-// 192.168.0.139
-
-	/* Target address is already new. TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
-	strcpy (cUrl5, "http://");
-	strcat (cUrl5, cNewIpAddr);
-	strcat (cUrl5, "/");
-	DURL("%s: cUrl5 = %s\n", cArg0, cUrl5);
-#endif /* (0) */
-
-	/* Target address is already new */
-	strcpy (cUrl4, "http://");
-	strcat (cUrl4, cNewIpAddr);
-	strcat (cUrl4, "/userRpm/SystemInfoRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl4, cTid);
-	DURL("%s: cUrl4 = %s\n", cArg0, cUrl4);
-
-	/* TODO: add comment 1 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 2 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 3 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-
-	/*  TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl5);
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 4 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl4);
-	res = curl_easy_perform(curl);
-
-
-	/*  TODO: add comm */
-	return INJ_SUCCESS;
-#else
+	/* Put XML section <System_IP> into structure <pUrlChain> */
 	parse_xml_cast(root_element, "System_IP");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */	
 
+	/* Put URLs into wire */
 	res= DeployUrl(pUrlChain);
 
+	/* If sending first portion of URLs failed then entire procedure failed */ 
 	if (res != CURLE_OK)
 	{
 		DURL("%s: direct part of SetStaticIp failed ERR_CODE(%d)\n", "", res);
@@ -617,30 +330,33 @@ int iAssignIp()
 		return res;
 
 	}
+
+	/* Otherwise, clean structures for second portion */
 	DeleteUrlEx(&pUrlChain);
 
 	memset(&cIpAddr[0],0,MAX_IP_SIZE);
 	memcpy(cIpAddr, ip_address, MAX_IP_SIZE);
 
-	
+	/* Put XML section <System_IP_backdraft> into structure <pUrlChain> */	
 	parse_xml_cast(root_element, "System_IP_backdraft");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	res = DeployUrl(pUrlChain);
 
+	/* If sending second portion of URLs (a.k.a. 'backfraft' traffic) failed then verbose */ 
 	if (res != CURLE_OK)
 	{
 		DURL("%s: reverse part of SetStaticIp failed ERR_CODE(%d)\n", "", res);
 	}
 
 	return res;
-
-#endif /* (0) */
 }
 
 int iBindMacIp()
@@ -652,68 +368,22 @@ int iBindMacIp()
 }
 
 /* 
-
 Not tested. TODO: test on 2218, 2428, 5428E
-
 */
 int iEnablePort()
 {
-#if (0)
-	#if (0)
-	//TODO: remove what is below
-	 GET /userRpm/SystemInfoRpm.htm?t=port&_tid_=58b10980f6f32c2f
-	 GET /userRpm/PortStatusSetRpm.htm?s_userlevel=1&_tid_=58b10980f6f32c2f
-	 GET /userRpm/PortStatusSetRpm.htm?txt_ipaddr=&state=1&spd=0&flowctrl=0&chk_1=1&chk_2=1&chk_3=1&submit=Apply&_tid_=58b10980f6f32c2f&t_port_name= 
-	#endif /* (0) */
-
-	/* TODO: add comment */
-	strcpy (cUrl1, "http://");
-	strcat (cUrl1, cIpAddr);
-	strcat (cUrl1, "/userRpm/SystemInfoRpm.htm?t=port&_tid_=");
-	strcat (cUrl1, cTid);
-	DURL("%s: cUrl1 = %s\n", cArg0, cUrl1);
-
-	/* TODO: CHECK IF MANDATORY. ASSUMING THAT IS. */
-	strcpy (cUrl2, "http://");
-	strcat (cUrl2, cIpAddr);
-	strcat (cUrl2, "/userRpm/PortStatusSetRpm.htm?s_userlevel=1&_tid_=");
-	strcat (cUrl2, cTid);
-	DURL("%s: cUrl2 = %s\n", cArg0, cUrl2);
-
-	/* Prepare message with new address and subnem mask (and rest) */
-	strcpy (cUrl3, "http://");
-	strcat (cUrl3, cIpAddr);
-	strcat (cUrl3, "/userRpm/PortStatusSetRpm.htm?txt_ipaddr=&state=1&spd=0&flowctrl=0&chk_1=1&chk_2=1&chk_3=1&submit=Apply&_tid_=");
-	strcat (cUrl3, cTid);
-	strcat (cUrl3, "&t_port_name= ");
-	DURL("%s: cUrl3 = %s\n", cArg0, cUrl3);
-
-	/* TODO: add comment 1 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl1 );
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 2 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl2);
-	res = curl_easy_perform(curl);
-
-	/* TODO: add comment 3 */
-	curl_easy_setopt(curl, CURLOPT_URL, cUrl3);
-	res = curl_easy_perform(curl);
-
-	/* Opetation is not yet implemented */
-	return INJ_SUCCESS;
-#else
-	// TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN?
+	/* Put XML section <Port_Enable> into structure <pUrlChain>.  TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN? */	
 	parse_xml_cast(root_element, "Port_Enable");
 
+	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
 #endif /* (0) */
 
+	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
-#endif /* (0) */
 }
 
 
@@ -887,7 +557,7 @@ int iOption;
 	} /* Command line arguments were parsed */
 
 
-	/* Name of XML file to parse must be given */
+	/* Ensure that file <cast.XXXXX.txt.xml>. Generated by <make_xml.sh> */
 	if ( NULL == cXmlName )
 	{
 		DCOMMON("%s: ERROR: name of XML file to parse should be passed on command line\n", cArg0);
@@ -895,16 +565,7 @@ int iOption;
 		return INJ_PAR_ERROR;
 	}
 
-#if (0)
-	/* TODO: find better place for this block */
-	if (INJ_SUCCESS != XmlAuxCreate(AUX_FNAME)) 
-	{
-		DCOMMON("%s: ERROR: no rules to handle (%s); check if (%s) exists\n", cArg0, cXmlName, AUX_FNAME);
-
-		return INJ_NOAUX_ERROR;
-	}
-#else
-	/* TODO: find better place for this block */
+	/* To this moment <voc.c> and <voc.h> are nearby, otherwise <autogen.cmd+make> was failed */
 	if (INJ_SUCCESS != XmlAuxCreateEx() ) 
 	{
 		DCOMMON("%s: ERROR: no rules to handle (%s) learned\n", cArg0, cXmlName);
@@ -912,13 +573,10 @@ int iOption;
 		return INJ_NOAUX_ERROR;
 	}
 
-#endif /* (0) */
-
-
 	/* Check potential ABI mismatches between the version it was compiled for and the actual shared library used */
 	LIBXML_TEST_VERSION
 
-	/* Parse the file and get the DOM */
+	/* Get the contents of <cast.XXXXX.txt.xml> into <doc> */
 	doc = xmlReadFile(cXmlName, NULL, 0);
 
 	if (NULL == doc)
@@ -928,14 +586,13 @@ int iOption;
 		return INJ_XML_ERROR;
 	}
 
-	/*Get the root element node */
+	/* Get the root node of the XML data stored in the <doc> */
 	root_element = xmlDocGetRootElement(doc);
 
-	/* At this time point we assume all parameters parsed OK, so let issu our URL injection */
-	curl = curl_easy_init();
-
-	if(curl)
+	if(NULL != ( curl = curl_easy_init() ) )
 	{
+
+		/* At this time point we assume all parameters parsed OK, so let's call inj. primitives */
 		switch (iOperation)
 		{
 			case DO_OPEN_OP:
@@ -980,15 +637,19 @@ int iOption;
 
 		/* Close URL lib */
 		curl_easy_cleanup(curl);
+
+		/* Delete entire list with URLs along with its compounds */
+		DeleteUrlEx(&pUrlChain);
+
 	}
+	else
+	{
+		DCOMMON("%s: Can't initialize lib cURL, so can't proceed \n", cArg0);
+	}	
 
-
-	/* Delete entire list with URLs along with its compounds */
-	DeleteUrlEx(&pUrlChain);
 
 	/* Delete vocabuilary, et al*/
 	DeleteXmlAuxEx(&pAuxiliary);
-
 
 	/* Free the document */
 	xmlFreeDoc(doc);
@@ -998,5 +659,6 @@ int iOption;
 
  	exit (0);
 
+	/* Basically, is not seen; but is kept here for accuracy */
 	DCOMMON("%s: this line is not seen\n", cArg0, iOperation);
 }

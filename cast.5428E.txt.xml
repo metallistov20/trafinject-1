@@ -279,7 +279,7 @@
 			<ACL_Summary>
 			</ACL_Summary>
 			<ACL_Create>
-				URL=""
+				URL="/"
 				URL="/userRpm/ACLRuleCreateRpm.htm?s_userlevel=1@_tid_=58b10980f6f32c2f"
 				URL="/userRpm/ACLRuleCreateRpm.htm?submit=Submit@aclId=aclid@ruleOrder=1@_tid_=58b10980f6f32c2f"
 			</ACL_Create>
@@ -358,6 +358,11 @@
 			<SNMP_User>
 			</SNMP_User>
 			<SNMP_Community>
+				URL="/"
+				URL="/userRpm/SNMPv3CommunityConfigRpm.htm"
+				URL="/userRpm/SNMPv3CommunityConfigRpm.htm?s_userlevel=1@_tid_=6666888"
+				URL="/userRpm/SNMPv3CommunityConfigRpm.htm?txt_comname=Smth@comRight=2@comView=0@button=Add@_tid_=6666888"
+				URL="/userRpm/SNMPv3GlobalConfigRpm.htm?snmpState=1@button=stateSubmit@_tid_=6666888"
 			</SNMP_Community>
 		</SNMP_Config>
 		<Notification>

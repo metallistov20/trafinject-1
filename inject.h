@@ -28,6 +28,7 @@ CURL *curl;
 /* Flag to define extra payload should be attached  */
 int iExtra;
 
+/* Extra payload for POST messages (address of string) */
 char ** pcPtr2Extra1, **pcPtr2Extra2;
 
 #endif /* _INJECT_H_ */
