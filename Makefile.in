@@ -63,7 +63,7 @@ build:	compute_tabs gen_vocabulary gen_voHabulary voc.c voc.h voc.obj inject
 
 clean:
 	rm -fv voc.c voc.h inject gen_vocabulary gen_voHabulary compute_tabs config.log config.status configure  *.in~ *.sh~ *.c~ *.h~ *.xml~ *.o *.log *.obj
-	rm -rfv autom4te.cache Makefile
+	rm -rfv autom4te.cache 
 
 
 gen_vocabulary: gen_vocabulary.c

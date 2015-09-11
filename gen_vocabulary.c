@@ -1,7 +1,27 @@
+/*
+ (C) Copyright 2015, TP-Link Inc, konstantin.mauch@tp-link.com
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of
+ the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT any WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ MA 02111-1307 USA
+*/
+
 #include <stdio.h>
 
 #include <sys/stat.h>
 
+/* TODO: should come as command line argument */
 #define FNAME "cast.5428E.txt.voc"
 
 int main()
@@ -45,11 +65,11 @@ struct stat fileStats;
 			{
 				i++;
 
-				fscanf(fp, "%s\n", &c);
+				fscanf(fp, "%s\n", &c[0]);
 
 				printf("/* variable for %d%s keyword found in <%s> file */\n", i, (i==1)?"st":((i==2)?"nd":((i==3)?"rd":"th")), FNAME );
 
-				printf("char %s [MAX_STR_SIZE];\n\n", &c);
+				printf("char %s [MAX_STR_SIZE];\n\n", &c[0]);
 			}
 			fclose(fp);
 
@@ -65,15 +85,15 @@ struct stat fileStats;
 			{ 
 			char d[512];
 
-				printf("/* This array provides correspondency between name of variable name and its address %s*/ \n");
+				printf("/* This array provides correspondency between name of variable name and its address */ \n");
 
 				printf("struct _QuineType QuineArray[] =\n{\n");
 
 				while ( !feof(fp) )
 				{
-					fscanf(fp, "%s\n", &d);
+					fscanf(fp, "%s\n", &d[0]);
 
-					printf("\t{ &%s   , \"_tid_\" },\n\n", &d);
+					printf("\t{ &%s   , \"_tid_\" },\n\n", &d[0]);
 				}
 
 				fclose(fp);
