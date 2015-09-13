@@ -28,6 +28,7 @@
 
 int main(int argc, char *argv[])
 {
+/* Target char for which we will search in each line */
 char c = '\t';
 
 char * line = NULL;
@@ -40,13 +41,20 @@ size_t len = 0;
 
 		char * s = line;
 
+		/* For each string till the end of text file */
 		while (*s)
+
+			/* Check each symbol in the string */
 			if(*s++ == c)
+
+				/* If founf then increase counter */
 				count++;
 
+		/* Print to STDOUT: firstly - counter (anount of target chars found in this string), then - string itself */
 		printf("%d %s", count, line);
 	}
 
+	/* Release mewory allocated by <getline> */
 	if(line)
 		free(line);
 

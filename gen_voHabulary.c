@@ -75,6 +75,5 @@ struct stat fileStats;
 		}
 	}
 
-	return 0;  
-
+	return 0;
 }

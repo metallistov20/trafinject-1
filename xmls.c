@@ -37,51 +37,55 @@ pUrlChainType  pUrlChain;
 /* Pointer to auxiliary data for current XML file  */
 pXmlAuxType pAuxiliary;
 
-
+/* Treansform string to tocken; designed for serial recursive calling */
 static char * strTokIdx(char *s1, const char *delimit, int iIdx)
 {
 char ** lastToken;
 
 char *tmp;
 
-    lastToken =  &(aLastToken[iIdx]) ;
+	lastToken =  &(aLastToken[iIdx]) ;
 
-//TODO: why can't initialile here?    *lastToken = NULL;
+	/* TIP: can't initialize (*lastToken = NULL;) here */
 
-    /* Skip leading delimiters if new string. */
-    if ( s1 == NULL )
-    {
-        s1 = *lastToken;
+	/* Skip leading delimiters if new string. */
+	if ( s1 == NULL )
+	{
+		s1 = *lastToken;
 
-        if (s1 == NULL)
+		if (s1 == NULL)
 
-            return NULL;
-    }
-    else
-        s1 += strspn(s1, delimit);
+			return NULL;
+	}
+	else
+		s1 += strspn(s1, delimit);
 
 
-    /* Find end of segment */
-    tmp = strpbrk(s1, delimit);
+	/* Find end of segment */
+	tmp = strpbrk(s1, delimit);
 
-    if (tmp)
-    {
-        /* Found another delimiter, split string and save state. */
-        *tmp = '\0';
+	if (tmp)
+	{
+		/* Found another delimiter, split string and save state. */
+		*tmp = '\0';
 
-        *lastToken = tmp + 1;
-    }
-    else
-    {
-        /* Last segment, remember that. */
-        *lastToken = NULL;
-    }
+		*lastToken = tmp + 1;
+	}
+	else
+	{
+		/* Last segment, remember that. */
+		*lastToken = NULL;
+	}
 
-    return s1;
+	return s1;
 }
 
+/* Tmp. ponter to record in Vocabilary struct */
 pCompoundType pTmpVoc;
 
+/* Given a keyword <pcToken> checks is this keyword is present in the vocabulary <pVocabulary> 
+   (i.e. compares it with <pVocabulary->pData>), and once present returns extended string
+   <keyword=value>, where value is taken from its address pointed by <pVocabulary->pVar>. */
 char * _parseToken (char * pcToken)
 {
 char * pcNewToken;
@@ -138,8 +142,12 @@ char * pcNewToken;
 
 	return pcToken;
 }
-
-
+/*
+  Function splits string divided by '@' characters into series of keyword-based strings.
+  The presence or absence of keyword is altimately verified in <_parseToken>.
+  For each keyword enrolls a construction <keyword=value> into URL-Compound sructure.
+  Once keyword was not detected within current string then enrolls this string into  
+  URL-Compound sructure without changes.*/
 static void _unat(char * tkn)
 {
 char *_localCopy;
@@ -186,6 +194,10 @@ pUrlChainType pUrlLastChain = pUrlChain;
 	free(_localCopy);
 }
 
+/* Function removes all <tab> withing single string of XML block; Once removed, extracts
+   value out of "URL=value" string. Then passes thins string to <_unat>.
+   TODO: add processing of 0-byte long tokens, which is needed to process URLs like "http://xxx.xxx.xxx.xxx",
+   i.e. those without any payload and backslash on the end. */
 static void _untab(char * tkn)
 {
 char *_localCopy;
@@ -233,6 +245,7 @@ char *cParcedOut;
 	free(_localCopy);
 }
 
+/* Function removes all <newline> withing entire XML block; once removed - passes string for firtherprocessing to <_untab> */
 static void _unret(char * tkn)
 {
 char *_localCopy;
