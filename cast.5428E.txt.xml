@@ -81,14 +81,40 @@
 	<Switching>
 		<Port>
 			<Port_Config>
+			    URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1&_tid_=06b2cec0acba17ec"
+			    URL="/help/PortStatusSetHelpRpm.htm"
+			    URL="/userRpm/PortStatusSetRpm.htm?txt_ipaddr=&state=0&spd=0&flowctrl=0&chk_1=1&chk_3=1&chk_5=1&chk_7=1&chk_9=1&submit=Apply&_tid_=06b2cec0acba17ec&t_port_name= "
 			</Port_Config>
 			<Port_Mirror>
+			    URL="/userRpm/multiMirrorShowRpm.htm?s_userlevel=1&_tid_=2ed18b063ac6b1b0"
+			    URL="/help/multiMirrorShowHelpRpm.htm"
+			    URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1&_tid_=2ed18b063ac6b1b0"
+			    URL="/help/PortMirrorHelpRpm.htm"
+			    URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1&mirrnumber=1&mirrtoport=0&mirrMode=0&cb_1=on&cb_3=on&cb_5=on&cb_7=on&cb_9=on&submit=Submit&_tid_=2ed18b063ac6b1b0"
 			</Port_Mirror>
 			<Port_Security>
+			    URL="/userRpm/AddressFormPortSecurityRpm.htm?s_userlevel=1&_tid_=2ed18b063ac6b1b0"
+			    URL="/help/AddressFormPortSecurityHelpRpm.htm"
+			    URL="/userRpm/AddressFormPortSecurityRpm.htm?n=4&list1=277&list2=0&list3=0&max=64&mode=4&status=2&button=submit&_tid_=2ed18b063ac6b1b0"
+			    URL="/help/AddressFormPortSecurityHelpRpm.htm"
 			</Port_Security>
 			<Port_Isolation>
+				URL="/userRpm/PortIsolationRpm.htm?s_userlevel=1&_tid_=ad12d1aa4796e597"
+				URL="/help/PortIsolationHelpRpm.htm"
+				URL="/userRpm/PortIsolationRpm.htm?selected_port=1&chk0_1=1&chk0_3=1&chk0_5=1&chk0_7=1&chk0_9=1&chk0_11=1&chk0_13=1&submit=Apply&_tid_=ad12d1aa4796e597"
+				URL="/help/PortIsolationHelpRpm.htm"
 			</Port_Isolation>
-			<Loopback_Detection>
+			<Loopback_Detection_GC>
+				URL="/userRpm/LoopbackDetectionRpm.htm?s_userlevel=1&_tid_=ad12d1aa4796e597"
+				URL="/help/LoopbackDetectionHelpRpm.htm"
+				URL="/userRpm/LoopbackDetectionRpm.htm?global_enable=0&txt_interval=30&txt_recovery_time=3&auto_refresh_enable=0&txt_refresh_interval=3&txt_portID=&state=3&pm=3&rm=3&chk_1=1&chk_3=1&chk_5=1&chk_7=1&chk_9=1&p_submit=Apply&_tid_=ad12d1aa4796e597"
+				URL="/help/LoopbackDetectionHelpRpm.htm"
+			</Loopback_Detection>
+			<Loopback_Detection_PC>
+				URL="/userRpm/LoopbackDetectionRpm.htm?s_userlevel=1&_tid_=ad12d1aa4796e597"
+				URL="/help/LoopbackDetectionHelpRpm.htm"
+				URL="/userRpm/LoopbackDetectionRpm.htm?global_enable=0&txt_interval=30&txt_recovery_time=3&auto_refresh_enable=0&txt_refresh_interval=3&g_submit=Apply&txt_portID=&state=0&pm=0&rm=0&_tid_=ad12d1aa4796e597"
+				URL="/help/LoopbackDetectionHelpRpm.htm"
 			</Loopback_Detection>
 		</Port>
 		<LAG>
@@ -434,8 +460,12 @@
 	<Maintenance>
 		<System_Monitor>
 			<CPU_Monitor>
+			    /userRpm/sysMoniterCpuSpyRpm.htm?s_userlevel=1&_tid_=97b90a2b3dec360b
+			    /userRpm/sysMoniterCpuSpyIframeRpm.htm (10 times or so)
 			</CPU_Monitor>
 			<Memory_Monitor>
+			    /userRpm/sysMoniterMemSpyRpm.htm?s_userlevel=1&_tid_=d6386e4aea66a95f
+			    /userRpm/sysMoniterMemSpyIframeRpm.htm (10 times or so)
 			</Memory_Monitor>
 		</System_Monitor>
 		<Log>
