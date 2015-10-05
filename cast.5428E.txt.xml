@@ -152,21 +152,87 @@
 			</LACP_Config>
 		</LAG>
 		<Traffic_Monitor>
-			<Traffic_Summary>
-			</Traffic_Summary>
-			<Traffic_Statistics>
-			</Traffic_Statistics>
+			<Traffic_Summary_Apply>
+				URL="/userRpm/MibBrowseRpm.htm?s_userlevel=1@_tid_=376773907ad0f162
+				URL="/help/MibBrowseHelpRpm.htm
+				URL="/userRpm/MibBrowseRpm.htm?refresh_open=0@refresh_frequency=30@submit=Apply@txt_ipaddr=@_tid_=376773907ad0f162
+				URL="/help/MibBrowseHelpRpm.htm
+			</Traffic_Summary_Apply>
+			<Traffic_Summary_Refresh>
+				URL="/userRpm/MibBrowseRpm.htm?s_userlevel=1@_tid_=376773907ad0f162"
+				URL="/help/MibBrowseHelpRpm.htm"
+				URL="/userRpm/MibBrowseRpm.htm?refresh_open=0@refresh_frequency=30@_tid_=376773907ad0f162"
+				URL="/help/MibBrowseHelpRpm.htm"
+			</Traffic_Summary_Refresh>
+			<Traffic_Statistics_Apply>
+				URL="/userRpm/MibCounterRpm.htm?s_userlevel=1@_tid_=376773907ad0f162"
+				URL="/help/MibCounterHelpRTKRpm.htm"
+				URL="/userRpm/MibCounterRpm.htm?refresh_open=0@refresh_frequency=30@submit=Apply@currentPort=1@_tid_=376773907ad0f162"
+				URL="/help/MibCounterHelpRTKRpm.htm"
+			</Traffic_Statistics_Apply>
+			<Traffic_Statistics_Refresh>
+				URL="/userRpm/MibCounterRpm.htm?s_userlevel=1@_tid_=376773907ad0f162"
+				URL="/help/MibCounterHelpRTKRpm.htm"
+				URL="/userRpm/MibCounterRpm.htm?currentPort=1@_tid_=376773907ad0f162"
+				URL="/help/MibCounterHelpRTKRpm.htm"
+			</Traffic_Statistics_Refresh>
 		</Traffic_Monitor>
 		<MAC_Address>
 			<Address_Table>
+				URL="/userRpm/AddressFormDisplayRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDisplayHelpRpm.htm"
+				URL="/userRpm/AddressFormDisplayRpm.htm?c=1&mac=12-23-56-78-9A-BC&vid=1&port=1&type=1&button=display&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDisplayHelpRpm.htm"
 			</Address_Table>
-			<Static_Address>
-			</Static_Address>
-			<Dynamic_Address>
-			</Dynamic_Address>
-			<Filtering_Address>
-			</Filtering_Address>
+			<Static_Address_CRST>
+				URL="/userRpm/AddressFormStaticRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormStaticHelpRpm.htm"
+				URL="/userRpm/AddressFormStaticRpm.htm?mac=12-23-56-78-9A-BC&vid=1&port=18&button=Add&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormStaticHelpRpm.htm"
+			</Static_Address_CRST>
+			<Static_Address_SRCH_O>
+				URL="/userRpm/AddressFormStaticRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormStaticHelpRpm.htm"
+				URL="/userRpm/AddressFormStaticRpm.htm"
+				URL="/help/AddressFormStaticHelpRpm.htm"
+			</Static_Address_SRCH_O>
+			<Dynamic_Address_AGING>
+				URL="/userRpm/AddressFormDynamicRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDynamicHelpRpm.htm"
+				URL="/userRpm/AddressFormDynamicRpm.htm?time=300&button=aging&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDynamicHelpRpm.htm"
+			</Dynamic_Address_AGING>
+			<Dynamic_Address_SRCH_O>
+				URL="/userRpm/AddressFormDynamicRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDynamicHelpRpm.htm"
+				URL="/userRpm/AddressFormDynamicRpm.htm?mac=0&vid=0&port=0&button=lookup&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormDynamicHelpRpm.htm"
+			</Dynamic_Address_SRCH_O>
+			<Filtering_Address_FILTADDR>
+				URL="/userRpm/AddressFormFilterRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormFilterHelpRpm.htm"
+				URL="/userRpm/AddressFormFilterRpm.htm?mac=12-23-56-78-9A-BC&vid=1&button=Add&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormFilterHelpRpm.htm"
+			</Filtering_Address_FILTADDR>
+			<Filtering_Address_SRCH_O>
+				URL="/userRpm/AddressFormFilterRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormFilterHelpRpm.htm"
+				URL="/userRpm/AddressFormFilterRpm.htm?mac=0&vid=1&button=lookup&_tid_=a797641e13ff018a"
+				URL="/help/AddressFormFilterHelpRpm.htm"
+			</Filtering_Address_SRCH_O>
 		</MAC_Address>
+		<DHCP_Filtering_Enable>
+			URL="/userRpm/DhcpFilterRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+			URL="/help/DhcpFilterHelpRpm.htm"
+			URL="/userRpm/DhcpFilterRpm.htm?submit1=submit1&enable=1&_tid_=a797641e13ff018a"
+			URL="/help/DhcpFilterHelpRpm.htm"
+		</DHCP_Filtering_Enable>
+		<DHCP_Filtering_Apply>
+			URL="/userRpm/DhcpFilterRpm.htm?s_userlevel=1&_tid_=a797641e13ff018a"
+			URL="/help/DhcpFilterHelpRpm.htm"
+			URL="/userRpm/DhcpFilterRpm.htm?dhcpFilter=0&member1=on&member18=on&submit=Apply&_tid_=a797641e13ff018a"
+			URL="/help/DhcpFilterHelpRpm.htm"
+		</DHCP_Filtering_Apply>
 	</Switching>
 	<VLAN>
 		<n802.1Q_VLAN>
