@@ -108,22 +108,22 @@
 	<Switching>
 		<Port>
 			<Port_Config>
-			    URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=06b2cec0acba17ec"
-			    URL="/help/PortStatusSetHelpRpm.htm"
-			    URL="/userRpm/PortStatusSetRpm.htm?txt_ipaddr=@state=0@spd=0@flowctrl=0@chk_1=1@chk_3=1@chk_5=1@chk_7=1@chk_9=1@submit=Apply@_tid_=06b2cec0acba17ec@t_port_name= "
+				URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=06b2cec0acba17ec"
+				URL="/help/PortStatusSetHelpRpm.htm"
+				URL="/userRpm/PortStatusSetRpm.htm?txt_ipaddr=@state=0@spd=0@flowctrl=0@chk_1=1@chk_3=1@chk_5=1@chk_7=1@chk_9=1@submit=Apply@_tid_=06b2cec0acba17ec@t_port_name= "
 			</Port_Config>
 			<Port_Mirror>
-			    URL="/userRpm/multiMirrorShowRpm.htm?s_userlevel=1@_tid_=2ed18b063ac6b1b0"
-			    URL="/help/multiMirrorShowHelpRpm.htm"
-			    URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1@_tid_=2ed18b063ac6b1b0"
-			    URL="/help/PortMirrorHelpRpm.htm"
-			    URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1@mirrnumber=1@mirrtoport=0@mirrMode=0@cb_1=on@cb_3=on@cb_5=on@cb_7=on@cb_9=on@submit=Submit@_tid_=2ed18b063ac6b1b0"
+				URL="/userRpm/multiMirrorShowRpm.htm?s_userlevel=1@_tid_=2ed18b063ac6b1b0"
+				URL="/help/multiMirrorShowHelpRpm.htm"
+				URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1@_tid_=2ed18b063ac6b1b0"
+				URL="/help/PortMirrorHelpRpm.htm"
+				URL="/userRpm/multiMirrorSetRpm.htm?curIndex=1@mirrnumber=1@mirrtoport=0@mirrMode=0@cb_1=on@cb_3=on@cb_5=on@cb_7=on@cb_9=on@submit=Submit@_tid_=2ed18b063ac6b1b0"
 			</Port_Mirror>
 			<Port_Security>
-			    URL="/userRpm/AddressFormPortSecurityRpm.htm?s_userlevel=1@_tid_=2ed18b063ac6b1b0"
-			    URL="/help/AddressFormPortSecurityHelpRpm.htm"
-			    URL="/userRpm/AddressFormPortSecurityRpm.htm?n=4@list1=277@list2=0@list3=0@max=64@mode=4@status=2@button=submit@_tid_=2ed18b063ac6b1b0"
-			    URL="/help/AddressFormPortSecurityHelpRpm.htm"
+				URL="/userRpm/AddressFormPortSecurityRpm.htm?s_userlevel=1@_tid_=2ed18b063ac6b1b0"
+				URL="/help/AddressFormPortSecurityHelpRpm.htm"
+				URL="/userRpm/AddressFormPortSecurityRpm.htm?n=4@list1=277@list2=0@list3=0@max=64@mode=4@status=2@button=submit@_tid_=2ed18b063ac6b1b0"
+				URL="/help/AddressFormPortSecurityHelpRpm.htm"
 			</Port_Security>
 			<Port_Isolation>
 				URL="/userRpm/PortIsolationRpm.htm?s_userlevel=1@_tid_=ad12d1aa4796e597"
@@ -276,61 +276,68 @@
 				URL="/help/VlanSetHelpRpm.htm"
 			</VLAN_Config_>
 		</n802.1Q_VLAN>
-		<MAC_VLAN>
-			<MAC_VLAN>
-			</MAC_VLAN>
-			<Port_Enable>
-				 URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=58b10980f6f32c2f"
-				 URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=58b10980f6f32c2f"
-				 URL="/userRpm/PortStatusSetRpm.htmtxt_ipaddr=@state=1@spd=0@flowctrl=0@chk_1=1@chk_2=1@chk_3=1@submit=Apply@_tid_=58b10980f6f32c2f@t_port_name="
-			</Port_Enable>
-		</MAC_VLAN>
-		<Protocol_VLAN>
-			<Protocol_VLAN>
-			</Protocol_VLAN>
-			<Protocol_Template>
-			</Protocol_Template>
-			<Port_Enable>
-			</Port_Enable>
-		</Protocol_VLAN>
-		<VLAN_VPN>
-			<VPN_Config>
-			</VPN_Config>
-			<VLAN_Mapping>
-			</VLAN_Mapping>
-			<Port_Enable>
-			</Port_Enable>
-		</VLAN_VPN>
-		<Private_VLAN>
-			<PVLAN_Config>
-			</PVLAN_Config>
-			<Port_Config>
-			</Port_Config>
-		</Private_VLAN>
-		<GVRP>
-		</GVRP>
 	</VLAN>
 	<Spanning_Tree>
 		<STP_Config>
-			<STP_Config>
-			</STP_Config>
+			<STP_Config_Global>
+				URL="/userRpm/MSTPBasicCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPBasicCfgHelpRpm.htm"
+				URL="/userRpm/MSTPBasicCfgRpm.htm?enable=0@version=1@submit1=Apply@pri=32768@helloTime=2@maxAge=20@fwdDelay=15@txHold=5@maxHop=20@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPBasicCfgHelpRpm.htm"
+			</STP_Config_Global>
+			<STP_Config_Parameters>
+				URL="/userRpm/MSTPBasicCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPBasicCfgHelpRpm.htm"
+				URL="/userRpm/MSTPBasicCfgRpm.htm?enable=0@version=1@pri=32768@helloTime=2@maxAge=20@fwdDelay=15@txHold=5@maxHop=20@submit2=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPBasicCfgHelpRpm.htm"
+			</STP_Config_Parameters>
 			<STP_Summary>
+				URL="/userRpm/MSTPInfoRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/userRpm/MSTPInfoRpm.htm?instance=1@_tid_=3c2055372f69fd14"
 			</STP_Summary>
 		</STP_Config>
 		<Port_Config>
+			URL="/userRpm/MSTPPortCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+			URL="/help/MSTPPortCfgHelpRpm.htm"
 		</Port_Config>
 		<MSTP_Instance>
 			<Region_Config>
+				URL="/userRpm/MSTPRegionCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPRegionCfgHelpRpm.htm"
+				URL="/userRpm/MSTPRegionCfgRpm.htm?regionName=10-fe-ed-f9-97-8c@revision=0@submit=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPRegionCfgHelpRpm.htm"
 			</Region_Config>
-			<Instance_Config>
-			</Instance_Config>
+			<Instance_Config_Table>
+				URL="/userRpm/MSTPInstanceCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstanceCfgHelpRpm.htm"
+				URL="/userRpm/MSTPInstanceCfgRpm.htm?instance=@t_prio=@chk_1=1@chk_8=1@submit=Apply@vlan=@mstId=@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstanceCfgHelpRpm.htm"
+			</Instance_Config_Table>
+			<Instance_Config_Mapping>
+				URL="/userRpm/MSTPInstanceCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstanceCfgHelpRpm.htm"
+				URL="/userRpm/MSTPInstanceCfgRpm.htm?instance=@t_prio=@t_vlan=@vlan=1@mstId=8@submit1=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstanceCfgHelpRpm.htm"
+			</Instance_Config_Mapping>
 			<Instance_Port_Config>
+				URL="/userRpm/MSTPInstancePortCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstancePortCfgHelpRpm.htm"
+				URL="/userRpm/MSTPInstancePortCfgRpm.htm?sl_instance=1@txt_ipaddr=@t_prio=@t_path=@chk_1=1@chk_15=1@submit=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPInstancePortCfgHelpRpm.htm"
 			</Instance_Port_Config>
 		</MSTP_Instance>
 		<STP_Security>
 			<Port_Protect>
+				URL="/userRpm/MSTPPortSecurityCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPPortSecurityCfgHelpRpm.htm"
+				URL="/userRpm/MSTPPortSecurityCfgRpm.htm?txt_ipaddr=@sl_lp=0@sl_rp=0@sl_tcp=0@sl_bp=0@sl_bb=0@chk_1=1@chk_15=1@submit=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPPortSecurityCfgHelpRpm.htm"
 			</Port_Protect>
 			<TC_Protect>
+				URL="/userRpm/MSTPSecurityCfgRpm.htm?s_userlevel=1@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPSecurityCfgHelpRpm.htm"
+				URL="/userRpm/MSTPSecurityCfgRpm.htm?tcCount=20@tcTimer=5@submit=Apply@_tid_=3c2055372f69fd14"
+				URL="/help/MSTPSecurityCfgHelpRpm.htm"
 			</TC_Protect>
 		</STP_Security>
 	</Spanning_Tree>
@@ -508,12 +515,28 @@
 	<SNMP>
 		<SNMP_Config>
 			<Global_Config>
+				URL="/userRpm/SNMPv3GlobalConfigRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3GlobalConfigHelpRpm.htm"
+				URL="/userRpm/SNMPv3GlobalConfigRpm.htm?snmpState=1@button=stateSubmit@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3GlobalConfigHelpRpm.htm"
 			</Global_Config>
 			<SNMP_View>
+				URL="/userRpm/SNMPv3ViewConfigRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3ViewConfigHelpRpm.htm"
+				URL="/userRpm/SNMPv3ViewConfigRpm.htm?txt_viewName=Number_1@txt_mib_id=1@rd_type=0@button=Add@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3ViewConfigHelpRpm.htm"
 			</SNMP_View>
 			<SNMP_Group>
+				URL="/userRpm/SNMPv3GroupConfigRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3GroupConfigHelpRpm.htm"
+				URL="/userRpm/SNMPv3GroupConfigRpm.htm?txt_groupname=GroupName_1@snmpMode=1@snmpLevel=1@readView=0@writeView=0@notifyView=0@button=Add@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3GroupConfigHelpRpm.htm"
 			</SNMP_Group>
 			<SNMP_User>
+				URL="/userRpm/SNMPv3UserConfigRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3UserConfigHelpRpm.htm"
+				URL="/userRpm/SNMPv3UserConfigRpm.htm?userName=UserName_1@userType=1@groupName=GroupName_1@secMode=1@secLevel=1@authMode=0@privMode=0@button=Add@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3UserConfigHelpRpm.htm"
 			</SNMP_User>
 			<SNMP_Community>
 				URL="/"
@@ -525,16 +548,30 @@
 		</SNMP_Config>
 		<Notification>
 			<Notification_Config>
+				URL="/userRpm/SNMPv3NotificationConfigRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3NotificationHelpRpm.htm"
+				URL="/userRpm/SNMPv3NotificationConfigRpm.htm?ip=192.168.0.100@port=162@userName=username_1@mpModel=1@secLev=1@ntfyType=1@timeOut=0@reTry=0@button=add@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3NotificationHelpRpm.htm"
 			</Notification_Config>
-			<Traps_Config>
-			</Traps_Config>
 		</Notification>
 		<RMON>
 			<History_Control>
+				URL="/userRpm/SNMPv3RmonHistoryCtrlRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonHistoryCtrlHelpRpm.htm"
+				URL="/userRpm/SNMPv3RmonHistoryCtrlRpm.htm?sl_rmon_hisList_port=0@t_rmon_hisList_interval=@sl_rmon_hisList_status=0@chk_1=1@chk_12=1@submit=Apply@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonHistoryCtrlHelpRpm.htm"
 			</History_Control>
 			<Event_Config>
+				URL="/userRpm/SNMPv3RmonEventRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonEventHelpRpm.htm"
+				URL="/userRpm/SNMPv3RmonEventRpm.htm?sl_type=0@sl_status=0@chk_1=1@chk_12=1@submit=Apply@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonEventHelpRpm.htm"
 			</Event_Config>
 			<Alarm_Config>
+				URL="/userRpm/SNMPv3RmonAlarmRpm.htm?s_userlevel=1@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonAlarmHelpRpm.htm"
+				URL="/userRpm/SNMPv3RmonAlarmRpm.htm?sl_variable=1@sl_port=0@sl_type=0@t_riseThreshold=@t_fallThreshold=@sl_aType=0@t_interval=@sl_status=0@chk_1=1@chk_12=1@submit=Apply@_tid_=77a861d4f28c635b"
+				URL="/help/SNMPv3RmonAlarmHelpRpm.htm"
 			</Alarm_Config>
 		</RMON>
 	</SNMP>
