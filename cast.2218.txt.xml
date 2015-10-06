@@ -499,41 +499,41 @@
 		</ACL_Config>
 		<Policy_Config>
 			<Policy_Summary>
-				URL="/userRpm/PolicyShowRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicyShowRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/PolicyShowHelpRpm_Smart.htm"
-				URL="/userRpm/PolicyShowRpm.htm?&submit=delete&policyId=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicyShowRpm.htm?@submit=delete@policyId=1@_tid_=a12df7b344558a9c"
 				URL="/help/PolicyShowHelpRpm_Smart.htm"
 			</Policy_Summary>
 			<Policy_Create>
-				URL="/userRpm/PolicyCreateRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicyCreateRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/PolicyCreateHelpRpm.htm"
-				URL="/userRpm/PolicyCreateRpm.htm?submit=Submit&policyName=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicyCreateRpm.htm?submit=Submit@policyName=1@_tid_=a12df7b344558a9c"
 				URL="/help/PolicyCreateHelpRpm.htm"
 			</Policy_Create>
 			<Action_Create>
-				URL="/userRpm/PolicySetRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicySetRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/PolicySetHelpRpm_Smart.htm"
-				URL="/userRpm/PolicySetRpm.htm?submit=Submit&policyName=1&aclId=100&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PolicySetRpm.htm?submit=Submit@policyName=1@aclId=100@_tid_=a12df7b344558a9c"
 				URL="/help/PolicySetHelpRpm_Smart.htm"
 			</Action_Create>
 		</Policy_Config>
 		<Policy_Binding>
 			<Binding_Table>
-				URL="/userRpm/bindShowRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/bindShowRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/bindShowHelpRpm.htm"
-				URL="/userRpm/bindShowRpm.htm?&submit=select&showMode=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/bindShowRpm.htm?@submit=select@showMode=1@_tid_=a12df7b344558a9c"
 				URL="/help/bindShowHelpRpm.htm"
 			</Binding_Table>
 			<Port_Binding>
-				URL="/userRpm/portBindRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/portBindRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/portBindHelpRpm.htm"
-				URL="/userRpm/portBindRpm.htm?submit=Submit&policyName=1&port=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/portBindRpm.htm?submit=Submit@policyName=1@port=1@_tid_=a12df7b344558a9c"
 				URL="/help/portBindHelpRpm.htm"
 			</Port_Binding>
 			<VLAN_Binding>
-				URL="/userRpm/vlanBindRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/vlanBindRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/vlanBindHelpRpm.htm"
-				URL="/userRpm/vlanBindRpm.htm?submit=Submit&policyName=1&vlan=2&_tid_=a12df7b344558a9c"
+				URL="/userRpm/vlanBindRpm.htm?submit=Submit@policyName=1@vlan=2@_tid_=a12df7b344558a9c"
 				URL="/help/vlanBindHelpRpm.htm"
 			</VLAN_Binding>
 		</Policy_Binding>
@@ -614,55 +614,55 @@
 		</System_Monitor>
 		<Log>
 			<Log_Table>
-				URL="/userRpm/SyslogDisplayRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogDisplayRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogDisplayHelpRpm.htm"
-				URL="/userRpm/SyslogDisplayRpm.htm?module=0&level=0&button=display&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogDisplayRpm.htm?module=0@level=0@button=display@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogDisplayHelpRpm.htm"
 			</Log_Table>
 			<Local_Log>
-				URL="/userRpm/SyslogGlobalConfRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogGlobalConfRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogGlobalConfHelpRpm.htm"
-				URL="/userRpm/SyslogGlobalConfRpm.htm?sl_srv_level=7&sl_srvstatus=2&chk_1=1&submit=Apply&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogGlobalConfRpm.htm?sl_srv_level=7@sl_srvstatus=2@chk_1=1@submit=Apply@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogGlobalConfHelpRpm.htm"
 			</Local_Log>
 			<Remote_Log>
-				URL="/userRpm/SyslogServerRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogServerRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogServerHelpRpm.htm"
-				URL="/userRpm/SyslogServerRpm.htm?sl_srvstatus=1&chk_1=1&submit=Apply&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogServerRpm.htm?sl_srvstatus=1@chk_1=1@submit=Apply@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogServerHelpRpm.htm"
 			</Remote_Log>
 			<Backup_Log>
-				URL="/userRpm/SyslogFileExptRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/SyslogFileExptRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/SyslogFileExptHelpRpm.htm"
-				URL="/userRpm/Syslog.cfg?backlog=Backup+Log&_tid_=a12df7b344558a9c"
+				URL="/userRpm/Syslog.cfg?backlog=Backup+Log@_tid_=a12df7b344558a9c"
 			</Backup_Log>
 		</Log>
 		<Device_Diagnostics>
 			<Cable_Test>
-				URL="/userRpm/CableCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/CableCheckRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/CableCheckHelpRpm.htm"
-				URL="/userRpm/CableCheckRpm.htm?portNo=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/CableCheckRpm.htm?portNo=1@_tid_=a12df7b344558a9c"
 				URL="/help/CableCheckHelpRpm.htm"
 			</Cable_Test>
 			<Loopback>
-				URL="/userRpm/LoopbackRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/LoopbackRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/LoopbackHelpRpm.htm"
-				URL="/userRpm/LoopbackRpm.htm?loopback=1&chk_6=on&check=Test&_tid_=a12df7b344558a9c"
+				URL="/userRpm/LoopbackRpm.htm?loopback=1@chk_6=on@check=Test@_tid_=a12df7b344558a9c"
 				URL="/help/LoopbackHelpRpm.htm"
 			</Loopback>
 		</Device_Diagnostics>
 		<Network_Diagnostics>
 			<Ping>
-				URL="/userRpm/PingCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PingCheckRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/help/PingCheckHelpRpm.htm"
-				URL="/userRpm/PingCheckRpm.htm?check=Ping&ipaddr=192.168.0.100&count=4&length=64&interval=100&_tid_=a12df7b344558a9c"
+				URL="/userRpm/PingCheckRpm.htm?check=Ping@ipaddr=192.168.0.100@count=4@length=64@interval=100@_tid_=a12df7b344558a9c"
 				URL="/help/PingCheckHelpRpm.htm"
 			</Ping>
 			<Tracert>
-				URL="/userRpm/TracertCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/TracertCheckRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
 				URL="/userRpm/TracertResultRpm.htm"
 				URL="/help/TracertResultHelpRpm.htm"
-				URL="/userRpm/TracertResultRpm.htm?destAddr=DestinatioIpAdressOrDomainAddr&doType=Tracert&trHops=4&isNew=new&_tid_=a12df7b344558a9c"
+				URL="/userRpm/TracertResultRpm.htm?destAddr=DestinatioIpAdressOrDomainAddr@doType=Tracert@trHops=4@isNew=new@_tid_=a12df7b344558a9c"
 			</Tracert>
 		</Network_Diagnostics>
 	</Maintenance>
