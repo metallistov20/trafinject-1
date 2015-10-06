@@ -341,107 +341,137 @@
 			</TC_Protect>
 		</STP_Security>
 	</Spanning_Tree>
-	<Ethernet_OAM>
-		<Basic_Config>
-			<Basic_Config>
-			</Basic_Config>
-			<Discovery_Info>
-			</Discovery_Info>
-		</Basic_Config>
-		<Link_Monitoring>
-		</Link_Monitoring>
-		<RFI>
-		</RFI>
-		<Remote_Loopback>
-		</Remote_Loopback>
-		<Statistics>
-			<Statistics>
-			</Statistics>
-			<Event_Log>
-			</Event_Log>
-		</Statistics>
-		<DLDP>
-		</DLDP>
-	</Ethernet_OAM>
 	<Multicast>
 		<IGMP_Snooping>
 			<Snooping_Config>
+				URL="/userRpm/IgmpConfigRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpConfigHelpRpm.htm"
+				URL="/userRpm/IgmpConfigRpm.htm?igmp_mode=0@unknown_multicast_filter=0@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpConfigHelpRpm.htm"
 			</Snooping_Config>
-			<VLAN_Config>
-			</VLAN_Config>
 			<Port_Config>
+				URL="/userRpm/IgmpPortConfRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpPortConfHelpRpm.htm"
+				URL="/userRpm/IgmpPortConfRpm.htm?igmpsnooping=0@fastleave=0@chk_1=1@chk_12=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpPortConfHelpRpm.htm"
 			</Port_Config>
-			<IP-Range>
-			</IP-Range>
+			<VLAN_Config>
+				URL="/userRpm/IgmpVlanConfRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpVlanConfHelpRpm.htm"
+				URL="/userRpm/IgmpVlanConfRpm.htm?txt_vid=1@txt_router_time=300@txt_member_time=260@txt_leave_time=1@txt_route_port=1@add=Create@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpVlanConfHelpRpm.htm"
+			</VLAN_Config>
 			<Multicast_VLAN>
+				URL="/userRpm/IgmpMultiVlanRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpMultiVlanHelpRpm.htm"
+				URL="/userRpm/IgmpMultiVlanRpm.htm?multivlan=1@txt_vid=2@txt_router_time=60@txt_member_time=60@txt_leave_time=1@txt_route_port=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpMultiVlanHelpRpm.htm"
 			</Multicast_VLAN>
-			<Static_Multicast_IP>
-			</Static_Multicast_IP>
-			<Packet_Statistics>
-			</Packet_Statistics>
-			<Querier_Config>
-			</Querier_Config>
 		</IGMP_Snooping>
-		<MLD_Snooping>
-			<Global_Config>
-			</Global_Config>
-			<VLAN_Config>
-			</VLAN_Config>
-			<Filter_Config>
-			</Filter_Config>
-			<Port_Config>
-			</Port_Config>
-			<Static_Multicast>
-			</Static_Multicast>
-			<Querier_Config>
-			</Querier_Config>
-			<Packet_Statistics>
-			</Packet_Statistics>
-		</MLD_Snooping>
-		<Multicast_Table>
-			<IPv4_Multicast_Table>
-			</IPv4_Multicast_Table>
-			<IPv6_Multicast_Table>
-			</IPv6_Multicast_Table>
-		</Multicast_Table>
+		<Multicast_IP>
+			<Multicast_IP_Table>
+				URL="/userRpm/IgmpGroupShowRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpGroupShowHelpRpm.htm"
+				URL="/userRpm/IgmpGroupShowRpm.htm?chk_IpSelect=1@txt_ip=225.0.0.1@chk_VlanIdSelect=on@txt_vlan=1@submit=Search@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpGroupShowHelpRpm.htm"
+			</Multicast_IP_Table>
+			<Static_Multicast_IP>
+				URL="/userRpm/IgmpGroupAdminRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpGroupAdminHelpRpm.htm"
+				URL="/userRpm/IgmpGroupAdminRpm.htm?ip=225.0.0.1@vid=1@port=1@add=add@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpGroupAdminHelpRpm.htm"
+			</Static_Multicast_IP>
+		</Multicast_IP>
+		<Multicast_Filter>
+			<IP_Range>
+				URL="/userRpm/IgmpFilterListRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpFilterListHelpRpm.htm"
+				URL="/userRpm/IgmpFilterListRpm.htm?txt_filter_id=1@txt_start_ip=225.0.0.1@txt_end_ip=225.0.0.1@add=Create@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpFilterListHelpRpm.htm"
+			</IP_Range>
+			<Port_Filter>
+				URL="/userRpm/IgmpFilterAdminRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpFilterAdminHelpRpm.htm"
+				URL="/userRpm/IgmpFilterAdminRpm.htm?portfilter=0@filtermode=0@entrylist=@maxnum=@chk_1=1@chk_12=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/IgmpFilterAdminHelpRpm.htm"
+			</Port_Filter>
+		</Multicast_Filter>
+		<Packet_Statistics>
+			URL="/userRpm/IgmpPacketStatRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+			URL="/help/IgmpPacketStatHelpRpm.htm"
+			URL="/userRpm/IgmpPacketStatRpm.htm?refresh_open=1@refresh_frequency=300@submit=Apply@txt_ipaddr=@_tid_=a12df7b344558a9c"
+			URL="/help/IgmpPacketStatHelpRpm.htm"
+		</Packet_Statistics>
 	</Multicast>
 	<QoS>
 		<DiffServ>
 			<Port_Priority>
+				URL="/userRpm/QosBasicConfigureRpm2TC.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/QosBasicConfigureHelpRpm2TC.htm"
+				URL="/userRpm/QosBasicConfigureRpm2TC.htm?entry=0@chk_1=1@chk_12=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/QosBasicConfigureHelpRpm2TC.htm"
 			</Port_Priority>
-			<DSCP_Priority>
-			</DSCP_Priority>
 			<n802.1P_CoS_mapping>
+				URL="/userRpm/QosAdvanced8021PRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvanced8021PHelpRpm.htm"
+				URL="/userRpm/QosAdvanced8021PRpm.htm?rd_8021p=1@enable=Apply@entryTag=0@entryPrio=0@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvanced8021PHelpRpm.htm"
 			</n802.1P_CoS_mapping>
+			<DSCP_Priority>
+				URL="/userRpm/QosAdvancedDSCPRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvancedDSCPHelpRpm.htm"
+				URL="/userRpm/QosAdvancedDSCPRpm.htm?rd_dscp=0@enable=Apply@entryDscp=0@entryPrio=0@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvancedDSCPHelpRpm.htm"
+			</DSCP_Priority>
 			<Schedule_Mode>
+				URL="/userRpm/QosAdvancedScheduleRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvancedScheduleHelpRpm.htm"
+				URL="/userRpm/QosAdvancedScheduleRpm.htm?shceMode=4@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/QosAdvancedScheduleHelpRpm.htm"
 			</Schedule_Mode>
 		</DiffServ>
 		<Bandwidth_Control>
 			<Rate_Limit>
+				URL="/userRpm/RateLimitRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/RateLimitHelpRpm.htm"
+				URL="/userRpm/RateLimitRpm.htm?txt_ipaddr=@ingressRate=0@egressRate=0@chk_1=1@chk_12=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/RateLimitHelpRpm.htm"
 			</Rate_Limit>
 			<Storm_Control>
+				URL="/userRpm/BcRateLimitRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/BcRateLimitHelpRpm.htm"
+				URL="/userRpm/BcRateLimitRpm.htm?txt_ipaddr=@bcast=0@mcast=0@dlef=0@chk_1=1@chk_12=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/BcRateLimitHelpRpm.htm"
 			</Storm_Control>
 		</Bandwidth_Control>
 		<Voice_VLAN>
 			<Global_Config>
+				URL="/userRpm/VoiceVlanGlobalSetRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanGlobalSetHelpRpm.htm"
+				URL="/userRpm/VoiceVlanGlobalSetRpm.htm?voice_vlan_status=1@txt_voice_vid=2@txt_aging_time=1440@sl_cos=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanGlobalSetHelpRpm.htm"
 			</Global_Config>
 			<Port_Config>
+				URL="/userRpm/VoiceVlanPortSetRpmBcm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanPortSetHelpRpm.htm"
+				URL="/userRpm/VoiceVlanPortSetRpmBcm.htm?txt_ipaddr=@autoMode=0@scrtMode=0@chk_1=1@chk_14=1@submit=Apply@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanPortSetHelpRpm.htm"
 			</Port_Config>
 			<OUI_Config>
+				URL="/userRpm/VoiceVlanOuiSetRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanOuiSetHelpRpm.htm"
+				URL="/userRpm/VoiceVlanOuiSetRpm.htm?add=1@oui=01-23-45-67-89-0A@mask=FF-FF-FF-00-00-00@des=TextDescription@_tid_=a12df7b344558a9c"
+				URL="/help/VoiceVlanOuiSetHelpRpm.htm"
 			</OUI_Config>
 		</Voice_VLAN>
 	</QoS>
 	<ACL>
-		<Time-Range>
-			<Time-Range_Summary>
-			</Time-Range_Summary>
-			<Time-Range_Create>
-			</Time-Range_Create>
-			<Holiday_Config>
-			</Holiday_Config>
-		</Time-Range>
 		<ACL_Config>
 			<ACL_Summary>
+				URL="/userRpm/ACLRuleShowRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c 
+				URL="/help/ACLRuleShowHelpRpm_Smart.htm
+				URL="/userRpm/ACLRuleShowRpm.htm?@submit=delete@aclId=1@_tid_=a12df7b344558a9c
+				URL="/help/ACLRuleShowHelpRpm_Smart.htm
 			</ACL_Summary>
 			<ACL_Create>
 				URL="/"
@@ -449,69 +479,65 @@
 				URL="/userRpm/ACLRuleCreateRpm.htm?submit=Submit@aclId=aclid@ruleOrder=1@_tid_=58b10980f6f32c2f"
 			</ACL_Create>
 			<MAC_ACL>
+				URL="/userRpm/ACLRuleMACRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleMACHelpRpm_Smart.htm"
+				URL="/userRpm/ACLRuleMACRpm.htm?submit=Submit@aclId=0@ruldId=1@opera=1@userPrio=0@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleMACHelpRpm_Smart.htm"
 			</MAC_ACL>
 			<Standard-IP_ACL>
+				URL="/userRpm/ACLRuleStdIPRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleStdIPHelpRpm_Smart.htm"
+				URL="/userRpm/ACLRuleStdIPRpm.htm?submit=Submit@aclId=100@ruldId=2@opera=1@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleStdIPHelpRpm_Smart.htm"
 			</Standard-IP_ACL>
 			<Extend-IP_ACL>
+				URL="/userRpm/ACLRuleExtIPRpm.htm?s_userlevel=1@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleExtIPHelpRpm_Smart.htm"
+				URL="/userRpm/ACLRuleExtIPRpm.htm?submit=Submit@aclId=200@ruldId=3@opera=1@ipProto=0@_tid_=a12df7b344558a9c"
+				URL="/help/ACLRuleExtIPHelpRpm_Smart.htm"
 			</Extend-IP_ACL>
 		</ACL_Config>
 		<Policy_Config>
 			<Policy_Summary>
+				URL="/userRpm/PolicyShowRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/PolicyShowHelpRpm_Smart.htm"
+				URL="/userRpm/PolicyShowRpm.htm?&submit=delete&policyId=1&_tid_=a12df7b344558a9c"
+				URL="/help/PolicyShowHelpRpm_Smart.htm"
 			</Policy_Summary>
 			<Policy_Create>
+				URL="/userRpm/PolicyCreateRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/PolicyCreateHelpRpm.htm"
+				URL="/userRpm/PolicyCreateRpm.htm?submit=Submit&policyName=1&_tid_=a12df7b344558a9c"
+				URL="/help/PolicyCreateHelpRpm.htm"
 			</Policy_Create>
 			<Action_Create>
+				URL="/userRpm/PolicySetRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/PolicySetHelpRpm_Smart.htm"
+				URL="/userRpm/PolicySetRpm.htm?submit=Submit&policyName=1&aclId=100&_tid_=a12df7b344558a9c"
+				URL="/help/PolicySetHelpRpm_Smart.htm"
 			</Action_Create>
 		</Policy_Config>
 		<Policy_Binding>
 			<Binding_Table>
+				URL="/userRpm/bindShowRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/bindShowHelpRpm.htm"
+				URL="/userRpm/bindShowRpm.htm?&submit=select&showMode=1&_tid_=a12df7b344558a9c"
+				URL="/help/bindShowHelpRpm.htm"
 			</Binding_Table>
 			<Port_Binding>
+				URL="/userRpm/portBindRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/portBindHelpRpm.htm"
+				URL="/userRpm/portBindRpm.htm?submit=Submit&policyName=1&port=1&_tid_=a12df7b344558a9c"
+				URL="/help/portBindHelpRpm.htm"
 			</Port_Binding>
 			<VLAN_Binding>
+				URL="/userRpm/vlanBindRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/vlanBindHelpRpm.htm"
+				URL="/userRpm/vlanBindRpm.htm?submit=Submit&policyName=1&vlan=2&_tid_=a12df7b344558a9c"
+				URL="/help/vlanBindHelpRpm.htm"
 			</VLAN_Binding>
 		</Policy_Binding>
 	</ACL>
-	<Network_Security>
-		<Network_Security>
-			<Binding_Table>
-			</Binding_Table>
-			<Manual_Binding>
-			</Manual_Binding>
-			<ARP_Scanning>
-			</ARP_Scanning>
-			<DHCP_Snooping>
-			</DHCP_Snooping>
-		</Network_Security>
-		<ARP_Inspection>
-			<ARP_Detect>
-			</ARP_Detect>
-			<ARP_Defend>
-			</ARP_Defend>
-			<ARP_Statistics>
-			</ARP_Statistics>
-		</ARP_Inspection>
-		<IP_Source_Guard>
-		</IP_Source_Guard>
-		<DoS_Defend>
-			<DoS_Defend>
-			</DoS_Defend>
-			<DoS_Detect>
-			</DoS_Detect>
-		</DoS_Defend>
-		<n802.1X>
-			<Global_Config>
-			</Global_Config>
-			<Port_Config>
-			</Port_Config>
-			<Radius_Server>
-			</Radius_Server>
-		</n802.1X>
-		<PPPoE_Config>
-			<PPPoE_Circuit-ID>
-			</PPPoE_Circuit-ID>
-		</PPPoE_Config>
-	</Network_Security>
 	<SNMP>
 		<SNMP_Config>
 			<Global_Config>
@@ -575,81 +601,68 @@
 			</Alarm_Config>
 		</RMON>
 	</SNMP>
-	<LLDP>
-		<Basic_Config>
-			<Global_Config>
-			</Global_Config>
-			<Port_Config>
-			</Port_Config>
-		</Basic_Config>
-		<Device_Info>
-			<Local_Info>
-			</Local_Info>
-			<Neighbor_Info>
-			</Neighbor_Info>
-		</Device_Info>
-		<Device_Statistics>
-			<Statistic_Info>
-			</Statistic_Info>
-		</Device_Statistics>
-	</LLDP>
-	<Cluster>
-		<NDP>
-			<Neighbor_Info>
-			</Neighbor_Info>
-			<NDP_Summary>
-			</NDP_Summary>
-			<NDP_Config>
-			</NDP_Config>
-		</NDP>
-		<NTDP>
-			<Device_Table>
-			</Device_Table>
-			<NTDP_Summary>
-			</NTDP_Summary>
-			<NTDP_Config>
-			</NTDP_Config>
-		</NTDP>
-		<Cluster>
-			<Cluster_Summary>
-			</Cluster_Summary>
-			<Cluster_Config>
-			</Cluster_Config>
-			<Member_Config>
-			</Member_Config>
-			<Cluster_Topology>
-			</Cluster_Topology>
-		</Cluster>
-	</Cluster>
 	<Maintenance>
 		<System_Monitor>
 			<CPU_Monitor>
-			    /userRpm/sysMoniterCpuSpyRpm.htm?s_userlevel=1@_tid_=97b90a2b3dec360b
-			    /userRpm/sysMoniterCpuSpyIframeRpm.htm (10 times or so)
+				URL="/userRpm/sysMoniterCpuSpyRpm.htm?s_userlevel=1@_tid_=97b90a2b3dec360b"
+				URL="/userRpm/sysMoniterCpuSpyIframeRpm.htm"
 			</CPU_Monitor>
 			<Memory_Monitor>
-			    /userRpm/sysMoniterMemSpyRpm.htm?s_userlevel=1@_tid_=d6386e4aea66a95f
-			    /userRpm/sysMoniterMemSpyIframeRpm.htm (10 times or so)
+				URL="/userRpm/sysMoniterMemSpyRpm.htm?s_userlevel=1@_tid_=d6386e4aea66a95f"
+				URL="/userRpm/sysMoniterMemSpyIframeRpm.htm"
 			</Memory_Monitor>
 		</System_Monitor>
 		<Log>
 			<Log_Table>
+				URL="/userRpm/SyslogDisplayRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogDisplayHelpRpm.htm"
+				URL="/userRpm/SyslogDisplayRpm.htm?module=0&level=0&button=display&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogDisplayHelpRpm.htm"
 			</Log_Table>
 			<Local_Log>
+				URL="/userRpm/SyslogGlobalConfRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogGlobalConfHelpRpm.htm"
+				URL="/userRpm/SyslogGlobalConfRpm.htm?sl_srv_level=7&sl_srvstatus=2&chk_1=1&submit=Apply&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogGlobalConfHelpRpm.htm"
 			</Local_Log>
 			<Remote_Log>
+				URL="/userRpm/SyslogServerRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogServerHelpRpm.htm"
+				URL="/userRpm/SyslogServerRpm.htm?sl_srvstatus=1&chk_1=1&submit=Apply&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogServerHelpRpm.htm"
 			</Remote_Log>
 			<Backup_Log>
+				URL="/userRpm/SyslogFileExptRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/SyslogFileExptHelpRpm.htm"
+				URL="/userRpm/Syslog.cfg?backlog=Backup+Log&_tid_=a12df7b344558a9c"
 			</Backup_Log>
 		</Log>
 		<Device_Diagnostics>
 			<Cable_Test>
+				URL="/userRpm/CableCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/CableCheckHelpRpm.htm"
+				URL="/userRpm/CableCheckRpm.htm?portNo=1&_tid_=a12df7b344558a9c"
+				URL="/help/CableCheckHelpRpm.htm"
 			</Cable_Test>
+			<Loopback>
+				URL="/userRpm/LoopbackRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/LoopbackHelpRpm.htm"
+				URL="/userRpm/LoopbackRpm.htm?loopback=1&chk_6=on&check=Test&_tid_=a12df7b344558a9c"
+				URL="/help/LoopbackHelpRpm.htm"
+			</Loopback>
 		</Device_Diagnostics>
 		<Network_Diagnostics>
 			<Ping>
+				URL="/userRpm/PingCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/help/PingCheckHelpRpm.htm"
+				URL="/userRpm/PingCheckRpm.htm?check=Ping&ipaddr=192.168.0.100&count=4&length=64&interval=100&_tid_=a12df7b344558a9c"
+				URL="/help/PingCheckHelpRpm.htm"
 			</Ping>
 			<Tracert>
+				URL="/userRpm/TracertCheckRpm.htm?s_userlevel=1&_tid_=a12df7b344558a9c"
+				URL="/userRpm/TracertResultRpm.htm"
+				URL="/help/TracertResultHelpRpm.htm"
+				URL="/userRpm/TracertResultRpm.htm?destAddr=DestinatioIpAdressOrDomainAddr&doType=Tracert&trHops=4&isNew=new&_tid_=a12df7b344558a9c"
 			</Tracert>
 		</Network_Diagnostics>
 	</Maintenance>
