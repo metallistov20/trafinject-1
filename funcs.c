@@ -351,12 +351,20 @@ int iEnablePort()
 }
 
 /* 
-
+Simple operation. No backdraft, no special handling.
 */
-int i_()
+int iMeta1(char * pcXmlEltName)
 {
-	/* Put XML section <Port_Enable> into structure <pUrlChain> */	
-	parse_xml_cast(root_element, "__");
+	/* Empty string ised instead of XML-node-name? */
+	if (NULL == pcXmlEltName)
+	{
+		DFUNC("%s: empty XML-node-name\n", "<iMeta1>");
+
+		return INJ_XML_NULL;
+	}
+
+	/* Parse named element, and put its XML section into structure <pUrlChain> */	
+	parse_xml_cast(root_element, pcXmlEltName);
 
 	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);
@@ -369,4 +377,67 @@ int i_()
 	return DeployUrl(pUrlChain);
 }
 
+/* 
+Complex operation type #1. With backdraft.
+*/
+int iMeta2(char * pcXmlEltName1, char * pcXmlEltName2)
+{
+	/* Empty string ised instead some of XML-node-names? */
+	if ((NULL == pcXmlEltName1) || (NULL == pcXmlEltName2)  )
+	{
+		DFUNC("%s: empty XML-node-name(s) \n", "<iMeta2>");
 
+		return INJ_XML_NULL;
+	}
+
+	/* Put XML section from node <*pcXmlEltName1>  into structure <pUrlChain> */
+	parse_xml_cast(root_element, pcXmlEltName1);
+
+	/* Glue particles of <pUrlChain> into full-blown URLs */
+	GlueUrl(pUrlChain);
+
+#if (DEBUG_URL)
+	DisplayUrl(pUrlChain);
+#endif /* (DEBUG_URL) */
+
+	/* Put URLs into wire */
+	res= DeployUrl(pUrlChain);
+
+	/* If sending first portion of URLs failed then entire procedure failed */ 
+	if (res != CURLE_OK)
+	{
+		DURL("%s: direct part of bidirectional funct. failed with ERR_CODE(%d)\n", "<iMeta2>", res);
+
+		return res;
+
+	}
+
+	/* Otherwise, clean structures for second portion */
+	DeleteUrlEx(&pUrlChain);
+
+	memset((void*)idle,0,MAX_STR_SIZE);
+#if (0)
+	memcpy(idle, ?, MAX_STR_SIZE);
+#endif /* (0) */
+
+		/* Put XML section from node <*pcXmlEltName2>  into structure <pUrlChain> */
+	parse_xml_cast(root_element, pcXmlEltName2);
+
+	/* Glue particles of <pUrlChain> into full-blown URLs */
+	GlueUrl(pUrlChain);
+
+#if (DEBUG_URL)
+	DisplayUrl(pUrlChain);
+#endif /* (DEBUG_URL) */
+
+	/* Put URLs into wire */
+	res = DeployUrl(pUrlChain);
+
+	/* If sending second portion of URLs (a.k.a. 'backfraft' traffic) failed then verbose */ 
+	if (res != CURLE_OK)
+	{
+		DURL("%s: reverese part of bidirectional funct. failed with ERR_CODE(%d)\n", "<iMeta2>", res);
+	}
+
+	return res;
+}

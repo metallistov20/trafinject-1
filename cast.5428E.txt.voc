@@ -3,3 +3,5 @@ ip_address
 ip_mask
 txt_comname
 aclId
+
+idle

@@ -47,6 +47,9 @@
 /* Operation is not yet impelmented */
 #define INJ_NOT_IMPL	(-8)
 
+/* Empty string instead of XML node name */
+#define INJ_XML_NULL	(-9)
+
 
 
 /* Assuming that 1K shoudl be enought for Barracuda */

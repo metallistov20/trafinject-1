@@ -41,6 +41,9 @@
 /* Show vocabulary generation and usage */
 #define DEBUG_VOC	0
 
+/* Show workflow of function methods */
+#define DEBUG_FUNC	1
+
 /* Dont sent URLs physically, only show them */
 #define IDLE_RUN	1
 
@@ -58,35 +61,42 @@
 	#define DURL(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DURL(format, ...) 
-#endif /* (DURL) */
+#endif /* (DEBUG_URL) */
 
 /* Very specific URL-composing info */
 #if (DEBUG_URL_AUX)
 	#define DURLAUX(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DURLAUX(format, ...)
-#endif /* (DXML) */
+#endif /* (DEBUG_URL_AUX) */
 
 /* Debug XML-parsing and related info */
 #if (DEBUG_XML)
 	#define DXML(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DXML(format, ...)
-#endif /* (DXML) */
+#endif /* (DEBUG_XML) */
 
 /* XML-parsing info with merkyp for */
 #if (DEBUG_XML_AUX)
 	#define DXMLAUX(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DXMLAUX(format, ...)
-#endif /* (DXMLAUX) */
+#endif /* (DEBUG_XML_AUX) */
 
 /* Show vocabulary generation and usage */
 #if (DEBUG_VOC)
 	#define DVOC(format, ...) fprintf (stdout, format, __VA_ARGS__)
 #else
 	#define DVOC(format, ...)
-#endif /* (DXML) */
+#endif /* (DEBUG_VOC) */
+
+/* Show workflow of function methods */
+#if (DEBUG_FUNC)
+	#define DFUNC(format, ...) fprintf (stdout, format, __VA_ARGS__)
+#else
+	#define DFUNC(format, ...)
+#endif /* (DEBUG_FUNC_VOC) */
 
 
 
@@ -94,6 +104,14 @@
 /* Report operation execution was finished depending on its status */
 #define VERBOSE_STATUS(x) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x() ) ) { printf("operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("operation WAS NOT %d done.\n",  iOperation ); } }
+
+/*  */
+#define VERBOSE_STATUS1(x,y) \
+	{int iErr; if (INJ_SUCCESS == ( iErr =  x(y) ) ) { printf("Type #1 operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("Type #1 operation WAS NOT %d done.\n",  iOperation ); } }
+
+/*  */
+#define VERBOSE_STATUS2(x,y,z) \
+	{int iErr; if (INJ_SUCCESS == ( iErr =  x(y,z) ) ) { printf("Type #2 operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("Type #2 operation WAS NOT %d done.\n",  iOperation ); } }
 
 
 #endif /* _VERBOSE_H_ */
