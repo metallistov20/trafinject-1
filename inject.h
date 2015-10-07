@@ -22,6 +22,12 @@
 
 #include <curl/curl.h>
 
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+
+#include "constants.h"
+
+
 /* Intermediate URL structure */
 CURL *curl;
 
@@ -30,5 +36,29 @@ int iExtra;
 
 /* Extra payload for POST messages (address of string) */
 char ** pcPtr2Extra1, **pcPtr2Extra2;
+
+
+
+/* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' )*/
+int iOperation;
+
+/*  Program name */
+char cArg0[MAX_URL_SIZE];
+
+
+
+/* Payload of POST method during user authenticate */
+const char *cPostMethodString;
+
+/* Extra payload of POST method during user  authenticate */
+const char *cPostMethodString2;
+
+/* Ptr to XML data for in memory */
+xmlNode *root_element;
+
+/* Ptr to XML data document */
+xmlDoc *doc;
+
+
 
 #endif /* _INJECT_H_ */

@@ -46,6 +46,42 @@
 /* Opcode definition for manual assigning an IP to switch */
 #define DO_IPSET_OP	7
 
+/* Opcode for manual assigning an IPv6 to switch */
+#define DO_IPV6SET_OP	8
+
+/* Opcode for access control */
+#define DO_ACNTL_OP	9
+
+/* Opcode for port security */
+#define DO_PSEC_OP	10
+
+/* Opcode for port mirroring */
+#define DO_PMIR_OP	11
+
+/* Opcode for VLAN config. creation */
+#define DO_VLANCR_OP	12
+
+/* Opcode for VLAN configuring */
+#define DO_VLANC_OP	13
+
+/* Opcode for IP range */
+#define DO_IPRAN_OP	14
+
+/* Opcode for port ofiltering */
+#define DO_PFILT_OP	15
+
+/* Opcode for Testing Network with <ping> command */
+#define DO_PING_OP	16
+
+/* Opcode for Testing Network with <tracert> command */
+#define DO_TRACERT_OP	17
+
+/* Opcode for cable check */
+#define DO_CABLE_OP	18
+
+/* Opcode for loopback check */
+#define DO_LOOPBK_OP	19
+
 
 
 /* Opcode definition for no operaiotn */

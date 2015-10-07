@@ -25,6 +25,7 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
+#include "inject.h"
 #include "verbose.h"
 #include "opcodes.h"
 #include "constants.h"
@@ -32,39 +33,17 @@
 #include "xmls.h"
 #include "auxiliary.h"
 
-/* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' )*/
-extern int iOperation;
-
 /* Buffer for <iUpgradeFirmware()> */
-char cUrlUploadFile[MAX_URL_SIZE];
+static char cUrlUploadFile[MAX_URL_SIZE];
 
 /* Another buffer for <iUpgradeFirmware()> */
-char cUrlUpgrade[MAX_URL_SIZE];
-
-/*  Program name */
-extern char cArg0[MAX_URL_SIZE];
-
-/* Intermediate URL structure */
-extern CURL *curl;
-
+static char cUrlUpgrade[MAX_URL_SIZE];
 
 /* Extended edition of current SW framework is expected to process the ErrCode */
-CURLcode res;
-
-/* Payload of POST method during user authenticate */
-extern const char *cPostMethodString;
-
-/* Extra payload of POST method during user  authenticate */
-extern const char *cPostMethodString2;
+static CURLcode res;
 
 /* Sometimes we just to post not empty payload */
 static const char *cAny="ArbitraryString";
-
-/* Ptr to XML data for in memory */
-extern xmlNode *root_element;
-
-/* Ptr to XML data document */
-extern xmlDoc *doc;
 
 
 
@@ -99,7 +78,7 @@ int iOpenSite()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrlEx(pUrlChain, 1);
@@ -119,7 +98,7 @@ int iCloseSite()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrlEx(pUrlChain, 0);
@@ -144,7 +123,7 @@ int iCreateSnmp()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
@@ -167,7 +146,7 @@ int iSaveSite()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
@@ -188,7 +167,7 @@ int iUpgradeFirmware()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	res= DeployUrl(pUrlChain);
@@ -234,7 +213,7 @@ int iUpgradeFirmware()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	res = DeployUrl(pUrlChain);
@@ -262,7 +241,7 @@ int iAclGroup()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
@@ -281,7 +260,7 @@ int iRebootSwitch()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
@@ -302,7 +281,7 @@ int iAssignIp()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */	
+#endif /* (DEBUG_URL) */	
 
 	/* Put URLs into wire */
 	res= DeployUrl(pUrlChain);
@@ -330,7 +309,7 @@ int iAssignIp()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	res = DeployUrl(pUrlChain);
@@ -365,8 +344,29 @@ int iEnablePort()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */
+#endif /* (DEBUG_URL) */
 
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
 }
+
+/* 
+
+*/
+int i_()
+{
+	/* Put XML section <Port_Enable> into structure <pUrlChain> */	
+	parse_xml_cast(root_element, "__");
+
+	/* Glue particles of <pUrlChain> into full-blown URLs */
+	GlueUrl(pUrlChain);
+
+#if (DEBUG_URL)
+	DisplayUrl(pUrlChain);
+#endif /* (DEBUG_URL) */
+
+	/* Put URLs into wire */
+	return DeployUrl(pUrlChain);
+}
+
+

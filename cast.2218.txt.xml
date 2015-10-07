@@ -136,13 +136,13 @@
 				URL="/help/LoopbackDetectionHelpRpm.htm"
 				URL="/userRpm/LoopbackDetectionRpm.htm?global_enable=0@txt_interval=30@txt_recovery_time=3@auto_refresh_enable=0@txt_refresh_interval=3@txt_portID=@state=3@pm=3@rm=3@chk_1=1@chk_3=1@chk_5=1@chk_7=1@chk_9=1@p_submit=Apply@_tid_=ad12d1aa4796e597"
 				URL="/help/LoopbackDetectionHelpRpm.htm"
-			</Loopback_Detection>
+			</Loopback_Detection_GC>
 			<Loopback_Detection_PC>
 				URL="/userRpm/LoopbackDetectionRpm.htm?s_userlevel=1@_tid_=ad12d1aa4796e597"
 				URL="/help/LoopbackDetectionHelpRpm.htm"
 				URL="/userRpm/LoopbackDetectionRpm.htm?global_enable=0@txt_interval=30@txt_recovery_time=3@auto_refresh_enable=0@txt_refresh_interval=3@g_submit=Apply@txt_portID=@state=0@pm=0@rm=0@_tid_=ad12d1aa4796e597"
 				URL="/help/LoopbackDetectionHelpRpm.htm"
-			</Loopback_Detection>
+			</Loopback_Detection_PC>
 		</Port>
 		<LAG>
 			<LAG_Table_MAC2>
@@ -150,13 +150,13 @@
 				URL="/help/TrunkViewHelpRpm.htm"
 				URL="/userRpm/TrunkViewRpm.htm?hashbasedon=0@submit=Apply@_tid_=8cb9949f7afd8102"
 				URL="/help/TrunkViewHelpRpm.htm"
-			</LAG_Table>
+			</LAG_Table_MAC2>
 			<LAG_Table_IP2>
 				URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=5a8ad88e5712b521"
 				URL="/help/PortStatusSetHelpRpm.htm"
 				URL="/userRpm/TrunkViewRpm.htm?hashbasedon=1@submit=Apply@_tid_=8cb9949f7afd8102"
 				URL="/help/TrunkViewHelpRpm.htm"
-			</LAG_Table>
+			</LAG_Table_IP2>
 			<Static_LAG>
 				URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=eea8a48fd8cb25ee"
 				URL="/userRpm/PortStatusSetRpm.htm?s_userlevel=1@_tid_=eea8a48fd8cb25ee"
@@ -269,12 +269,12 @@
 				URL="/userRpm/VlanSetRpm.htm?txt_vid=2@txt_descrip=VlanName@vid_create=Create@txt_ipaddr=@qvlanname=@selectVid=0@tag_1=2@tag_2=2@tag_3=2@tag_4=2@tag_5=2@tag_6=2@tag_7=2@tag_8=2@tag_9=2@tag_10=2@tag_11=2@tag_12=2@tag_13=2@tag_14=2@slct_1=1@slct_2=1@slct_3=1@slct_4=1@slct_5=1@slct_6=1@slct_7=1@slct_8=1@slct_9=1@slct_10=1@slct_11=1@slct_12=1@slct_13=1@slct_14=1@tag_15=2@tag_16=2@tag_17=2@tag_18=2@slct_15=1@slct_16=1@slct_17=1@slct_18=1@_tid_=f0ae18c8e0951d38"
 				URL="/help/VlanSetHelpRpm.htm"
 			</VLAN_Config_Create>
-			<VLAN_Config_>
+			<VLAN_Config>
 				URL="/userRpm/VlanSetRpm.htm?s_userlevel=1@_tid_=f0ae18c8e0951d38"
 				URL="/help/VlanSetHelpRpm.htm"
 				URL="/userRpm/VlanSetRpm.htm?txt_vid=@txt_descrip=@txt_ipaddr=@chk_2=on@qvlanname=VlanName@selectVid=2@tag_1=2@tag_2=2@tag_3=2@tag_4=2@tag_5=2@tag_6=2@tag_7=2@tag_8=2@tag_9=2@tag_10=2@tag_11=2@tag_12=2@tag_13=2@tag_14=2@slct_1=2@slct_2=1@slct_3=1@slct_4=1@slct_5=1@slct_6=1@slct_7=1@slct_8=1@slct_9=1@slct_10=1@slct_11=1@slct_12=1@slct_13=1@slct_14=1@tag_15=2@tag_16=2@tag_17=2@tag_18=2@slct_15=1@slct_16=1@slct_17=1@slct_18=1@submit=Apply@_tid_=f0ae18c8e0951d38"
 				URL="/help/VlanSetHelpRpm.htm"
-			</VLAN_Config_>
+			</VLAN_Config>
 		</n802.1Q_VLAN>
 	</VLAN>
 	<Spanning_Tree>

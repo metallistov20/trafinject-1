@@ -85,26 +85,48 @@ int iOption;
 	{
 	static struct option long_options[] =
 	{
-		/* Singletons: opearion names */
-		{"open",no_argument, 0, 	'o'},
-		{"close",  no_argument, 0,	'x'},
+		/* Singletons: operation names */
+		{"open",no_argument, 0, 	'o'},// <SYSTEMNAME>
+		{"close",  no_argument, 0,	'x'},// Logout
 
-		{"create",no_argument, 0,	'c'},
-		{"save",  no_argument, 0,	's'},
-		{"ACL",	  no_argument, 0,	'a'},
-		{"upgrade",  no_argument, 0,	'r'},
-		{"reboot",  no_argument, 0,	'b'},
-		{"ipassign",  no_argument, 0,	'g'},// TODO: change to 'static' or sort of that.
+		{"create",no_argument, 0,	'c'},// SNMP_Group
+		{"save",  no_argument, 0,	's'},// Save_Config
+		{"ACL",	  no_argument, 0,	'a'},// ACL_Create
+		{"upgrade",  no_argument, 0,	'r'},// Firmware_Upgrade, Firmware_Upgrade_backdraft
+		{"reboot",  no_argument, 0,	'b'},// System_Reboot
+		{"ipassign",  no_argument, 0,	'g'},// System_IP, System_IP_backdraft
+
+		{"ipV6assign",  no_argument, 0,	'e'},// System_IPv6
+		{"acontrol",  no_argument, 0,	'k'},// Access_Control
+		{"psecure",  no_argument, 0,	'h'},// Port_Security
+		{"pmirror",  no_argument, 0,	'j'},// Port_Mirro
+		{"vlancrt",  no_argument, 0,	'm'},// VLAN_Config_Create
+		{"vlanco",  no_argument, 0,	'n'},// VLAN_Config
+		{"iprange",  no_argument, 0,	'p'},// IP_Range
+		{"pfilter",  no_argument, 0,	'q'},// Port_Filter
+		{"ping",  no_argument, 0,	'y'},// Ping
+		{"tracert",  no_argument, 0,	'z'},// Tracert
+		{"cable",  no_argument, 0,	'v'},// Cable_Test
+		{"looback",  no_argument, 0,	'w'},// Loopback
 
 		/* Couples: names of variables and their values */
-		{"target",  required_argument, 0,	't'},
-		{"id",   required_argument, 0, 		'i'},
-		{"community",required_argument, 0,	'u'},
-		{"filename",required_argument, 0,	'f'},
-		{"acl-data",required_argument, 0,	'l'},
-		{"ip-addr",required_argument, 0,	'0'},
-		{"ip-mask",required_argument, 0,	'1'},
-		{"xml-data",required_argument, 0,	'd'},
+		{"target",  required_argument, 0,	't'},// e.g. --target=192.168.0.1
+		{"id",   required_argument, 0, 		'i'},// e.g. --id=4b7e2773bc9deeab
+		{"community",required_argument, 0,	'u'},// e.g. --community=NEW_SNMP_CMTY_X
+		{"filename",required_argument, 0,	'f'},// e.g. --filename=./TL-SL5428Ev3_en_up.bin
+		{"acl-data",required_argument, 0,	'l'},// e.g. --acl-data=NEW_ACL_GRP_X
+		{"ip-addr",required_argument, 0,	'0'},// e.g. --ip-addr=192.168.0.199
+		{"ip-mask",required_argument, 0,	'1'},// e.g. --ip-mask=255.255.255.0
+		{"xml-data",required_argument, 0,	'd'},// e.g. --xml-data=cast.2218.txt.xml
+
+		{"_raw_str",  required_argument, 0,	'2'},//
+		{"_raw_str",  required_argument, 0,	'3'},//
+		{"_raw_str",  required_argument, 0,	'4'},//
+		{"_raw_str",  required_argument, 0,	'5'},//
+		{"_raw_str",  required_argument, 0,	'6'},//
+		{"_raw_str",  required_argument, 0,	'7'},//
+		{"_raw_str",  required_argument, 0,	'8'},//
+		{"_raw_str",  required_argument, 0,	'9'},//
 
 		/* End of array */
 		{0, 0, 0, 0}
@@ -114,7 +136,7 @@ int iOption;
 	int option_index = 0;
 
 		/* Get each paramter */
-		iOption = getopt_long (argc, argv, "oxcsarbg:t:i:u:f:l:0:1:d:", long_options, &option_index);
+		iOption = getopt_long (argc, argv, "oxcsarbgefhjmnpqyzvw:t:i:u:f:l:0:1:d:2:3:4:5:6:7:8:", long_options, &option_index);
 
 		/* Break cycle at the end of the options */
 		if (-1 == iOption) break;
@@ -170,6 +192,69 @@ int iOption;
 				DCOMMON("%s: option -g\n", cArg0);
 				iOperation = DO_IPSET_OP;
 				break;
+
+
+			/* Single: ip v6 set */
+			case 'e':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_IPV6SET_OP;
+				break;
+			/* Single: access */
+			case 'k':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_ACNTL_OP;
+				break;
+			/* Single: port security */
+			case 'h':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_PSEC_OP;
+				break;
+			/* Single: port mirroring */
+			case 'j':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_PMIR_OP;
+				break;
+			/* Single: vlan conf. create */
+			case 'm':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_VLANCR_OP;
+				break;
+			/* Single: vlan configure */
+			case 'n':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_VLANC_OP;
+				break;
+			/* Single: ip range */
+			case 'q':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_IPRAN_OP;
+				break;
+			/* Single: port filter */
+			case 'p':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_PFILT_OP;
+				break;
+			/* Single: ping */
+			case 'y':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_PING_OP;
+				break;
+			/* Single: tracert */
+			case 'z':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_TRACERT_OP;
+				break;
+			/* Single: cable test */
+			case 'v':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_CABLE_OP;
+				break;
+			/* Single: loopback */
+			case 'w':
+				DCOMMON("%s: option -g\n", cArg0);
+				iOperation = DO_LOOPBK_OP;
+				break;
+
 
 
 			/* Couple: IP addr of target switch */
