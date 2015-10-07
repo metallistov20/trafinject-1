@@ -18,9 +18,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-//#include <stdbool.h>
 #include <string.h>
-//#include <getopt.h>
 
 #include <curl/curl.h>
 
@@ -190,7 +188,7 @@ int iUpgradeFirmware()
 
 #if (DEBUG_URL)
 	DisplayUrl(pUrlChain);
-#endif /* (0) */	
+#endif /* (0) */
 
 	/* Put URLs into wire */
 	res= DeployUrl(pUrlChain);
@@ -211,17 +209,20 @@ int iUpgradeFirmware()
 	sprintf (cUrlUploadFile, "/usr/bin/curl -F filedata=@%s http://%s/ ", cFwName, cIpAddr);
 	DURL("%s: cUrl3 = %s\n", cArg0, cUrlUploadFile);
 
+#if (IDLE_RUN)
 	/* Button <Upload file>. Put URLs into wire with system() command  */
-//.	system(cUrlUploadFile);
+	system(cUrlUploadFile);
+#endif /* (IDLE_RUN) */
 
 
 	/* Third portion of URLs */
 	sprintf (cUrlUpgrade, "/usr/bin/curl --form submit=@%s --form submit=upgrade --form _tid_=%s  http://%s/userRpm/FirmwareAdRpm.htm",  cFwName, _tid_, cIpAddr);
 	DURL("%s: cUrl4 = %s\n", cArg0, cUrlUpgrade);
 
+#if (IDLE_RUN)
 	/* Button <Upgrade>. Put URLs into wire with system() command  */
-//.	system(cUrlUpgrade);
-
+	system(cUrlUpgrade);
+#endif /* (IDLE_RUN) */
 
 	/* Forth portion of URLs */
 
@@ -369,4 +370,3 @@ int iEnablePort()
 	/* Put URLs into wire */
 	return DeployUrl(pUrlChain);
 }
-

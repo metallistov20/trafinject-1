@@ -437,8 +437,10 @@ int iRes;
 
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
+#if (IDLE_RUN)
 		/* here we produce 'live' HTTP traffic in wire */
-//.		iRes = curl_easy_perform(curl);
+		iRes = curl_easy_perform(curl);
+#endif /* (IDLE_RUN) */
 	}
 	else
 	{
@@ -533,10 +535,10 @@ int iExtras = 0;
 
 
 		}
-
+#if (IDLE_RUN)
 		/* here we produce 'live' HTTP traffic in wire */
-//.		iRes = curl_easy_perform(curl);
-
+		iRes = curl_easy_perform(curl);
+#endif /* (IDLE_RUN) */
 	}
 	else
 	{

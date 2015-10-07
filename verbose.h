@@ -41,6 +41,9 @@
 /* Show vocabulary generation and usage */
 #define DEBUG_VOC	0
 
+/* Dont sent URLs physically, only show them */
+#define IDLE_RUN	1
+
 
 /* Display common debug info */
 #if (DEBUG_COMMON)
