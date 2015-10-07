@@ -84,8 +84,8 @@ voc.obj: voc.c
 .o: .c
 	$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
 
-inject: inject.o lists.o xmls.o auxiliary.o voc.obj 
-	$(CC)  -o inject inject.o lists.o xmls.o auxiliary.o voc.obj $(LDFLAGS) $(LIBS)
+inject: inject.o funcs.o lists.o xmls.o auxiliary.o voc.obj 
+	$(CC)  -o inject inject.o funcs.o lists.o xmls.o auxiliary.o voc.obj $(LDFLAGS) $(LIBS)
 
 compute_tabs: compute_tabs.c
 	$(CC) compute_tabs.c -o compute_tabs
