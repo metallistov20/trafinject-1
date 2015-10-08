@@ -347,8 +347,8 @@ Not tested. TODO: test on 2218, 2428, 5428E. TODO: 10-2015
 */
 int iEnablePort()
 {
-	/* Put XML section <Port_Enable> into structure <pUrlChain>.  TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN? * TODO: 10-2015 /	
-	parse_xml_cast(root_element, "Port_Enable");
+	/* Put XML section <Port_Config> into structure <pUrlChain>.  TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN? * TODO: 10-2015 */	
+	parse_xml_cast(root_element, "Port_Config");
 
 	/* Glue particles of <pUrlChain> into full-blown URLs */
 	GlueUrl(pUrlChain);

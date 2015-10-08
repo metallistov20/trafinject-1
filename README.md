@@ -67,11 +67,14 @@ Five-step operation. This operation assigns static IP to a server side. IP must 
 
 int iBindMacIp( )
 
-Function int iBindMacIp( ) performs manual binding of given IP and given  MAC address .Four-step operation.This operation provides IP-MAC binding in “Network security” applet. >>>>Being prepared currently<<<<
+Function int iBindMacIp( ) performs manual binding of given physical port and MAC address. Four-step operation. This binding is done in “Switching”+"MAC address" applet. 
+
+In first message it refferences to <http://<TARGET_IP>/userRpm/AddressFormStaticRpm.htm?s_userlevel=1&_tid_=<tID> >, without extra payload, 
+in second - to <http://<TARGET_IP>/help/AddressFormStaticHelpRpm.htm>, in third - to <http://<TARGET_IP>/userRpm/AddressFormStaticRpm.htm?mac=12-23-56-78-9A-BC@vid=1&port=18&button=Add@_tid_=<tID> >, in fourth - to <http://<TARGET_IP>/help/AddressFormStaticHelpRpm.htm>. On this MAC address is fixed behind physical port.
 
 int iEnablePort( )
 
-Three-step operation to implement port enabling or disabling in “Switching” applet. >>>>Being prepared currently<<<<
+Three-step operation to implement port enabling or disabling in “Switching” applet. This operation configures dedicated port ot be monitored/mirrored/secured/isolated. In first message it refferences to <http://<TARGET_IP>/SystemInfoRpm.htm?s_userlevel=1&_tid_=<tID> >, without extra payload, in second - to <http://<TARGET_IP>/help/PortStatusSetHelpRpm.htm >, in third - to <http://<TARGET_IP>/SystemInfoRpm.htm?txt_ipaddr=&state=0&spd=0&flowctrl=0&chk_1=1&chk_3=1&chk_5=1&chk_7=1&chk_9=1&submit=Apply@&tid_=<tID>&t_port_name= >. On this target port is ready for further commands, be it mirroring, securing, isolating, etc.
 
 
 Summary:
