@@ -67,7 +67,7 @@
 /* Opcode for IP range */
 #define DO_IPRAN_OP	14
 
-/* Opcode for port ofiltering */
+/* Opcode for port filtering */
 #define DO_PFILT_OP	15
 
 /* Opcode for Testing Network with <ping> command */

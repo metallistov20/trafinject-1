@@ -120,14 +120,14 @@ int iOption;
 		{"ip-mask", required_argument,	0,'1'},// e.g. --ip-mask=255.255.255.0
 		{"xml-data", required_argument,	0,'d'},// e.g. --xml-data=cast.2218.txt.xml
 
-		{"t_mode", required_argument,	0,'2'},//
-		{"t_key", required_argument,	0,'3'},//
-		{"t_stat", required_argument,	0,'4'},//
-		{"chk_", required_argument,	0,'5'},//
-		{"cb_", required_argument,	0,'6'},//
-		{"list_", required_argument,	0,'7'},//
-		{"member_", required_argument,	0,'8'},//
-		{"proof", required_argument,	0,'9'},//e.g. proof=www.speedtest.net/ru/
+		{"t_mode", required_argument,	0,'2'},// e.g. --t_mode=0
+		{"t_key", required_argument,	0,'3'},// e.g. --t_key=-1
+		{"t_stat", required_argument,	0,'4'},// e.g. --t_stat=0
+		{"chk_", required_argument,	0,'5'},// e.g. --chk_9=1
+		{"cb_", required_argument,	0,'6'},// e.g. --cb_9=on
+		{"list_", required_argument,	0,'7'},// e.g. --list_port=0
+		{"member_", required_argument,	0,'8'},// e.g. --member_time=60
+		{"proof", required_argument,	0,'9'},// e.g. --proof=www.speedtest.net/ru/
 
 		/* End of array */
 		{0, 0, 0, 0}
@@ -137,7 +137,7 @@ int iOption;
 	int option_index = 0;
 
 		/* Get each paramter */
-		iOption = getopt_long (argc, argv, "oxcsarbgefhjmnpqyzvw:t:i:u:f:l:0:1:d:2:3:4:5:6:7:8:", long_options, &option_index);
+		iOption = getopt_long (argc, argv, "oxcsarbgefhjmnpqyzvw:t:i:u:f:l:0:1:d:2:3:4:5:6:7:8:9:", long_options, &option_index);
 
 		/* Break cycle at the end of the options */
 		if (-1 == iOption) break;
@@ -309,42 +309,42 @@ int iOption;
 			/* Couple:  */
 			case '2':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(t_mode, optarg);
 				break;
 			/* Couple:  */
 			case '3':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(t_key, optarg);
 				break;
 			/* Couple:  */
 			case '4':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(t_stat, optarg);
 				break;
 			/* Couple:  */
 			case '5':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(chk_, optarg);
 				break;
 			/* Couple:  */
 			case '6':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(cb_, optarg);
 				break;
 			/* Couple:  */
 			case '7':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(list_, optarg);
 				break;
 			/* Couple:  */
 			case '8':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(member_, optarg);
 				break;
 			/* Couple:  */
 			case '9':
 				DCOMMON("%s: option -%c (...) with value `%s'\n", cArg0, iOption, optarg);
-				strcpy(idle, optarg);
+				strcpy(proof, optarg);
 				break;
 
 

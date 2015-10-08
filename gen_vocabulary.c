@@ -22,7 +22,8 @@
 #include <sys/stat.h>
 
 /* TODO: should come as command line argument */
-#define FNAME "cast.5428E.txt.voc"
+//#define FNAME "cast.5428E.txt.voc"
+#define FNAME "cast.2218.txt.voc"
 
 int main()
 {             
