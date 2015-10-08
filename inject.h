@@ -29,36 +29,28 @@
 
 
 /* Intermediate URL structure */
-CURL *curl;
-
-/* Flag to define extra payload should be attached  */
-int iExtra;
+extern CURL *curl;
 
 /* Extra payload for POST messages (address of string) */
-char ** pcPtr2Extra1, **pcPtr2Extra2;
+extern char ** pcPtr2Extra1, **pcPtr2Extra2;
 
+/* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' ). Deployed by rest c-files via <verbose.h> */
+extern int iOperation;
 
-
-/* Index of desired operation (can be 'create', 'save', 'ACL', 'firmware' )*/
-int iOperation;
-
-/*  Program name */
-char cArg0[MAX_URL_SIZE];
-
-
+/*  Program name, needed for better dbg-print-out */
+extern char cArg0[MAX_URL_SIZE];
 
 /* Payload of POST method during user authenticate */
-const char *cPostMethodString;
+extern const char *cPostMethodString;
 
 /* Extra payload of POST method during user  authenticate */
-const char *cPostMethodString2;
+extern const char *cPostMethodString2;
 
 /* Ptr to XML data for in memory */
-xmlNode *root_element;
+extern xmlNode *root_element;
 
 /* Ptr to XML data document */
-xmlDoc *doc;
-
+extern xmlDoc *doc;
 
 
 #endif /* _INJECT_H_ */

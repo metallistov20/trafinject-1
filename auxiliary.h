@@ -39,14 +39,15 @@ typedef struct _QuineType
 /* (Make it visible to others) */
 extern QuineType QuineArray[];
 
-/* (Make it visible to others) */
-char cIpAddr [MAX_IP_SIZE];
 
 /* (Make it visible to others) */
-char cFwName [MAX_STR_SIZE];
+extern char cIpAddr [MAX_IP_SIZE];
 
 /* (Make it visible to others) */
-char cXmlName [MAX_STR_SIZE];
+extern char cFwName [MAX_STR_SIZE];
+
+/* (Make it visible to others) */
+extern char cXmlName [MAX_STR_SIZE];
 
 
 #endif /* _AUXILIARY_H_ */

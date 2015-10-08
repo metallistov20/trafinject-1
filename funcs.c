@@ -229,7 +229,7 @@ int iUpgradeFirmware()
 }
 
 /* 
-Performs an ACL settings (group creation). Tested on switches: TL-SL2428 (TODO: to be tested on TL-SL2218, TL-SL5428E).
+Performs an ACL settings (group creation). Tested on switches: TL-SL2428 (TODO: to be tested on TL-SL2218, TL-SL5428E). TODO: 10-2015
 */
 int iAclGroup()
 {
@@ -323,20 +323,31 @@ int iAssignIp()
 	return res;
 }
 
+/* 
+Not tested. TODO: test on 2218, 2428, 5428E. TODO: is it possible <MAC_Address&Static_Address_CRST> without <MAC_Address&Address_Table>? TODO: 10-2015; 
+*/
 int iBindMacIp()
 {
-	DCOMMON("%s: MAC-IP binding OPCODE=%d is not yet implemented\n", cArg0, iOperation);
+	/* Put XML section  into structure <pUrlChain> */
+	parse_xml_cast(root_element, "Static_Address_CRST");
 
-	/* Opetation is not yet implemented */
-	return INJ_NOT_IMPL;
+	/* Glue particles of <pUrlChain> into full-blown URLs */
+	GlueUrl(pUrlChain);
+
+#if (DEBUG_URL)
+	DisplayUrl(pUrlChain);
+#endif /* (DEBUG_URL) */
+
+	/* Put URLs into wire */
+	return DeployUrl(pUrlChain);
 }
 
 /* 
-Not tested. TODO: test on 2218, 2428, 5428E
+Not tested. TODO: test on 2218, 2428, 5428E. TODO: 10-2015
 */
 int iEnablePort()
 {
-	/* Put XML section <Port_Enable> into structure <pUrlChain>.  TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN? */	
+	/* Put XML section <Port_Enable> into structure <pUrlChain>.  TODO: which one : MAC_VLAN? Protocol_VLAN? VLAN_VPN? * TODO: 10-2015 /	
 	parse_xml_cast(root_element, "Port_Enable");
 
 	/* Glue particles of <pUrlChain> into full-blown URLs */

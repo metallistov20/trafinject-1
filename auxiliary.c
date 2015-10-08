@@ -29,5 +29,3 @@ char cFwName [MAX_STR_SIZE];
 
 /* Buffer to keep name of XML-file */
 char cXmlName [MAX_STR_SIZE];
-
-

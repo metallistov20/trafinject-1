@@ -105,11 +105,11 @@
 #define VERBOSE_STATUS(x) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x() ) ) { printf("operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("operation WAS NOT %d done.\n",  iOperation ); } }
 
-/*  */
+/* Report generalized operation of Type #1 (Meta1) execution was finished depending on its status */
 #define VERBOSE_STATUS1(x,y) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x(y) ) ) { printf("Type #1 operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("Type #1 operation WAS NOT %d done.\n",  iOperation ); } }
 
-/*  */
+/* Report generalized operation of Type #2 (Meta2) execution was finished depending on its status */
 #define VERBOSE_STATUS2(x,y,z) \
 	{int iErr; if (INJ_SUCCESS == ( iErr =  x(y,z) ) ) { printf("Type #2 operation %d is DONE!\n",  iOperation ); } else { /* verbose an error */  printf("Type #2 operation WAS NOT %d done.\n",  iOperation ); } }
 
