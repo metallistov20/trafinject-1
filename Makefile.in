@@ -33,7 +33,7 @@ export CC=@CC@
 
 BUILD_CURL=@BUILD_CURL@
 
-CFLAGS =  -c -g   -I/usr/local/include/libxml2
+CFLAGS =  -c -g   -I/usr/include/libxml2
 
 
 LDFLAGS = -L/usr/local/lib 

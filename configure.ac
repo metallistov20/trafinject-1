@@ -73,6 +73,10 @@ else
 fi
 
 
+XTRAINCPATHS="-I/usr/include/libxml2/"
+CFLAGS="$CFLAGS $XTRAINCPATHS"
+CPPFLAGS="$CPPFLAGS $XTRAINCPATHS"
+
 xm_in_h=1
 AC_CHECK_HEADERS(libxml/parser.h, [], [xm_in_h=0])
 if test $xm_in_h == 0
