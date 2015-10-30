@@ -438,6 +438,8 @@ int iRes;
 	if ( CURLE_OK == ( iRes = curl_easy_setopt(curl, CURLOPT_URL, pThisUrlChain->pcSumm ) ) )
 	{
 #if (IDLE_RUN)
+		DURL("%s: idle run mode: the HTTP injection was not physically sent\n", caller);
+#else
 		/* here we produce 'live' HTTP traffic in wire */
 		iRes = curl_easy_perform(curl);
 #endif /* (IDLE_RUN) */
@@ -535,7 +537,10 @@ int iExtras = 0;
 
 
 		}
+
 #if (IDLE_RUN)
+		DURL("%s: idle run mode: the HTTP injection was not physically sent\n", caller);
+#else
 		/* here we produce 'live' HTTP traffic in wire */
 		iRes = curl_easy_perform(curl);
 #endif /* (IDLE_RUN) */

@@ -189,6 +189,8 @@ int iUpgradeFirmware()
 	DURL("%s: cUrl3 = %s\n", cArg0, cUrlUploadFile);
 
 #if (IDLE_RUN)
+		DURL("%s: idle run mode: the HTTP injection was not physically sent\n", "");
+#else
 	/* Button <Upload file>. Put URLs into wire with system() command  */
 	system(cUrlUploadFile);
 #endif /* (IDLE_RUN) */
@@ -199,6 +201,8 @@ int iUpgradeFirmware()
 	DURL("%s: cUrl4 = %s\n", cArg0, cUrlUpgrade);
 
 #if (IDLE_RUN)
+		DURL("%s: idle run mode: the HTTP injection was not physically sent\n", "");
+#else
 	/* Button <Upgrade>. Put URLs into wire with system() command  */
 	system(cUrlUpgrade);
 #endif /* (IDLE_RUN) */

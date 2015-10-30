@@ -44,8 +44,6 @@
 /* Show workflow of function methods */
 #define DEBUG_FUNC	1
 
-/* Dont sent URLs physically, only show them */
-#define IDLE_RUN	1
 
 
 /* Display common debug info */

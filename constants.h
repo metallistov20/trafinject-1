@@ -70,5 +70,12 @@
 /* On linux systems should (but not must) be same as MAX_PATH */
 #define MAX_INJ_PATH 250
 
+/* Send URLs physically */
+#define NON_IDLE_RUN	1
+
+
+/* Dont sent URLs physically, only show them */
+#define IDLE_RUN	0
+
 
 #endif /* _CONSTANTS_H_ */
