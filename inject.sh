@@ -80,7 +80,7 @@ tID_e=$tID
 
 	done < ./$TMP_NAME
 
-	rm -f ./$TMP_NAME
+#	rm -f ./$TMP_NAME
 
 
 	if [[ $MODEL == "5428E" ]]; then
