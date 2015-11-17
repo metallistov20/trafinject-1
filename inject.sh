@@ -149,7 +149,7 @@ tID_e=$tID
 
 	elif  [[ $OPERATION == "save" ]]; then
 
-		echo "<$0>: To save changes alegedly done earlier in web interface of (TL-SL$MODEL) switch ...";	
+		echo "<$0>: To save changes alegedly done earlier in web interface of (TL-SL$MODEL) switch ..."; 
 
 		# will call --save below
 
