@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<TL-SG3210>
+	URL="/logon/LogonRpm.htm"
+	URL="/"
+	<System>
+		URL="/userRpm/SystemInfoRpm.htm?t=port@_tid_=d724619dde502310"
+		URL="/userRpm/SystemInfoRpm.htm?s_userlevel=1@_tid_=d724619dde502310@_tid_=d724619dde502310"
+		URL="/help/SystemInfoHelpRpm.htm"
+		URL="/userRpm/SystemInfoRpm.htm?drawradio=on@refresh=Refresh@_tid_=d724619dde502310"
+		URL="/userRpm/SystemInfoRpm.htm?t=both@_tid_=d724619dde502310"
+		<System_Tools>
+			<System_Reboot>
+				URL="/userRpm/RebootAdRpm.htm?reboot=Reboot@_tid_=d724619dde502310"
+				URL="/userRpm/RebootAdTempRpm.htm@_tid_=d724619dde502310"
+			</System_Reboot>
+		</System_Tools>
+	</System>
+</TL-SG3210>
