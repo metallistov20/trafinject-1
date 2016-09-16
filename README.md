@@ -1,10 +1,10 @@
 
-LIBRARY NAME:		trafinject v.1.0
+# LIBRARY NAME:		trafinject v.1.0
 
-LIBRARY PURPOSE:	L7 traffic injections to automate remote setting of L2/L3 network hardware.
+### LIBRARY PURPOSE:	L7 traffic injections to automate remote setting of L2/L3 network hardware.
 
 
-Abstract:
+## Abstract:
 
 
 Current library implements hypertext traffic injections for automation of remote setting on network-switching and -routing hardware.
@@ -12,7 +12,7 @@ This library was tested on TL-SL2218, TL-SL2428, TL-SL5428E, and most of below o
 Library is still under development and its up-to-date revision is permanently stored at  https://github.com/metallistov20/trafinject/  . Feel free to deploy under your tasks and to contribute.
 
 
-Short description of functions:
+## Short description of functions:
 
 
 int iOpenSite( )
@@ -77,6 +77,6 @@ int iEnablePort( )
 Three-step operation to implement port enabling or disabling in “Switching” applet. This operation configures dedicated port ot be monitored/mirrored/secured/isolated. In first message it refferences to <http://<TARGET_IP>/SystemInfoRpm.htm?s_userlevel=1&_tid_=<tID> >, without extra payload, in second - to <http://<TARGET_IP>/help/PortStatusSetHelpRpm.htm >, in third - to <http://<TARGET_IP>/SystemInfoRpm.htm?txt_ipaddr=&state=0&spd=0&flowctrl=0&chk_1=1&chk_3=1&chk_5=1&chk_7=1&chk_9=1&submit=Apply@&tid_=<tID>&t_port_name= >. On this target port is ready for further commands, be it mirroring, securing, isolating, etc.
 
 
-Summary:
+## Summary:
 
 Library's prospective is: to brecome stable and then to get ported onto L3 network hardware (routers, ADSL modems).
